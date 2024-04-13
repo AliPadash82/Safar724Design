@@ -1,0 +1,79 @@
+.calendar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.calendar .year-and-month {
+    display: inline;
+    margin: 0 6vw;
+    color: #3498db;
+}
+
+.calendar .year-and-month span {
+    display: inline-block;
+    margin: 0 8px;
+}
+
+.calendar .fas {
+    color: #2980b9;
+    transform: translate(-3px, 2px);
+}
+
+.seperator-line-calendar {
+    margin-top: 10px;
+    width: 80%;
+    height: 1px;
+    background-color: #2980b9;
+}
+
+.grid {
+    direction: rtl;
+    display: grid;
+    width: 80%;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+}
+
+.grid.weekdays {
+    color: #2980b9;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.grid.days {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.grid.days .day {
+    padding: 6px 0 9px 0;
+    width: 30px;
+    height: 15px;
+    /* background-color: #2980b9; */
+    border-radius: 1000px;
+    margin: auto;
+    cursor: pointer;
+}
+
+.grid.days .day:hover {
+    background-color: rgba(210, 205, 190, 0.2);
+}
+
+.grid.days .day:nth-child(7n) {
+    color: #a94442;
+    /* Change the color to the shade of red you prefer */
+}
+
+@media (max-height: 500px) and (min-width: 769px) {
+    .grid.days {
+        margin-top: 6px;
+        font-size: 12px;
+    }
+
+    .grid.days .day {
+        padding: 3px 0 6px 0;
+        width: 24px;
+    }
+}

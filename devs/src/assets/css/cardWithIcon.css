@@ -1,0 +1,51 @@
+.card-with-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 2.25vw;
+    transition: 0.3s;
+    border-top: 1px solid white;
+    cursor: pointer;
+}
+
+.card-with-icon:hover {
+    color: white;
+    background-color: #3498db;
+}
+
+.card-with-icon:hover .icon {
+    color: white;
+}
+
+.card-with-icon .icon {
+    font-family: "CustomIcon";
+    font-size: 64px;
+    font-style: normal;
+    color: #3498db;
+    transition: 0.3s;
+    border: none;
+    width: 60%;
+}
+
+.card-with-icon .icon.paper::before {
+    content: "j";
+}
+
+.card-with-icon .icon.magnifier::before {
+    content: "D";
+}
+
+.card-with-icon .icon.circle-dollar::before {
+    content: "f";
+}
+
+
+.card-with-icon-content {
+    width: 150%;
+    direction: rtl;
+    padding: 10px 0;
+}
+
+.card-with-icon-content p {
+    font-size: 14px;
+}

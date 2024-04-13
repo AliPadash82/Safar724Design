@@ -1,0 +1,86 @@
+.suggestions {
+    position: absolute;
+    display: flex;
+    /* justify-content: center; */
+    /* overflow: scroll; */
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-top: none;
+    z-index: 100;
+    top: 100%;
+    margin-top: 0;
+    box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    right: 0;
+    left: 0;
+    z-index: 10000000000;
+    max-height: 220px;
+    overflow-x: hidden;
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    direction: rtl;
+}
+
+.suggestions li {
+    text-align: right;
+    border: none;
+    cursor: pointer;
+    /* text-wrap: nowrap; */
+    list-style-type: none;
+}
+
+.suggestions li:hover {
+    background-color: #f2f2f2;
+    color: black;
+}
+
+.suggestions .selected {
+    background-color: #3498db;
+    color: white;
+}
+
+.suggestions .selected:hover {
+    background-color: #207dbb;
+    color: white;
+}
+
+.suggestions::-webkit-scrollbar {
+    width: 10px;
+}
+.suggestions::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #EEE;
+}
+
+.suggestions::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: radial-gradient(ellipse farthest-corner at 30% 40%, #666, #999 70%, #bbb);
+}
+
+.suggestions::-webkit-scrollbar-thumb:hover {
+    background: radial-gradient(ellipse farthest-corner at 30% 40%, #555, #888 70%, #aaa);
+}
+
+.icon-location {
+    font-family: "CustomIcon";
+    font-size: 32px;
+    padding-left: 10px;
+    padding-right: 5px;
+    color: #AAA;
+    font-style: normal;
+}
+
+.icon-location::before {
+    content: "E";
+}
+
+.triangle-right {
+    margin-left: 15px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-left: 10px solid #3498db;
+    border-bottom: 8px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
+}

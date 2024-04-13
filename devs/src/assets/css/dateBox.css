@@ -1,0 +1,109 @@
+.date-box {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 14px;
+}
+
+.cross {
+    position: absolute;
+    font-style: normal;
+    color: #3498db;
+    font-size: 25px;
+    padding: 0px 13px;
+    margin: 15px 0;
+    cursor: pointer;
+    top: 8px;
+    left: 5%;
+}
+
+.cross::before {
+    content: "×";
+}
+
+.date-box h3 {
+    padding: 10px;
+}
+
+#calender {
+    position: absolute;
+    font-style: normal;
+    color: #3498db;
+    font-size: 20px;
+    padding: 5px;
+    cursor: pointer;
+    top: 25px;
+    right: calc(5% + 10px);
+}
+
+.tooltip-message {
+    pointer-events: none;
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.75);
+    width: 80px;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    font-size: 12px;
+
+    /* Positioning */
+    position: absolute;
+    z-index: 1;
+    top: 86%;
+    left: 50%;
+    /* Use half of the width value to align it center */
+    margin-left: -40px;
+
+    /* Fade in */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-message-triangle {
+    pointer-events: none;
+    visibility: hidden;
+    color: rgba(0, 0, 0, 0.75);
+    text-align: center;
+    padding: 5px 0;
+    font-size: 12px;
+
+    position: absolute;
+    z-index: 1;
+    top: 61%;
+    left: 40%;
+
+    opacity: 0;
+    transition: opacity 0.3s;
+    transform: rotateX(45deg);
+}
+
+#calender:hover .tooltip-message,
+#calender:hover .tooltip-message-triangle {
+    visibility: visible;
+    opacity: 1;
+}
+
+@media (max-height: 600px), (max-width: 480px)  {
+    .date-box h3 {
+        margin: 6px;
+        font-size: 14px;
+    }
+    .cross {
+        top: -7px;
+    }
+    #calender {
+        top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .date-box {
+        border-radius: 0;
+    }
+}

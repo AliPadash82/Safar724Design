@@ -1,0 +1,151 @@
+@font-face {
+    font-family: 'CustomIcon';
+    src: url('../icons/line-icons-custom.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'IRANSansWeb';
+    src: url('../fonts/IRANSansWeb.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IRANSansWeb-Medium';
+    src: url('../fonts/IRANSansWeb_Medium.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IRANSansWeb-bold';
+    src: url('../fonts/IRANSansWeb_Bold.woff2') format('woff2');
+    font-weight: bolder;
+    font-style: normal;
+}
+
+*::-webkit-scrollbar {
+    width: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #2980b9;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #1f6391;
+}
+
+p {
+    line-height: 2.5;
+}
+
+body {
+    margin: 0;
+    font-family: 'IRANSansWeb', sans-serif;
+}
+
+.separator-line {
+    background-color: #EEE;
+    width: 1px;
+    height: 12px;
+    margin: 0 1vw;
+}
+
+.black-cover {
+    pointer-events: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 80;
+    border: none;
+    transition: visibility 0s linear 0.2s, opacity 0.2s linear;
+}
+
+.black-cover.show {
+    opacity: 1;
+    visibility: visible;
+    transition: visibility 0s linear 0s, opacity 0.4s linear;
+}
+
+.element-cover {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100000000000;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: opacity 0.2s linear;
+}
+
+.element-cover.show {
+    opacity: 1;
+    transition: opacity 0.4s linear;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    position: relative;
+    display: flex-inline;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    outline: 1px solid #ccc  ;
+    border: 2px solid white;
+    cursor: pointer;
+    border-radius: 50%;
+    margin: 0;
+}
+
+input[type="checkbox"] {
+    border-radius: 0;
+}
+
+
+input[type="checkbox"]:hover,
+input[type="radio"]:hover {
+    border: 2px solid #2980b9;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    border: 2px solid #2980b9;
+    background-color: #2980b9;
+    outline-color: transparent;
+}
+
+input[type="checkbox"]:checked::after,
+input[type="radio"]:checked::after {
+    content: '\2713';
+    font-size: 14px;
+    color: white;
+    font-weight: bolder;
+    font-size: 16px;
+    position: absolute;
+    bottom: -10%;
+    left: 15%;
+}
+
+input[type="radio"]:disabled,
+input[type="checkbox"]:disabled {
+    border: 2px solid #ccc;
+    background-color: #ccc;
+    cursor: auto;
+} 
+
+.unselectable {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Standard syntax */
+}

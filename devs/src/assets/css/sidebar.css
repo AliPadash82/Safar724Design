@@ -1,0 +1,134 @@
+.sidebar {
+    display: none;
+    height: 100vh;
+    height: 100svh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70vw;
+    max-width: 280px;
+    min-width: 210px;
+    background-color: white;
+    z-index: 20000;
+    overflow-x: hidden;
+    direction: rtl;
+    transform: translateX(calc(-150%));
+    transition: 0.3s;
+}
+
+.sidebar.show {
+    transform: none;
+}
+
+.sidebar-blackcover {
+    pointer-events: none;
+    display: none;
+    height: 100vh;
+    width: 100vw;
+    height: 100svh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 20000;
+    opacity: 0;
+    transition: 0.2s;
+}
+
+.sidebar-blackcover.show {
+    pointer-events: all;
+    opacity: 1;
+    transition: 0.3s;
+}
+
+.sidebar-blueheader {
+    direction: ltr;
+    position: relative;
+    padding: 35px;
+    width: calc(100% - 70px);
+    height: 100px;
+    box-shadow: 1px 2px 10px rgba(0, 0, 50, 0.2), 1px 2px 20px rgba(0, 0, 50, 0.2);
+    background-color: #3498db;
+}
+
+
+.sidebar-blueheader i {
+    position: fixed;
+    color: white;
+    font-weight: bolder;
+    font-style: normal;
+    cursor: pointer;
+    left: 30px;
+    top: 30px;
+    font-size: 20px;
+    border: none;
+    padding: 0 10px;
+    border-radius: 1000px;
+}
+
+.sidebar-blueheader img {
+    position: absolute;
+    right: 30px;
+    transform: translateY(-8px);
+    width: 80px;
+}
+
+.sidebar-blueheader p {
+    line-height: normal;
+    color: white;
+    font-size: 13px;
+    text-align: end;
+    max-width: 200px;
+}
+
+.sidebar-blueheader span {
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    bottom: 20px;
+    right: 10%;
+}
+
+.sidebar-blueheader .phone-number {
+    position: absolute;
+    bottom: 17px;
+    left: 10%;
+}
+
+.sidebar-blueheader .phone-number span {
+    bottom: 0;
+    right: 0;
+    position: relative;
+    margin: 0 3px;
+}
+
+.sidebar .list a {
+    font-weight: 300;
+    font-size: 15px;
+    display: inline-block;
+    text-decoration: none;
+    color: #555555;
+    font-weight: bolder;
+    cursor: pointer;
+    transition: 0.2s;
+    padding: 6px 0;
+}
+
+.sidebar .list {
+    list-style-type: none;
+    direction: ltr;
+    margin: 25px 0 0 0;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+@media (max-width: 768px),
+(max-height: 600px) and (max-width: 1024px) {
+    .sidebar {
+        display: block;
+    }
+
+    .sidebar-blackcover {
+        display: block;
+    }
+}

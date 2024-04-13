@@ -1,0 +1,58 @@
+.days-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  background-color: #fafafa;
+  direction: rtl;
+  border-top: 2px solid #F0F0F0;
+}
+
+.days-tab .specific-day {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  font-size: 14px;
+  border-bottom: 1px solid #EAEAEA;
+}
+
+.days-tab .fas {
+  display: flex;
+  font-size: 24px;
+  color: #3498db;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  flex: 0;
+  border-bottom: 1px solid #EAEAEA;
+}
+
+.days-tab-container {
+  width: 75%;
+  display: flex;
+  align-items: center;
+}
+
+.days-tab .specific-day.selected {
+  background-color: white;
+  border-top: 2px solid #3498db;
+  border-inline: 1px solid #EAEAEA;
+  font-weight: bold;
+  color: #3498db;
+  border-bottom: none;
+}
+
+@media (max-width: 1200px) {
+  .days-tab-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .days-tab-container {
+    width: 95%
+  }
+}

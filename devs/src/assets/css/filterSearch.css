@@ -1,0 +1,111 @@
+.filter-search {
+    position: relative;
+    direction: rtl;
+    margin-right: 12%;
+    padding-bottom: 5px;
+}
+
+.expandable-card2 {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    direction: rtl;
+    font-size: 13px;
+}
+
+.expandable-card2 p {
+    text-wrap: nowrap;
+    display: inline;
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.expandable-card2 i {
+    position: absolute;
+    left: 20px;
+    color: #3498db;
+}
+
+.expandable-card2:hover .expandable-card2-header {
+    background-color: #f0f0f0;
+    color: #3498db;
+}
+
+.expandable-card2-header.expanded {
+    background-color: #f0f0f0;
+    color: #3498db;
+}
+
+.expandable-card2-header {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    direction: rtl;
+    width: 100%;
+    height: 100%;
+    padding: inherit;
+    cursor: pointer;
+    padding-inline: 20px 40px;
+}
+
+.expandable-card2-content {
+    position: absolute;
+    flex-direction: column;
+    min-width: 75%;
+    overflow-x: hidden;
+    gap: 8px;
+    top: 100%;
+    max-height: 270px;
+    padding: 10px 15px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    z-index: 100;
+}
+
+.calendar-div .expandable-card2-content {
+    pointer-events: none;
+    /* height: auto; */
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.5s, opacity 0.5s 0.1s;
+    overflow: hidden;
+}
+
+.calendar-div .expandable-card2-content.show {
+    pointer-events: all;
+    opacity: 1;
+    max-height: 350px;
+    transition: max-height 0.5s, opacity 0.2s;
+}
+
+.input-box {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.input-box label {
+    padding-right: 10px;
+    text-wrap: nowrap;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+}
+
+.end-start-point {
+    position: relative;
+    padding: 28px 20px 0 20px;
+}
+
+.end-start-point p {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    color: #555;
+    font-weight: bold;
+    font-size: 14px;
+}

@@ -1,0 +1,217 @@
+.home-header {
+    background-color: #cbe6f8;
+    background-image: url('../images/header.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 500px;
+    position: relative;
+}
+
+.home-header .container {
+    position: absolute;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 400px;
+    padding: 20px 30px;
+    align-items: center;
+    justify-items: center;
+    border-radius: 15px;
+    right: 10%;
+}
+
+
+.home-header .container .in {
+    width: 100%;
+    padding-left: inherit;
+    padding-right: inherit;
+    background-color: white;
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: none;
+    font-size: 20px;
+}
+
+.home-header .container input {
+    width: 80%;
+    padding: 24px 5% 24px 5%;
+    outline: none;
+    border: none;
+    font-family: 'IRANSansWeb', sans-serif;
+    font-size: 22px;
+    direction: rtl;
+}
+
+.home-header .container input::placeholder {
+    font-size: 16px;
+}
+
+.home-header .container input:focus {
+    outline: none;
+}
+
+.home-header .container h2 {
+    font-weight: 400;
+    color: #3498db;
+    margin: 0;
+}
+
+.home-header .container h5 {
+    font-weight: 100;
+    color: #555;
+    text-align: center;
+}
+
+.home-header .search {
+    position: relative;
+    bottom: 0;
+    overflow: hidden;
+    padding: 12px 40%;
+    font-size: 20px;
+    z-index: 1000;
+    background-color: #3498db;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: 'IRANSansWeb', sans-serif;
+    transition: 0.4s;
+    cursor: pointer;
+}
+
+.home-header .search.place {
+    position: static;
+}
+
+.home-header .search:hover {
+    background-color: #2980b9;
+}
+
+@media (max-width: 1024px) {
+    .home-header .container {
+        margin-left: 0;
+        left: 17%;
+        max-width: none; 
+        width: 60%;
+        top: 20px;
+    }
+    .home-header {
+        height: 510px;
+    }
+}
+
+@media (max-width: 768px) {
+    .home-header .container {
+        padding: 30px 50px;
+        left: 6%;
+        width: calc(88% - 100px);
+    }
+    .home-header {
+        height: 520px;
+    }
+}
+
+@media (max-height: 600px) {
+    .home-header .container h2 {
+        font-size: 21px;
+    }
+    .home-header .container h5 {
+        font-size: 15px;
+        margin: 16px 0 6px 0;
+    }
+    .home-header .container .date-div {
+        padding-top: 22px;
+        padding-bottom: 22px;
+    }
+    .home-header .container .search {
+        padding: 12px 40%;
+    }
+    .home-header .container input {
+        font-size: 24px;
+        padding-top: 22px;
+        padding-bottom: 22px;
+    }
+    
+}
+
+@media (max-height: 500px) {
+    .home-header .container h2 {
+        font-size: 18px;
+    }
+    .home-header .container h5 {
+        font-size: 12px;
+        margin: 15px 0 5px 0;
+    }
+    .home-header .container .date-div {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .home-header .container .search {
+        padding: 10px 35%;
+    }
+    .home-header .container input {
+        font-size: 18px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+}
+
+@media (max-height: 600px) and (max-width: 1024px) and (min-width: 769px) {
+    .home-header .container {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        top: 20px;
+    }
+}
+
+@media (max-height: 500px) and (min-width: 769px) {
+    .home-header {
+        height: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-header .container {
+        border-radius: 0;
+        left: 0;
+        padding: 30px 30px;
+        width: calc(100% - 60px);
+        top: 0;
+
+        transform: none;
+    }
+
+    .home-header .container input {
+        font-size: 20px;
+    }
+
+    .home-header {
+        height: 490px;
+    }
+}
+
+@media (max-width: 320px) {
+    .home-header .container {
+        padding: 15px 10px;
+        width: calc(100% - 20px);
+    }
+    .home-header {
+        height: 400px;  
+    }
+    .home-header .container h2 {
+        font-size: 20px;
+    }
+    .home-header .container h5 {
+        font-size: 12px;
+        text-align: center;
+    }
+    .home-header .container input {
+        font-size: 18px;
+    }
+    .home-header .container .search {
+        padding: 8px 30%;
+    }
+}
