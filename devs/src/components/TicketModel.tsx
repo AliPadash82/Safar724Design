@@ -1,6 +1,9 @@
 import React from "react";
 import s from "../assets/css/ticketModel.module.css";
 import img from "../assets/images/reserve.svg"
+import busDash from "../assets/images/bus_dash.svg"
+import calendar from "../assets/images/calender.svg"
+import volume from "../assets/images/volume.svg"
 
 const TicketModel = () => {
   return (
@@ -18,6 +21,22 @@ const TicketModel = () => {
         </div>
         <div className={s.theBody}>
           <h5>در صورت نبود سرویس یا صندلی خالی، می‌توانید در سامانه اطلاع‌رسانی <br/> ثبت‌نام کنید تا از سرویس‌های جدید اطلاع پیدا کنید</h5>
+          <div className={s.odimg}>
+            <span>تهران</span>
+            <img src={busDash} alt="busDash"/>
+            <span>رشت</span>
+          </div>
+          <div className={s.inform}>
+            <div className={s.accessory}>
+              <img src={calendar}/>
+              <span>۱۴۰۳-۱-۲۵</span>
+            </div>
+            <div className={s.accessory}>
+              <img src={volume}/>
+              <span>سرویس‌های جدید در حال هماهنگی هستند</span>
+            </div>
+          </div>
+          <button>ثبت نام در سامانه اطلاع رسانی</button>
         </div>
       </div>
     </div>

@@ -24,7 +24,7 @@
 
 .blueHeader img {
   flex: 1;
-  margin: 8px 10px 8px 30px; 
+  margin: 8px 10px 8px 30px;
 }
 
 .blueHeader .title {
@@ -43,7 +43,8 @@
   font-size: 14px;
 }
 
-.blueHeader .right, .blueHeader .left {
+.blueHeader .right,
+.blueHeader .left {
   position: absolute;
   width: 22px;
   height: 22px;
@@ -89,5 +90,59 @@
   font-size: 14px;
   line-height: 30px;
   color: #555;
+  margin-bottom: 0;
   font-weight: 100;
+}
+
+.theBody .odimg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.theBody .odimg img {
+  margin-inline: 40px;
+  flex: 1;
+}
+
+.theBody .odimg span {
+  font-size: 13px;
+  font-weight: bold;
+  flex: 1;
+  text-align: center;
+}
+
+.theBody .inform {
+  width: 100%;
+  display: flex;
+  direction: rtl;
+  align-items: center;
+  justify-items: center;
+}
+
+.theBody .inform .accessory {
+  font-size: 14px;
+  margin: auto;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+.theBody .inform .accessory img {
+  margin-left: 10px;
+}
+
+.theBody button {
+  font-family: 'IRANSansWeb', sans-serif;
+  width: 90%;
+  margin-inline: auto;
+  height: 50px;
+  margin-top: 20px;
+  border: none;
+  background-color: blue;
+  color: white;
+  font-size: 14px;
+  border-radius: 11px;
+  cursor: pointer;
 }
