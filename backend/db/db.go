@@ -1,20 +1,28 @@
 package db
 
 import (
-	"database/sql"
 	"fmt"
-	_ "github.com/lib/pq"
+	"gorm.io/gorm"
+	"gorm.io/driver/postgres"
 )
 
-func InitDB() {
-	db, err := sql.Open("postgres", "postgres://default:DE3fRxcL6ugU@ep-polished-lab-a45rj9zc.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require")
+func InitDB() *gorm.DB {
+	dsn := "postgres://default:DE3fRxcL6ugU@ep-polished-lab-a45rj9zc.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic(err)
+		panic("failed to connect database: " + err.Error())
 	}
-	defer db.Close()
-	err = db.Ping()
+
+	sqlDB, err := db.DB()
 	if err != nil {
-		panic(err)
+		panic("failed to get database object: " + err.Error())
 	}
+
+	err = sqlDB.Ping()
+	if err != nil {
+		panic("failed to ping database: " + err.Error())
+	}
+
 	fmt.Println("Connection to database is successful")
+	return db
 }
