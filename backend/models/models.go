@@ -48,7 +48,7 @@ type City struct {
 type Service struct {
 	gorm.Model
 	BusType               string
-	Price                 float64
+	Price                 uint
 	VIP                   bool
 	CompanyID             uint
 	OriginTerminalID      uint
@@ -77,7 +77,6 @@ type Ticket struct {
 	Code            string
 	ServiceID       uint
 	UserID          uint
-	Seats           string
 	PurchasedStatus string
 	ReservedAt      time.Time
 	User            User        `gorm:"foreignKey:UserID"`
