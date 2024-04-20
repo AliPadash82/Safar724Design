@@ -44,12 +44,11 @@ func InitDB() {
 		&m.CancellationCondition{},
 		&m.MidwayCity{},
 	)
-
 	if err != nil {
 		panic("Failed to run auto migration: " + err.Error())
 	}*/
 
-	GenerateRows(true)
+	// GenerateRows(true)
 
 	fmt.Println("Connection to database is successful")
 }
