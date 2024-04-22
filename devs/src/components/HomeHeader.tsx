@@ -48,7 +48,7 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
           placeholder="مقصد را تایپ نمایید"
         />
         <DateDiv className={"date-div"} setDisplay={setDisplay} selectedDate={selectedDate} />
-        <DateBox display={display} setDisplay={setDisplay} setSelectedDate={setSelectedDate} />
+        <DateBox selectedDate={selectedDate} display={display} setDisplay={setDisplay} setSelectedDate={setSelectedDate} />
         <button className={styles.search}>
           <div className={`element-cover${isFocused || isFocusedTo ? ` ${" show"}` : ""}`} />
           جستوجو

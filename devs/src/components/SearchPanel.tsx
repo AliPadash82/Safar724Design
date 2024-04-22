@@ -9,9 +9,10 @@ import cities from "../util/cities.json";
 
 interface Props {
   setSelectedDate: (date: Date) => void;
+  selectedDate: Date;
 }
 
-const SearchPanel = ({ setSelectedDate }: Props) => {
+const SearchPanel = ({ setSelectedDate, selectedDate }: Props) => {
   const [display, setDisplay] = useState(false);
 
   const handleFocus = () => {
@@ -37,7 +38,7 @@ const SearchPanel = ({ setSelectedDate }: Props) => {
         <div className="row">
           <button className="search">جستجو</button>
           <div className="custom-gap" />
-          <CalenderInput display={display} setDisplay={setDisplay} setSelectedDate={setSelectedDate} />
+          <CalenderInput display={display} setDisplay={setDisplay} setSelectedDate={setSelectedDate} selectedDate={selectedDate}/>
           <div className="custom-gap" />
           <div className="in from">
             <i className="fas fa-map-marker-alt"></i>

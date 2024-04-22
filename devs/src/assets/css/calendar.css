@@ -19,6 +19,7 @@
 .calendar .fas {
     color: #2980b9;
     transform: translate(-3px, 2px);
+    padding: 7.5px;
 }
 
 .seperator-line-calendar {
@@ -59,6 +60,11 @@
 
 .grid.days .day:hover {
     background-color: rgba(210, 205, 190, 0.2);
+}
+
+.grid.days .day.selected {
+    background-color: #3498db;
+    color: white;
 }
 
 .grid.days .day:nth-child(7n) {

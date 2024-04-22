@@ -1,3 +1,5 @@
+import jalaali from 'jalaali-js'
+
 function toPersianNum(num: string | number): string {
   const numbers: { [key: string]: string } = {
     '0': '۰', '1': '۱', '2': '۲', '3': '۳', '4': '۴',
@@ -24,8 +26,12 @@ function turnTimeToInteger(time: string) {
 }
 
 function getFirstWeekday(date: Date) {
-  const newDate = new Date(date.getFullYear(), date.getMonth(), 1);
-  return newDate.getDay();
+  const persianDate = date.toLocaleDateString('en-us-u-ca-persian')
+  let [persianMonth, persianDay, persianYear] = persianDate.split('/').map(number => parseInt(number));
+  let gregorianDate = jalaali.toGregorian(persianYear, persianMonth, 1);
+  console.log();
+  return (new Date(gregorianDate.gy, gregorianDate.gm - 1, gregorianDate.gd).getDay() + 1)%7;
 }
+
 
 export { toPersianNum, putComma, dateReverse, turnTimeToInteger, getFirstWeekday };
