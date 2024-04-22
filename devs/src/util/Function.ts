@@ -27,7 +27,7 @@ function turnTimeToInteger(time: string) {
 
 function getFirstWeekday(date: Date) {
   const persianDate = date.toLocaleDateString('en-us-u-ca-persian')
-  let [persianMonth, persianDay, persianYear] = persianDate.split('/').map(number => parseInt(number));
+  let [persianMonth, _, persianYear] = persianDate.split('/').map(number => parseInt(number));
   let gregorianDate = jalaali.toGregorian(persianYear, persianMonth, 1);
   console.log();
   return (new Date(gregorianDate.gy, gregorianDate.gm - 1, gregorianDate.gd).getDay() + 1)%7;

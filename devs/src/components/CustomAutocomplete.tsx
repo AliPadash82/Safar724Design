@@ -5,12 +5,11 @@ import { City } from "../util/Models";
 interface Props {
   cities: City[];
   placeholder: string;
-  setDisplay?: (display: boolean) => void;
   handleFocus?: () => void;
   offset?: string;
 }
 
-const CustomAutocomplete = ({ cities, placeholder, setDisplay, handleFocus=()=>{}, offset="11%"}: Props) => {
+const CustomAutocomplete = ({ cities, placeholder, handleFocus = () => {}, offset = "11%" }: Props) => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState<City[]>([]);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
@@ -23,9 +22,11 @@ const CustomAutocomplete = ({ cities, placeholder, setDisplay, handleFocus=()=>{
     if (!value) {
       setSuggestions([]);
     } else {
-      const filteredSuggestions = cities.filter((city) =>
-        city.SearchExpressions.some((expression) => expression.toLowerCase().startsWith(value.toLowerCase()))
-      ).sort((a, b) => b.Order - a.Order);
+      const filteredSuggestions = cities
+        .filter((city) =>
+          city.SearchExpressions.some((expression) => expression.toLowerCase().startsWith(value.toLowerCase()))
+        )
+        .sort((a, b) => b.Order - a.Order);
       setSuggestions(filteredSuggestions);
     }
   };
@@ -45,21 +46,12 @@ const CustomAutocomplete = ({ cities, placeholder, setDisplay, handleFocus=()=>{
     }
     // Enter
     else if (event.key === "Enter") {
-      if (selectedOption == null) {
-        if (suggestions.length > 0) {
-          event.preventDefault();
-          setInputValue(suggestions[0].PersianName);
-          setSuggestions([]);
-        } else return;
-      } else {
-        event.preventDefault();
-        setInputValue(suggestions[selectedOption].PersianName);
-        setSuggestions([]);
-        setSelectedOption(null);
-      }
-
-      handleFocus();
-
+      event.preventDefault();
+      if (selectedOption == null)
+        if (suggestions.length > 0) setInputValue(suggestions[0].PersianName);
+        else return;
+      else setInputValue(suggestions[selectedOption].PersianName);
+      setTimeout(() => handleFocus());
       return; // Prevent further processing
     }
 
@@ -69,13 +61,12 @@ const CustomAutocomplete = ({ cities, placeholder, setDisplay, handleFocus=()=>{
       setInputValue(suggestions[newSelectedOption].PersianName);
     }
 
-    setTimeout(
-      () =>
-        document.querySelector(".selected")?.scrollIntoView({
-          behavior: "instant",
-          block: "nearest",
-          inline: "start",
-        })
+    setTimeout(() =>
+      document.querySelector(".selected")?.scrollIntoView({
+        behavior: "instant",
+        block: "nearest",
+        inline: "start",
+      })
     );
   };
 
@@ -88,25 +79,32 @@ const CustomAutocomplete = ({ cities, placeholder, setDisplay, handleFocus=()=>{
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         onBlur={() => {
-          // Delay hiding suggestions to allow click event to register on suggestions
-          setSuggestions([]);
-          setSelectedOption(null);
+          setTimeout(() => {
+            const expressions = suggestions.flatMap((suggestion) => suggestion.SearchExpressions);
+            if (inputValue && !expressions.includes(inputValue)) {
+              setInputValue("");
+            }
+            setSuggestions([]);
+            setSelectedOption(null);
+          }, 0);
         }}
         onFocus={handleChange}
       />
       {inputValue.length > 0 && suggestions.length > 0 && (
         <ul className="suggestions">
           {suggestions.map((suggestion, index) => (
-            <li style={{paddingRight: offset}}
+            <li
+              style={{ paddingRight: offset }}
               key={index}
               className={index === selectedOption ? "selected" : ""}
               onMouseDown={(e) => {
                 e.preventDefault(); // Prevent the input from being blurred
                 setInputValue(suggestion.PersianName); // Update the input value
-                setSuggestions([]); // Clear the suggestions
                 setTimeout(() => handleFocus());
               }}>
-              {suggestion.PersianName}{" - "}<span style={{fontSize: "12px", color: "#777"}}>{suggestion.ProvincePersianName}</span>
+              {suggestion.PersianName}
+              {" - "}
+              <span style={{ fontSize: "12px", color: "#777" }}>{suggestion.ProvincePersianName}</span>
             </li>
           ))}
         </ul>

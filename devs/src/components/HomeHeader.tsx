@@ -33,17 +33,18 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
         <h2>خرید بلیط اتوبوس</h2>
         <h5>از تمامی ترمینال ها و شرکت های مسافربری کشور</h5>
         <CustomInput
-          className={`${styles.in} ${styles.from}`}
+          className={`${styles.in} from`}
           isFocused={isFocusedTo || display}
+          display={display}
           cities={citiesJSON}
           handleFocus={handleFocus}
           placeholder="مبداء را تایپ نمایید"
         />
         <CustomInput
-          className={`${styles.in} ${styles.to}`}
+          className={`${styles.in} to`}
           isFocused={isFocused || display}
           cities={citiesJSON}
-          setDisplay={setDisplay}
+          display={display}
           handleFocus={handleFocus}
           placeholder="مقصد را تایپ نمایید"
         />

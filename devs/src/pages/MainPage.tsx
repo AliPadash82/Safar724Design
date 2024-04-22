@@ -15,8 +15,8 @@ function App() {
 
   useEffect(() => {
     const inputs = document.querySelectorAll("input");
-    const boxFrom = document.querySelector(".in.from");
-    const boxTo = document.querySelector(".in.to");
+    const boxFrom = document.querySelector(".from");
+    const boxTo = document.querySelector(".to");
 
     const handleFocus = () => setIsFocused(true);
     const handleBlur = () => setIsFocused(false);
@@ -25,12 +25,22 @@ function App() {
     const handleMakeBlur = () => inputs[0]?.focus();
     const handleMakeBlurTo = () => inputs[1]?.focus();
 
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        inputs.forEach((input) => input.blur()); // Blur all inputs
+        setIsFocused(false);
+        setIsFocusedTo(false);
+        setDisplay(false);
+      }
+    };
+
     inputs[0]?.addEventListener("focus", handleFocus);
     inputs[0]?.addEventListener("blur", handleBlur);
     inputs[1]?.addEventListener("focus", handleFocusTo);
     inputs[1]?.addEventListener("blur", handleBlurTo);
     boxFrom?.addEventListener("click", handleMakeBlur);
     boxTo?.addEventListener("click", handleMakeBlurTo);
+    window.addEventListener("keydown", handleEscape);
 
     return () => {
       inputs[0]?.removeEventListener("focus", handleFocus);
@@ -39,8 +49,27 @@ function App() {
       inputs[1]?.removeEventListener("blur", handleBlurTo);
       boxFrom?.removeEventListener("click", handleMakeBlur);
       boxTo?.removeEventListener("click", handleMakeBlurTo);
+      window.removeEventListener("keydown", handleEscape);
     };
   }, []);
+
+  useEffect(() => {
+    const inputs = document.querySelectorAll("input");
+    const handleEnter = (event: KeyboardEvent) => {
+      console.log(event.key);
+      if (event.key === "Enter") {
+        if (!display && !isFocused && !isFocusedTo) {
+          if (!inputs[0]?.value) inputs[0]?.focus();
+          else if (inputs[0]?.value && !inputs[1]?.value) inputs[1]?.focus();
+          else if (inputs[0]?.value && inputs[1]?.value) setDisplay(true);
+        }
+      }
+    };
+    window.addEventListener("keydown", handleEnter);
+    return () => {
+      window.removeEventListener("keydown", handleEnter);
+    };
+  }, [display, isFocused, isFocusedTo]);
 
   return (
     <>

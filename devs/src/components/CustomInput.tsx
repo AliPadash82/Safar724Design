@@ -7,28 +7,40 @@ interface Props {
   cities: City[];
   className: string;
   placeholder: string;
-  setDisplay?: (display: boolean) => void;
+  display?: boolean;
   handleFocus?: () => void;
   offset?: string;
 }
 
-const CustomInput = ({ isFocused, cities, className, placeholder, setDisplay, handleFocus=()=>{}, offset="21%" }: Props) => {
+const CustomInput = ({ isFocused, cities, className, placeholder, display, handleFocus=()=>{}, offset="21%" }: Props) => {
   const [render, setRender] = useState(false);
+  const [render2, setRender2] = useState(false);
+
   useEffect(() => {
-    let timeout;
+    if (!display) {
+      setTimeout(() => {
+        setRender2(false);
+      }, 250);
+    } else {
+      setRender2(true);
+    }
+  }, [display]);
+
+  useEffect(() => {
     if (!isFocused) {
-      timeout = setTimeout(() => {
+      setTimeout(() => {
         setRender(false);
-      });
+      }, render2 ? 250 : 0);
     } else {
       setRender(true);
     }
-  });
+  }, [isFocused]);
+  
   return (
-    <div className={className} style={{ zIndex: render ? 1000 : 1002 }}>
+    <div className={className} style={{ zIndex: render2 || render ? 1000 : 1002 }}>
       <div className={"element-cover" + (isFocused ? " show" : "")} />
       <div className="triangle-right"></div>
-      <CustomAutocomplete cities={cities} placeholder={placeholder} setDisplay={setDisplay} handleFocus={handleFocus} offset={offset} />
+      <CustomAutocomplete cities={cities} placeholder={placeholder} handleFocus={handleFocus} offset={offset} />
       <i className="icon-location"></i>
     </div>
   );
