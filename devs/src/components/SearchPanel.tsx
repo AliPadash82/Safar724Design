@@ -7,7 +7,11 @@ import FilterSearch from "./FilterSearch";
 import data from "../util/serviceResponse.json";
 import cities from "../util/cities.json";
 
-const SearchPanel = () => {
+interface Props {
+  setSelectedDate: (date: Date) => void;
+}
+
+const SearchPanel = ({ setSelectedDate }: Props) => {
   const [display, setDisplay] = useState(false);
 
   const handleFocus = () => {
@@ -33,7 +37,7 @@ const SearchPanel = () => {
         <div className="row">
           <button className="search">جستجو</button>
           <div className="custom-gap" />
-          <CalenderInput display={display} setDisplay={setDisplay}/>
+          <CalenderInput display={display} setDisplay={setDisplay} setSelectedDate={setSelectedDate} />
           <div className="custom-gap" />
           <div className="in from">
             <i className="fas fa-map-marker-alt"></i>

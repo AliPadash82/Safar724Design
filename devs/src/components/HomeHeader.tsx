@@ -14,6 +14,8 @@ interface Props {
 }
 
 const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   const handleFocus = () => {
     let temp = document.querySelectorAll("input");
     if (document.activeElement === temp[0]) {
@@ -45,8 +47,8 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
           handleFocus={handleFocus}
           placeholder="مقصد را تایپ نمایید"
         />
-        <DateDiv className={"date-div"} setDisplay={setDisplay} />
-        <DateBox display={display} setDisplay={setDisplay} />
+        <DateDiv className={"date-div"} setDisplay={setDisplay} selectedDate={selectedDate} />
+        <DateBox display={display} setDisplay={setDisplay} setSelectedDate={setSelectedDate} />
         <button className={styles.search}>
           <div className={`element-cover${isFocused || isFocusedTo ? ` ${" show"}` : ""}`} />
           جستوجو

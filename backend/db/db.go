@@ -113,4 +113,3 @@ func GenerateRows(removePreviosRows bool) {
 		log.Printf("Failed to create midway city: %v", err)
 	}
 }
-

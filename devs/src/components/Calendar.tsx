@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "../assets/css/calendar.css";
-import { toPersianNum } from "../util/Function";
+import { getFirstWeekday, toPersianNum } from "../util/Function";
 
 interface Props {
   className: string;
+  setSelectedDate: (date: Date) => void;
 }
 
-const Calendar = ({ className }: Props) => {
+const Calendar = ({ className, setSelectedDate }: Props) => {
+  const [searchDate, setSearchDate] = useState(new Date());
   const days = Array.from({ length: 31 }, (_, index) => index + 1);
-
+  const firstWeekday = getFirstWeekday(new Date());
+  const emptyDays = Array.from({ length: firstWeekday-1 }, (_, index) => <div key={`empty-${index}`} className="day"></div>);
   return (
     <div className={className}>
       <div>
@@ -28,8 +31,9 @@ const Calendar = ({ className }: Props) => {
         <div>چ</div>
         <div>پ</div>
         <div>ج</div>
-      </div>
+      </div>  
       <div className="grid days">
+        {emptyDays}
         {days.map((day) => (
           <div key={day} className="day">
             {toPersianNum(day)}

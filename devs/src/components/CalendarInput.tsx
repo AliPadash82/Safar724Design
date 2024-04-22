@@ -5,9 +5,10 @@ import Calendar from "./Calendar";
 interface Props {
   display: boolean;
   setDisplay: (display: boolean) => void;
+  setSelectedDate: (date: Date) => void;
 }
 
-const CalendarInput = ({display, setDisplay}:Props) => {
+const CalendarInput = ({ display, setDisplay, setSelectedDate }: Props) => {
   const contentRef = React.useRef<HTMLDivElement>(null);
   const handleClick = (e: MouseEvent) => {
     if (contentRef.current && !contentRef.current.contains(e.target as Node)) {
@@ -20,7 +21,7 @@ const CalendarInput = ({display, setDisplay}:Props) => {
     return () => {
       document.removeEventListener("click", handleClick);
     };
-  })
+  });
 
   return (
     <div className="calendar-div">
@@ -35,9 +36,11 @@ const CalendarInput = ({display, setDisplay}:Props) => {
         ref={contentRef}
         className={`expandable-card2-content${display ? " show" : ""}`}
         style={{ width: "400px", paddingInline: "0", paddingBottom: "0" }}>
-        <Calendar className="calendar-2" />
+        <Calendar className="calendar-2" setSelectedDate={setSelectedDate} />
         <div className="bottom-calendar">
-          <div className="crosss unselectable" onClick={() => setDisplay(false)}>×</div>
+          <div className="crosss unselectable" onClick={() => setDisplay(false)}>
+            ×
+          </div>
         </div>
       </div>
     </div>

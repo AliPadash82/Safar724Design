@@ -4,13 +4,17 @@ import "../assets/css/dateDiv.css";
 interface Props {
   className: string;
   setDisplay: (display: boolean) => void;
+  selectedDate: Date;
 }
 
-const DateDiv = ({ className, setDisplay }: Props) => {
+const DateDiv = ({ className, setDisplay, selectedDate }: Props) => {
   return (
     <div className={className} onClick={() => setDisplay(true)}>
       <div className="date">
-        <span>چهارشنبه</span> <span>۱۵</span> <span>فروردین</span> <span>۱۴۰۳</span>{" "}
+        <span>{selectedDate.toLocaleString("fa-IR", { weekday: "long" })}</span>{" "}
+        <span>{selectedDate.toLocaleString("fa-IR", { day: "numeric" })}</span>{" "}
+        <span>{selectedDate.toLocaleString("fa-IR", { month: "long" })}</span>{" "}
+        <span>{selectedDate.toLocaleString("fa-IR", { year: "numeric" })}</span>
       </div>
       <i className="icon-date"></i>
     </div>

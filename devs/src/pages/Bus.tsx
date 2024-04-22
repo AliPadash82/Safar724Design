@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import TicketModel from "../components/TicketModel";
 
 function Bus() {
+  const [ selectedDate, setSelectedDate ] = useState(new Date())
   const [sortBasedOnPrice, setSortBasedOnPrice] = useState(false);
   const [checkedState, setCheckedState] = useState<{ [key: string]: boolean }>({ all: true });
   const [originState, setOriginState] = useState<{ [key: string]: boolean }>({ all: true });
@@ -35,7 +36,7 @@ function Bus() {
     <>
       <div className="space" style={{ height: "135px", backgroundColor: "#f0f0f0", zIndex: -1000 }}></div>
       <WholeNavbar isFocused={false} />
-      <SearchPanel />
+      <SearchPanel setSelectedDate={setSelectedDate} />
       <div style={{ backgroundColor: "#FBFBFB", paddingTop: "10px" }}>
         <h1 style={{ marginTop: 0 }}>
           بلیط اتوبوس {data.OriginPersianName} {data.DestinationPersianName}

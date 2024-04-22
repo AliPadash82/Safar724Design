@@ -15,11 +15,11 @@ function App() {
 
   useEffect(() => {
     const inputs = document.querySelectorAll("input");
-    const boxFrom = document.querySelector(".in.from")
-    const boxTo = document.querySelector(".in.to")
+    const boxFrom = document.querySelector(".in.from");
+    const boxTo = document.querySelector(".in.to");
 
     const handleFocus = () => setIsFocused(true);
-    const handleBlur = () => setIsFocused(false)
+    const handleBlur = () => setIsFocused(false);
     const handleFocusTo = () => setIsFocusedTo(true);
     const handleBlurTo = () => setIsFocusedTo(false);
     const handleMakeBlur = () => inputs[0]?.focus();
@@ -44,7 +44,9 @@ function App() {
 
   return (
     <>
-      <div className="space" style={{ height: "170px", backgroundColor: "#cbe6f8", zIndex: -1000, transform: "translateY(40px)" }}></div>
+      <div
+        className="space"
+        style={{ height: "170px", backgroundColor: "#cbe6f8", zIndex: -1000, transform: "translateY(40px)" }}></div>
       <WholeNavbar isFocused={isFocused || isFocusedTo || display} />
       <HomeHeader isFocused={isFocused} isFocusedTo={isFocusedTo} display={display} setDisplay={setDisplay} />
       <BlueHeader />

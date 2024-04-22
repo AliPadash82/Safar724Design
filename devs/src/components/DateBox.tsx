@@ -5,9 +5,10 @@ import Calendar from "./Calendar";
 interface Props {
   display: boolean;
   setDisplay: (display: boolean) => void;
+  setSelectedDate: (date: Date) => void;
 }
 
-const DateBox = ({ display, setDisplay }: Props) => {
+const DateBox = ({ display, setDisplay, setSelectedDate }: Props) => {
   const dateBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,7 +38,7 @@ const DateBox = ({ display, setDisplay }: Props) => {
         <div className="tooltip-message">date</div>
       </i>
       <h3 style={{ color: "black" }}>تاریخ را انتخاب نمایید</h3>
-      <Calendar className="calendar" />
+      <Calendar className="calendar" setSelectedDate={setSelectedDate}/>
     </div>
   );
 };

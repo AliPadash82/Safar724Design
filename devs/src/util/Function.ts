@@ -23,4 +23,9 @@ function turnTimeToInteger(time: string) {
   return parseInt(hours) * 60 + parseInt(minutes);
 }
 
-export { toPersianNum, putComma, dateReverse, turnTimeToInteger };
+function getFirstWeekday(date: Date) {
+  const newDate = new Date(date.getFullYear(), date.getMonth(), 1);
+  return newDate.getDay();
+}
+
+export { toPersianNum, putComma, dateReverse, turnTimeToInteger, getFirstWeekday };
