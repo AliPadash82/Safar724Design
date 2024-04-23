@@ -1,4 +1,3 @@
-import React from 'react'
 import "../assets/css/positivePoints.css"
 import CardWithIconVerticall from './CardWithIconVerticall'
 

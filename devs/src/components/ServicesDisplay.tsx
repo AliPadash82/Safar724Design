@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Service, ServiceResponse } from "../util/Models";
+import { useEffect, useState } from "react";
+import { ServiceResponse } from "../util/Models";
 import s from "../assets/css/servicesDisplay.module.css";
 import rawData from "../util/serviceResponse.json";
 import { TbClockHour9 } from "react-icons/tb";

@@ -1,4 +1,3 @@
-import React from "react";
 import s from "../assets/css/ticketModel.module.css";
 import img from "../assets/images/reserve.svg"
 import busDash from "../assets/images/bus_dash.svg"

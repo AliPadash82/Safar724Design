@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../assets/css/calendar.css";
 import { getFirstWeekday, toPersianNum } from "../util/Function";
 import jalaali from "jalaali-js";

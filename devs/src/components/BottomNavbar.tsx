@@ -1,4 +1,3 @@
-import React from 'react';
 import "../assets/css/bottomNavbar.css";
 
 const BottomNavbar = () => {

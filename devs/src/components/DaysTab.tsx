@@ -1,4 +1,3 @@
-import React from "react";
 import "../assets/css/daysTab.css";
 import { toPersianNum } from "../util/Function";
 

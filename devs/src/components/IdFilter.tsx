@@ -17,7 +17,7 @@ const IdFilter = ({ elements, id, allElementTitle, excheckedState, exsetCheckedS
 
   useEffect(() => {
     const initialStates: { [key: string]: boolean } = { all: true };
-    elements.forEach((name, elementId) => {
+    elements.forEach((_, elementId) => {
       // Corrected order for Map iteration
       initialStates[elementId] = false;
     });
@@ -27,7 +27,7 @@ const IdFilter = ({ elements, id, allElementTitle, excheckedState, exsetCheckedS
   const handleCheckboxChange = (elementId: string) => {
     if (elementId === `all`) {
       const newState: { [key: string]: boolean } = { all: true };
-      elements.forEach((name, id) => {
+      elements.forEach((_, id) => {
         newState[id] = false;
       });
       setCheckedState(newState);

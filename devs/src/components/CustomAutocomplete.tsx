@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from "react";
+import { useState, ChangeEvent, KeyboardEvent } from "react";
 import "../assets/css/autocomplete.css";
 import { City } from "../util/Models";
 

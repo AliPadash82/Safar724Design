@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../assets/css/searchPanel.css";
-import CustomInput from "./CustomInput";
 import CustomAutocomplete from "./CustomAutocomplete";
 import CalenderInput from "./CalendarInput";
-import FilterSearch from "./FilterSearch";
-import data from "../util/serviceResponse.json";
 import cities from "../util/cities.json";
 import { useLocation } from "react-router-dom";
 

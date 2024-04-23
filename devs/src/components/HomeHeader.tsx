@@ -2,10 +2,9 @@ import CustomInput from "./CustomInput";
 import DateDiv from "./DateDiv";
 import DateBox from "./DateBox";
 import styles from "../assets/css/homeHeader.module.css";
-import { useEffect, useState } from "react";
-import { City } from "../util/Models";
+import { useState } from "react";
 import citiesJSON from "../util/cities.json";
-import { Form, Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   isFocused: boolean;
@@ -34,15 +33,15 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
     const formData = {
       origin: e.currentTarget.origin.value,
       destination: e.currentTarget.destination.value,
-      date: selectedDate
+      date: selectedDate,
     };
 
     // Navigate to "/bus" and pass the formData as state
-    navigate('/services', { state: { formData } });
-  }
+    navigate("/services", { state: { formData } });
+  };
 
   return (
-    <form onSubmit={e => handleSubmission(e)} method="POST" name="myForm"> 
+    <form onSubmit={(e) => handleSubmission(e)} method="POST" name="myForm">
       <div className={styles["home-header"]}>
         <div className={styles.container}>
           <div className={`black-cover${isFocused || isFocusedTo || display ? " show" : ""}`}></div>
@@ -73,7 +72,6 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
             setDisplay={setDisplay}
             setSelectedDate={setSelectedDate}
           />
-
           <button type="submit" className={styles.search}>
             <div className={`element-cover${isFocused || isFocusedTo ? ` ${" show"}` : ""}`} />
             جستوجو
