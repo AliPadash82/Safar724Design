@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rs/cors"
 )
 
 func InitServer() {
@@ -17,8 +18,21 @@ func InitServer() {
 			v1.GET("/getservices", GetServicesHandler)
 		}
 	}
-
-	router.Run("localhost:8080")
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:5173"},
+		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},
+		AllowedHeaders:   []string{"Content-Type"},
+		AllowCredentials: true,
+		Debug:            true,
+	})
+	handler := c.Handler(router)
+	httpServer := &http.Server{
+		Addr:    "localhost:8080",
+		Handler: handler, // Here we pass the CORS wrapped handler
+	}
+	if err := httpServer.ListenAndServe(); err != nil {
+		panic(err)
+	}
 }
 
 func GetServicesHandler(c *gin.Context) {

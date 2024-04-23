@@ -148,5 +148,5 @@ type Item struct {
 	OriginTerminalUrl              string  `json:"OriginTerminalUrl"`
 	DestinationTerminalUrl         string  `json:"DestinationTerminalUrl"`
 	Status                         int     `json:"Status"`
-	RefundRules                    []RefundRule	
+	// RefundRules                    []RefundRule `foreignKey:ID`
 }

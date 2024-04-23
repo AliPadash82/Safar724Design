@@ -8,6 +8,7 @@ import FilterSearch from "../components/FilterSearch";
 import data from "../util/serviceResponse.json";
 import { useEffect, useState } from "react";
 import TicketModel from "../components/TicketModel";
+import { ServiceResponse } from "../util/Models";
 
 function ServicePage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -17,13 +18,33 @@ function ServicePage() {
   const [destinationState, setDistinationState] = useState<{ [key: string]: boolean }>({ all: true });
 
   useEffect(() => {
+    const fetchServices = async (date: string, originID: number, destinationID: number): Promise<ServiceResponse> => {
+      const url = new URL("http://localhost:8080/api/v1/getservices");
+      url.searchParams.append("Date", date);
+      url.searchParams.append("OriginID", originID.toString());
+      url.searchParams.append("DestinationID", destinationID.toString());
+  
+      try {
+        const response = await fetch(url.toString());
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: ServiceResponse = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error fetching services:", error);
+        throw error;
+      }
+    };
+    fetchServices("2024-05-10", 1, 42).then((data) => {
+      console.log("Fetched data:", data);
+    });    
     const sortBasedOnHourCheckbox = document.querySelector<HTMLInputElement>("#s1");
     const sortBasedOnPriceCheckbox = document.querySelector<HTMLInputElement>("#s2");
     sortBasedOnHourCheckbox?.click();
     const checkInput = () => {
       setSortBasedOnPrice(sortBasedOnPriceCheckbox?.checked ? true : false);
     };
-
     checkInput();
     sortBasedOnPriceCheckbox?.addEventListener("change", checkInput); // Add change listener
     sortBasedOnHourCheckbox?.addEventListener("change", checkInput);
@@ -51,7 +72,7 @@ function ServicePage() {
           setDistinationState={setDistinationState}
         />
       </div>
-      <DaysTab selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
+      <DaysTab selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <ServicesDisplay
         sortBasedOnPrice={sortBasedOnPrice}
         checkedState={checkedState}
