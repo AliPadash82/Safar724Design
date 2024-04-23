@@ -9,7 +9,7 @@ import data from "../util/serviceResponse.json";
 import { useEffect, useState } from "react";
 import TicketModel from "../components/TicketModel";
 
-function Bus() {
+function ServicePage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [sortBasedOnPrice, setSortBasedOnPrice] = useState(false);
   const [checkedState, setCheckedState] = useState<{ [key: string]: boolean }>({ all: true });
@@ -24,7 +24,7 @@ function Bus() {
       setSortBasedOnPrice(sortBasedOnPriceCheckbox?.checked ? true : false);
     };
 
-    checkInput(); // Check on mount
+    checkInput();
     sortBasedOnPriceCheckbox?.addEventListener("change", checkInput); // Add change listener
     sortBasedOnHourCheckbox?.addEventListener("change", checkInput);
     return () => {
@@ -51,7 +51,7 @@ function Bus() {
           setDistinationState={setDistinationState}
         />
       </div>
-      <DaysTab />
+      <DaysTab selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
       <ServicesDisplay
         sortBasedOnPrice={sortBasedOnPrice}
         checkedState={checkedState}
@@ -64,4 +64,4 @@ function Bus() {
   );
 }
 
-export default Bus;
+export default ServicePage;

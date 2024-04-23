@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./assets/css/index.css";
 import MainPage from "./pages/MainPage"
-import Bus from "./pages/Bus"
+import ServicePage from "./pages/ServicePage"
 
 
 
@@ -12,7 +12,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/bus/" element={<Bus />} />
+        <Route path="/services/" element={<ServicePage />} />
       </Routes> 
     </Router>
     </>

@@ -32,6 +32,7 @@ const DateBox = ({ display, setDisplay, setSelectedDate, selectedDate }: Props) 
         pointerEvents: display ? "auto" : "none",
         opacity: display ? 1 : 0,
         transition: display ? "opacity 0.3s" : "opacity 0.2s", // Add visibility to the transition
+        direction: "rtl",
       }}>
       <i className="cross" onClick={() => setDisplay(false)} />
       <i className="fas fa-calendar-alt" id="calender" aria-hidden="true">

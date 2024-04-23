@@ -38,7 +38,7 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
     };
 
     // Navigate to "/bus" and pass the formData as state
-    navigate('/bus', { state: { formData } });
+    navigate('/services', { state: { formData } });
   }
 
   return (

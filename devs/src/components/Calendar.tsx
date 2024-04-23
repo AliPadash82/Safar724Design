@@ -19,12 +19,13 @@ const Calendar = ({ className, setSelectedDate, selectedDate }: Props) => {
     setSelectedDate(new Date(newGregorianDate.gy, newGregorianDate.gm - 1, newGregorianDate.gd));
   };
   return (
-    <div className={className}>
-      <input type="hidden" name="date" value={selectedDate.toISOString().split('T')[0]} />
+    <div className={className} style={{ direction: "rtl" }}>
+      <input type="hidden" name="date" value={selectedDate.toISOString().split("T")[0]} />
       <div>
         <i
-          className="fas fa-chevron-left"
-          onClick={() => setSearchDate(new Date(searchDate.setMonth(searchDate.getMonth() + 1)))}></i>
+          className="fas fa-chevron-right"
+          onClick={() => setSearchDate(new Date(searchDate.setMonth(searchDate.getMonth() - 1)))}
+        />
         <div className="year-and-month unselectable">
           <span> {searchDate.toLocaleString("fa-IR", { year: "numeric" })}</span>
           <span style={{ width: "40px", textAlign: "center" }}>
@@ -33,8 +34,9 @@ const Calendar = ({ className, setSelectedDate, selectedDate }: Props) => {
           </span>
         </div>
         <i
-          className="fas fa-chevron-right"
-          onClick={() => setSearchDate(new Date(searchDate.setMonth(searchDate.getMonth() - 1)))}></i>
+          className="fas fa-chevron-left"
+          onClick={() => setSearchDate(new Date(searchDate.setMonth(searchDate.getMonth() + 1)))}
+        />
       </div>
       <div className="seperator-line-calendar"></div>
       <div className="grid weekdays">

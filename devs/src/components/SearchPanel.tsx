@@ -19,18 +19,18 @@ const SearchPanel = ({ setSelectedDate, selectedDate }: Props) => {
   const formData = location.state?.formData;
 
   const handleFocus = () => {
-    let temp = document.querySelectorAll("input");
-    if (document.activeElement === temp[1]) {
-      temp[1]?.blur();
-      temp[0]?.focus();
-    } else if (document.activeElement === temp[0]) {
+    const temp = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
+    if (document.activeElement === temp[0]) {
       temp[0]?.blur();
+      temp[1]?.focus();
+    } else if (document.activeElement === temp[1]) {
+      temp[1]?.blur();
       setDisplay(true);
     }
   };
 
   const handleExchange = () => {
-    const inputs = document.querySelectorAll('input[type="text"]');
+    const inputs = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
     if (inputs.length >= 2) {
       const temp = inputs[0].value;
       inputs[0].value = inputs[1].value;
