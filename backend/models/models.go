@@ -117,3 +117,36 @@ type MidwayCity struct {
 	Service   Service `gorm:"foreignKey:ServiceID"`
 	City      City    `gorm:"foreignKey:CityID"`
 }
+
+type Item struct {
+	ID                             uint    `json:"ID"`
+	IsVip                          bool    `json:"IsVip"`
+	BusType                        string  `json:"BusType"`
+	Price                          uint    `json:"Price"`
+	MidwayCity                     string  `json:"MidwayCity"`
+	MidwayCityCode                 string  `json:"MidwayCityCode"`
+	MidwayEnglishName              string  `json:"MidwayEnglishName"`
+	CompanyCode                    string  `json:"CompanyCode"`
+	OriginTerminalName             string  `json:"OriginTerminalName"`
+	OriginTerminalPersianName      string  `json:"OriginTerminalPersianName"`
+	OriginTerminalCode             string  `json:"OriginTerminalCode"`
+	DestinationTerminalPersianName string  `json:"DestinationTerminalPersianName"`
+	DestinationTerminalName        string  `json:"DestinationTerminalName"`
+	DestinationTerminalCode        string  `json:"DestinationTerminalCode"`
+	CompanyName                    string  `json:"CompanyName"`
+	CompanyPersianName             string  `json:"CompanyPersianName"`
+	DepartureTime                  string  `json:"DepartureTime"`
+	DepartureDate                  string  `json:"DepartureDate"`
+	Description                    string  `json:"Description"`
+	BriefDescription               *string `json:"BriefDescription"`
+	DestinationCode                string  `json:"DestinationCode"`
+	AvailableSeatCount             int     `json:"AvailableSeatCount"`
+	DiscountPercentage             float64 `json:"DiscountPercentage"`
+	CompanyLogo                    string  `json:"CompanyLogo"`
+	CompanyId                      uint    `json:"CompanyId"`
+	CompanyUrl                     string  `json:"CompanyUrl"`
+	OriginTerminalUrl              string  `json:"OriginTerminalUrl"`
+	DestinationTerminalUrl         string  `json:"DestinationTerminalUrl"`
+	Status                         int     `json:"Status"`
+	RefundRules                    []RefundRule	
+}

@@ -12,17 +12,16 @@ func InitServer() {
 	router := gin.Default()
 	api := router.Group("/api")
 	{
-			v1 := api.Group("/v1")
-			{
-					v1.GET("/getservices", GetServicesHandler)
-			}
+		v1 := api.Group("/v1")
+		{
+			v1.GET("/getservices", GetServicesHandler)
+		}
 	}
-	
 
 	router.Run("localhost:8080")
 }
 
-func GetServicesHandler(c* gin.Context) {
+func GetServicesHandler(c *gin.Context) {
 	date := c.Query("Date")
 	originIDStr := c.Query("OriginID")
 	destinationIDStr := c.Query("DestinationID")
@@ -36,10 +35,29 @@ func GetServicesHandler(c* gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid destinationID format"})
 		return
 	}
-	services, err := db.GetServices(date, uint(originID), uint(destinationID))
+	OriginCity, err := db.GetCityByID(uint(originID))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	DestinationCity, err := db.GetCityByID(uint(destinationID))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	items, err := db.GetItem(date, uint(originID), uint(destinationID))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, services)
+	c.JSON(http.StatusOK, gin.H{
+		"Date":                   date,
+		"OriginPersianName":      OriginCity.PersianName,
+		"OriginEnglishName":      OriginCity.Name,
+		"OriginCode":             OriginCity.Code,
+		"DestinationPersianName": DestinationCity.PersianName,
+		"DestinationEnglishName": DestinationCity.Name,
+		"DestinationCode":        DestinationCity.Code,
+		"Today":                  nil,
+		"Logo":                   nil,
+		"Items":                  items,
+	})
 }
