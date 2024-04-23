@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-const HYPERPARAMETER_INT_CONSTANT = 1000
+const HYPERPARAMETER_INT_CONSTANT = 2555
 
 func GetRandomStringSize() int {
 	return rand.Intn(10) + 5
@@ -57,6 +57,7 @@ func CreateRandomMidwayCity() MidwayCity {
 }
 
 func CreateRandomService() Service {
+	randomTime := time.Now().AddDate(0, 10 * rand.Intn(6) * int(time.Minute), +rand.Intn(30)).Add(-time.Duration(rand.Intn(24)) * time.Hour);
 	return Service{
 		BusType:               generateRandomString(GetRandomStringSize()),
 		Price:                 uint(rand.Intn(1500000) + 500000),
@@ -64,7 +65,8 @@ func CreateRandomService() Service {
 		CompanyID:             uint(1 + rand.Intn(HYPERPARAMETER_INT_CONSTANT)),
 		OriginTerminalID:      uint(1 + rand.Intn(HYPERPARAMETER_INT_CONSTANT)),
 		DestinationTerminalID: uint(1 + rand.Intn(HYPERPARAMETER_INT_CONSTANT)),
-		DepartureDate:         time.Now().AddDate(0, 0, +rand.Intn(30)).Add(-time.Duration(rand.Intn(24)) * time.Hour),
+		DepartureDate:         randomTime.Format("2006-01-02"),
+		DepartureTime:         randomTime.Format("15:04"),
 		Description:           generateRandomString(GetRandomStringSize()),
 		BriefDescription:      generateRandomString(GetRandomStringSize()),
 		AvailableSeatCount:    rand.Intn(40),
@@ -75,7 +77,7 @@ func CreateRandomService() Service {
 func CreateRandomSeat() Seat {
 	return Seat{
 		ServiceID:  uint(1 + rand.Intn(HYPERPARAMETER_INT_CONSTANT)),
-		SeatNumber: generateRandomString(GetRandomStringSize()),
+		SeatNumber: uint(1 + rand.Intn(40)),
 	}
 }
 

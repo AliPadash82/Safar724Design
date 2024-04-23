@@ -23,12 +23,16 @@
   display: flex;
   font-size: 24px;
   color: #3498db;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
   height: 40px;
-  margin-inline: 20px;
+  min-width: 30px;
   flex: 0;
   border-bottom: 1px solid #EAEAEA;
+}
+
+.days-tab .fas.fa-chevron-right {
+  justify-content: start;
 }
 
 .days-tab-container {

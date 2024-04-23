@@ -1,34 +1,45 @@
 package server
 
 import (
-	"fmt"
+	"main/db"
 	"net/http"
-
-	"time"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
-	ptime "github.com/yaa110/go-persian-calendar"
 )
 
 func InitServer() {
 	router := gin.Default()
-
-	pt := ptime.New(time.Now())
-	// Get the date in Persian calendar
-	fmt.Println(pt.Weekday()) 
-	router.GET("/", func(c *gin.Context) {
-		y, mString, d := pt.Date()
-		m := int(mString)
-		c.JSON(http.StatusOK, gin.H{
-			"Date": pt.Format("y-MM-dd"),
-			"Day": d,
-			"Month": m,
-			"Year": y,
-			"MonthString": mString,
-			"Weekday": pt.Weekday().String(),
-			"WeekdayNumber": int(pt.Weekday()),
-		})
-	})
+	api := router.Group("/api")
+	{
+			v1 := api.Group("/v1")
+			{
+					v1.GET("/getservices", GetServicesHandler)
+			}
+	}
+	
 
 	router.Run("localhost:8080")
+}
+
+func GetServicesHandler(c* gin.Context) {
+	date := c.Query("Date")
+	originIDStr := c.Query("OriginID")
+	destinationIDStr := c.Query("DestinationID")
+	originID, err := strconv.ParseUint(originIDStr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid originID format"})
+		return
+	}
+	destinationID, err := strconv.ParseUint(destinationIDStr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid destinationID format"})
+		return
+	}
+	services, err := db.GetServices(date, uint(originID), uint(destinationID))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, services)
 }

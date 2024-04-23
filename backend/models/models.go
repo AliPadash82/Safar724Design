@@ -53,8 +53,8 @@ type Service struct {
 	CompanyID             uint
 	OriginTerminalID      uint
 	DestinationTerminalID uint
-	DepartureTime         time.Time
-	DepartureDate         time.Time
+	DepartureTime         string
+	DepartureDate         string
 	Description           string
 	BriefDescription      string
 	AvailableSeatCount    int
@@ -68,7 +68,7 @@ type Service struct {
 type Seat struct {
 	ID         uint `gorm:"primaryKey"`
 	ServiceID  uint
-	SeatNumber string
+	SeatNumber uint
 	Service    Service `gorm:"foreignKey:ServiceID"`
 }
 

@@ -32,25 +32,35 @@ func InitDB() {
 		panic("failed to ping database: " + err.Error())
 	}
 
-	/*err = db.AutoMigrate(
-		&m.User{},
-		&m.Company{},
-		&m.City{},
-		&m.Service{},
-		&m.Seat{},
-		&m.Ticket{},
-		&m.Passenger{},
-		&m.RefundRule{},
-		&m.CancellationCondition{},
-		&m.MidwayCity{},
-	)
-	if err != nil {
-		panic("Failed to run auto migration: " + err.Error())
-	}*/
+	// err = db.AutoMigrate(
+	// 	&m.User{},
+	// 	&m.Company{},
+	// 	&m.City{},
+	// 	&m.Service{},
+	// 	&m.Seat{},
+	// 	&m.Ticket{},
+	// 	&m.Passenger{},
+	// 	&m.RefundRule{},
+	// 	&m.CancellationCondition{},
+	// 	&m.MidwayCity{},
+	// )
+	// if err != nil {
+	// 	panic("Failed to run auto migration: " + err.Error())
+	// }
 
-	// GenerateRows(true)
+	// GenerateRows(false)
 
 	fmt.Println("Connection to database is successful")
+}
+
+func GetServices(date string, originID uint, destinationID uint) ([]m.Service, error) {
+	var services []m.Service
+	err := db.Where("departure_date = ? AND origin_terminal_id = ? AND destination_terminal_id = ?", date, originID, destinationID).
+		Find(&services).Error
+	if err != nil {
+		return nil, err
+	}
+	return services, nil
 }
 
 func GenerateRows(removePreviosRows bool) {
@@ -106,10 +116,32 @@ func GenerateRows(removePreviosRows bool) {
 	if err := db.Create(cancellationConditions).Error; err != nil {
 		log.Printf("Failed to create cancellation condition: %v", err)
 	}
-	if err := db.Create(refundRules).Error; err != nil {
-		log.Printf("Failed to create refund rule: %v", err)
+	// try 5 times
+	for j := 0; ; j++ {
+		if err := db.Create(refundRules).Error; err != nil {
+			log.Printf("Failed to create refund rule: %v", err)
+			if j == 5 {
+				break
+			}
+			for i := 0; i < m.HYPERPARAMETER_INT_CONSTANT; i++ {
+				refundRules[i] = m.CreateRandomRefundRule()
+			}
+		} else {
+			break
+		}
 	}
-	if err := db.Create(midwayCity).Error; err != nil {
-		log.Printf("Failed to create midway city: %v", err)
+	// try 5 times
+	for j := 0; ; j++ {
+		if err := db.Create(midwayCity).Error; err != nil {
+			log.Printf("Failed to create midway city: %v", err)
+			if j == 5 {
+				break
+			}
+			for i := 0; i < m.HYPERPARAMETER_INT_CONSTANT; i++ {
+				midwayCity[i] = m.CreateRandomMidwayCity()
+			}
+		} else {
+			break
+		}
 	}
 }
