@@ -23,8 +23,11 @@ const SearchPanel = ({ setSelectedDate, selectedDate }: Props) => {
   useEffect(() => {
     const handleBeforeUnload = () => {
       let temp = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
+      let temp2 = document.querySelectorAll<HTMLInputElement>('input[type="hidden"]');
       formData.origin = temp[0].value;
       formData.destination = temp[1].value;
+      formData.originID = temp2[0].value;
+      formData.destinationID = temp2[1].value;
       formData.date = selectedDate;
       navigate('/services', { state: { formData } });
     }
@@ -45,10 +48,14 @@ const SearchPanel = ({ setSelectedDate, selectedDate }: Props) => {
 
   const handleExchange = () => {
     const inputs = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
+    const hiddenInputs = document.querySelectorAll<HTMLInputElement>('input[type="hidden"]');
     if (inputs.length >= 2) {
-      const temp = inputs[0].value;
+      let temp:any = inputs[0].value;
       inputs[0].value = inputs[1].value;
       inputs[1].value = temp;
+      temp = hiddenInputs[0].value;
+      hiddenInputs[0].value = hiddenInputs[1].value;
+      hiddenInputs[1].value = temp;
     } else console.error("Expected at least two input elements, but found", inputs.length);
   };
 
@@ -69,6 +76,7 @@ const SearchPanel = ({ setSelectedDate, selectedDate }: Props) => {
               cities={cities}
               handleFocus={handleFocus}
               initialInputValue={formData.origin}
+              initialCityID={formData.originID}
             />
           </div>
           <i className="fas fa-exchange-alt custom-gap" onClick={handleExchange}></i>
@@ -79,6 +87,7 @@ const SearchPanel = ({ setSelectedDate, selectedDate }: Props) => {
               cities={cities}
               handleFocus={handleFocus}
               initialInputValue={formData.destination}
+              initialCityID={formData.destinationID}
             />
           </div>
           <div className="custom-gap" />

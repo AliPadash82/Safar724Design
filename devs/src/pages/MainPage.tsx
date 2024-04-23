@@ -14,7 +14,7 @@ function App() {
   const [display, setDisplay] = useState(true);
 
   useEffect(() => {
-    const inputs = document.querySelectorAll<HTMLInputElement>('input["text"]');
+    const inputs = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
     const boxFrom = document.querySelector(".from");
     const boxTo = document.querySelector(".to");
 

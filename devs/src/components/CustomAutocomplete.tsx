@@ -12,7 +12,15 @@ interface Props {
   initialCityID?: number;
 }
 
-const CustomAutocomplete = ({ cities, placeholder, handleFocus = () => {}, offset = "11%", name=undefined, initialInputValue="", initialCityID=undefined }: Props) => {
+const CustomAutocomplete = ({
+  cities,
+  placeholder,
+  handleFocus = () => {},
+  offset = "11%",
+  name = undefined,
+  initialInputValue = "",
+  initialCityID = undefined,
+}: Props) => {
   const [inputValue, setInputValue] = useState(initialInputValue);
   const [cityID, setCityID] = useState(initialCityID);
   const [suggestions, setSuggestions] = useState<City[]>([]);
@@ -52,9 +60,14 @@ const CustomAutocomplete = ({ cities, placeholder, handleFocus = () => {}, offse
     else if (event.key === "Enter") {
       event.preventDefault();
       if (selectedOption == null)
-        if (suggestions.length > 0) setInputValue(suggestions[0].PersianName);
-        else return;
-      else setInputValue(suggestions[selectedOption].PersianName);
+        if (suggestions.length > 0) {
+          setInputValue(suggestions[0].PersianName);
+          setCityID(suggestions[0].ID);
+        } else return;
+      else {
+        setInputValue(suggestions[selectedOption].PersianName);
+        setCityID(suggestions[selectedOption].ID);
+      }
       setTimeout(() => handleFocus());
       return; // Prevent further processing
     }
@@ -63,6 +76,7 @@ const CustomAutocomplete = ({ cities, placeholder, handleFocus = () => {}, offse
     if (newSelectedOption !== undefined) {
       setSelectedOption(newSelectedOption);
       setInputValue(suggestions[newSelectedOption].PersianName);
+      setCityID(suggestions[newSelectedOption].ID);
     }
 
     setTimeout(() =>
@@ -88,6 +102,7 @@ const CustomAutocomplete = ({ cities, placeholder, handleFocus = () => {}, offse
             const expressions = suggestions.flatMap((suggestion) => suggestion.SearchExpressions);
             if (inputValue && !expressions.includes(inputValue)) {
               setInputValue("");
+              setCityID(undefined);
             }
             setSuggestions([]);
             setSelectedOption(null);
@@ -95,7 +110,7 @@ const CustomAutocomplete = ({ cities, placeholder, handleFocus = () => {}, offse
         }}
         onFocus={handleChange}
       />
-      <input type="hidden" name={`${name}Code`} value={cityID}/>
+      <input type="hidden" name={`${name}ID`} value={cityID} />
       {inputValue.length > 0 && suggestions.length > 0 && (
         <ul className="suggestions">
           {suggestions.map((suggestion, index) => (

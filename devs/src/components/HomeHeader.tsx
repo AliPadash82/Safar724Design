@@ -18,7 +18,7 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
   const navigate = useNavigate();
 
   const handleFocus = () => {
-    let temp = document.querySelectorAll<HTMLInputElement>('input["text"]');
+    let temp = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
     if (document.activeElement === temp[0]) {
       temp[0]?.blur();
       temp[1]?.focus();
@@ -33,10 +33,11 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
     const formData = {
       origin: e.currentTarget.origin.value,
       destination: e.currentTarget.destination.value,
+      originID: e.currentTarget.originID.value,
+      destinationID: e.currentTarget.destinationID.value,
       date: selectedDate,
     };
 
-    // Navigate to "/bus" and pass the formData as state
     navigate("/services", { state: { formData } });
   };
 
