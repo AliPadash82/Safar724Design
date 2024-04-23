@@ -7,10 +7,12 @@ interface Props {
   placeholder: string;
   handleFocus?: () => void;
   offset?: string;
+  name?: string;
+  initialInputValue?: string;
 }
 
-const CustomAutocomplete = ({ cities, placeholder, handleFocus = () => {}, offset = "11%" }: Props) => {
-  const [inputValue, setInputValue] = useState("");
+const CustomAutocomplete = ({ cities, placeholder, handleFocus = () => {}, offset = "11%", name=undefined, initialInputValue="" }: Props) => {
+  const [inputValue, setInputValue] = useState(initialInputValue);
   const [suggestions, setSuggestions] = useState<City[]>([]);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
@@ -74,6 +76,7 @@ const CustomAutocomplete = ({ cities, placeholder, handleFocus = () => {}, offse
     <>
       <input
         type="text"
+        name={name}
         placeholder={String(placeholder)}
         value={inputValue}
         onChange={handleChange}

@@ -20,6 +20,7 @@ const Calendar = ({ className, setSelectedDate, selectedDate }: Props) => {
   };
   return (
     <div className={className}>
+      <input type="hidden" name="date" value={selectedDate.toISOString().split('T')[0]} />
       <div>
         <i
           className="fas fa-chevron-left"

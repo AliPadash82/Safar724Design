@@ -47,6 +47,8 @@
 .blue-header h1 {
     direction: rtl;
     text-align: center;
+    color: white;
+    font-size: 30px !important;
     margin: 50px 0 0 0;
 }
 

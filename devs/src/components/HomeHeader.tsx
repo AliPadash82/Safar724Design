@@ -5,6 +5,7 @@ import styles from "../assets/css/homeHeader.module.css";
 import { useEffect, useState } from "react";
 import { City } from "../util/Models";
 import citiesJSON from "../util/cities.json";
+import { Form, Link, useNavigate } from "react-router-dom";
 
 interface Props {
   isFocused: boolean;
@@ -15,6 +16,7 @@ interface Props {
 
 const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const navigate = useNavigate();
 
   const handleFocus = () => {
     let temp = document.querySelectorAll("input");
@@ -26,36 +28,59 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
       setDisplay(true);
     }
   };
+  const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Prepare the payload to send
+    const formData = {
+      origin: e.currentTarget.origin.value,
+      destination: e.currentTarget.destination.value,
+      date: selectedDate
+    };
+
+    // Navigate to "/bus" and pass the formData as state
+    navigate('/bus', { state: { formData } });
+  }
+
   return (
-    <div className={styles["home-header"]}>
-      <div className={styles.container}>
-        <div className={`black-cover${isFocused || isFocusedTo || display ? " show" : ""}`}></div>
-        <h2>خرید بلیط اتوبوس</h2>
-        <h5>از تمامی ترمینال ها و شرکت های مسافربری کشور</h5>
-        <CustomInput
-          className={`${styles.in} from`}
-          isFocused={isFocusedTo || display}
-          display={display}
-          cities={citiesJSON}
-          handleFocus={handleFocus}
-          placeholder="مبداء را تایپ نمایید"
-        />
-        <CustomInput
-          className={`${styles.in} to`}
-          isFocused={isFocused || display}
-          cities={citiesJSON}
-          display={display}
-          handleFocus={handleFocus}
-          placeholder="مقصد را تایپ نمایید"
-        />
-        <DateDiv className={"date-div"} setDisplay={setDisplay} selectedDate={selectedDate} />
-        <DateBox selectedDate={selectedDate} display={display} setDisplay={setDisplay} setSelectedDate={setSelectedDate} />
-        <button className={styles.search}>
-          <div className={`element-cover${isFocused || isFocusedTo ? ` ${" show"}` : ""}`} />
-          جستوجو
-        </button>
+    <form onSubmit={e => handleSubmission(e)} method="POST" name="myForm"> 
+      <div className={styles["home-header"]}>
+        <div className={styles.container}>
+          <div className={`black-cover${isFocused || isFocusedTo || display ? " show" : ""}`}></div>
+          <h2>خرید بلیط اتوبوس</h2>
+          <h5>از تمامی ترمینال ها و شرکت های مسافربری کشور</h5>
+          <CustomInput
+            className={`${styles.in} from`}
+            name="origin"
+            isFocused={isFocusedTo || display}
+            display={display}
+            cities={citiesJSON}
+            handleFocus={handleFocus}
+            placeholder="مبداء را تایپ نمایید"
+          />
+          <CustomInput
+            className={`${styles.in} to`}
+            name="destination"
+            isFocused={isFocused || display}
+            cities={citiesJSON}
+            display={display}
+            handleFocus={handleFocus}
+            placeholder="مقصد را تایپ نمایید"
+          />
+          <DateDiv className={"date-div"} setDisplay={setDisplay} selectedDate={selectedDate} />
+          <DateBox
+            selectedDate={selectedDate}
+            display={display}
+            setDisplay={setDisplay}
+            setSelectedDate={setSelectedDate}
+          />
+
+          <button type="submit" className={styles.search}>
+            <div className={`element-cover${isFocused || isFocusedTo ? ` ${" show"}` : ""}`} />
+            جستوجو
+          </button>
+        </div>
       </div>
-    </div>
+    </form>
   );
 };
 

@@ -10,13 +10,14 @@
     direction: rtl;
     overflow-x: hidden;
     /* padding: 0; */
-    height: 730px;  
+    height: 730px;
 }
 
 .bus-common-questions h1 {
     font-size: 2.6vw;
     margin-right: 25px;
     margin-top: 15px;
+    text-align: right;
 }
 
 .bus-common-questions .more {
@@ -53,13 +54,16 @@
         margin-right: 25px;
         margin-top: 15px;
     }
+
     .two-columns {
         display: block;
         height: auto;
     }
+
     .grid-three-rows {
         height: auto;
     }
+
     .bus-common-questions {
         overflow: auto;
         height: auto;

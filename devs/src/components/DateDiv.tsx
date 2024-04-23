@@ -9,7 +9,7 @@ interface Props {
 
 const DateDiv = ({ className, setDisplay, selectedDate }: Props) => {
   return (
-    <div className={className} onClick={() => setDisplay(true)}>
+    <div className={className} onMouseDown={() => setTimeout(() => setDisplay(true))}>
       <div className="date">
         <span>{selectedDate.toLocaleString("fa-IR", { weekday: "long" })}</span>{" "}
         <span>{selectedDate.toLocaleString("fa-IR", { day: "numeric" })}</span>{" "}

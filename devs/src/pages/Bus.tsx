@@ -10,11 +10,12 @@ import { useEffect, useState } from "react";
 import TicketModel from "../components/TicketModel";
 
 function Bus() {
-  const [ selectedDate, setSelectedDate ] = useState(new Date())
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [sortBasedOnPrice, setSortBasedOnPrice] = useState(false);
   const [checkedState, setCheckedState] = useState<{ [key: string]: boolean }>({ all: true });
   const [originState, setOriginState] = useState<{ [key: string]: boolean }>({ all: true });
   const [destinationState, setDistinationState] = useState<{ [key: string]: boolean }>({ all: true });
+
   useEffect(() => {
     const sortBasedOnHourCheckbox = document.querySelector<HTMLInputElement>("#s1");
     const sortBasedOnPriceCheckbox = document.querySelector<HTMLInputElement>("#s2");
@@ -36,7 +37,7 @@ function Bus() {
     <>
       <div className="space" style={{ height: "135px", backgroundColor: "#f0f0f0", zIndex: -1000 }}></div>
       <WholeNavbar isFocused={false} />
-      <SearchPanel setSelectedDate={setSelectedDate} selectedDate={selectedDate}/>
+      <SearchPanel setSelectedDate={setSelectedDate} selectedDate={selectedDate} />
       <div style={{ backgroundColor: "#FBFBFB", paddingTop: "10px" }}>
         <h1 style={{ marginTop: 0 }}>
           بلیط اتوبوس {data.OriginPersianName} {data.DestinationPersianName}
@@ -51,8 +52,13 @@ function Bus() {
         />
       </div>
       <DaysTab />
-      <ServicesDisplay sortBasedOnPrice={sortBasedOnPrice} checkedState={checkedState} originState={originState} destinationState={destinationState} />
-      <TicketModel/>
+      <ServicesDisplay
+        sortBasedOnPrice={sortBasedOnPrice}
+        checkedState={checkedState}
+        originState={originState}
+        destinationState={destinationState}
+      />
+      <TicketModel />
       <BottomNavbar />
     </>
   );

@@ -10,9 +10,10 @@ interface Props {
   display?: boolean;
   handleFocus?: () => void;
   offset?: string;
+  name?: string;
 }
 
-const CustomInput = ({ isFocused, cities, className, placeholder, display, handleFocus=()=>{}, offset="21%" }: Props) => {
+const CustomInput = ({ isFocused, cities, className, placeholder, display, handleFocus=()=>{}, offset="21%", name }: Props) => {
   const [render, setRender] = useState(false);
   const [render2, setRender2] = useState(false);
 
@@ -40,7 +41,7 @@ const CustomInput = ({ isFocused, cities, className, placeholder, display, handl
     <div className={className} style={{ zIndex: render2 || render ? 1000 : 1002 }}>
       <div className={"element-cover" + (isFocused ? " show" : "")} />
       <div className="triangle-right"></div>
-      <CustomAutocomplete cities={cities} placeholder={placeholder} handleFocus={handleFocus} offset={offset} />
+      <CustomAutocomplete cities={cities} placeholder={placeholder} handleFocus={handleFocus} offset={offset} name={name}/>
       <i className="icon-location"></i>
     </div>
   );

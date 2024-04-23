@@ -22,8 +22,8 @@ function App() {
     const handleBlur = () => setIsFocused(false);
     const handleFocusTo = () => setIsFocusedTo(true);
     const handleBlurTo = () => setIsFocusedTo(false);
-    const handleMakeBlur = () => inputs[0]?.focus();
-    const handleMakeBlurTo = () => inputs[1]?.focus();
+    const handleMakeBlur = () => setTimeout(() => inputs[0]?.focus());
+    const handleMakeBlurTo = () => setTimeout(() => inputs[1]?.focus());
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -38,8 +38,8 @@ function App() {
     inputs[0]?.addEventListener("blur", handleBlur);
     inputs[1]?.addEventListener("focus", handleFocusTo);
     inputs[1]?.addEventListener("blur", handleBlurTo);
-    boxFrom?.addEventListener("click", handleMakeBlur);
-    boxTo?.addEventListener("click", handleMakeBlurTo);
+    boxFrom?.addEventListener("mousedown", handleMakeBlur);
+    boxTo?.addEventListener("mousedown", handleMakeBlurTo);
     window.addEventListener("keydown", handleEscape);
 
     return () => {
@@ -47,8 +47,8 @@ function App() {
       inputs[0]?.removeEventListener("blur", handleBlur);
       inputs[1]?.removeEventListener("focus", handleFocusTo);
       inputs[1]?.removeEventListener("blur", handleBlurTo);
-      boxFrom?.removeEventListener("click", handleMakeBlur);
-      boxTo?.removeEventListener("click", handleMakeBlurTo);
+      boxFrom?.removeEventListener("mousedown", handleMakeBlur);
+      boxTo?.removeEventListener("mousedown", handleMakeBlurTo);
       window.removeEventListener("keydown", handleEscape);
     };
   }, []);
