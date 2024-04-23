@@ -3,7 +3,7 @@ import "../assets/css/searchPanel.css";
 import CustomAutocomplete from "./CustomAutocomplete";
 import CalenderInput from "./CalendarInput";
 import cities from "../util/cities.json";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface Props {
   setSelectedDate: (date: Date) => void;
@@ -14,6 +14,23 @@ const SearchPanel = ({ setSelectedDate, selectedDate }: Props) => {
   const [display, setDisplay] = useState(false);
   const location = useLocation();
   const formData = location.state?.formData;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (formData) setSelectedDate(new Date(formData.date));
+
+  }, [])
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      let temp = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
+      formData.origin = temp[0].value;
+      formData.destination = temp[1].value;
+      formData.date = selectedDate;
+      navigate('/services', { state: { formData } });
+    }
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [selectedDate])
 
   const handleFocus = () => {
     const temp = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
@@ -34,12 +51,6 @@ const SearchPanel = ({ setSelectedDate, selectedDate }: Props) => {
       inputs[1].value = temp;
     } else console.error("Expected at least two input elements, but found", inputs.length);
   };
-
-  useEffect(() => {
-    if (formData) {
-      setSelectedDate(new Date(formData.date));
-    }
-  }, []);
 
   return (
     <div className="search-panel" style={{ direction: "rtl" }}>

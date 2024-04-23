@@ -9,10 +9,12 @@ interface Props {
   offset?: string;
   name?: string;
   initialInputValue?: string;
+  initialCityID?: number;
 }
 
-const CustomAutocomplete = ({ cities, placeholder, handleFocus = () => {}, offset = "11%", name=undefined, initialInputValue="" }: Props) => {
+const CustomAutocomplete = ({ cities, placeholder, handleFocus = () => {}, offset = "11%", name=undefined, initialInputValue="", initialCityID=undefined }: Props) => {
   const [inputValue, setInputValue] = useState(initialInputValue);
+  const [cityID, setCityID] = useState(initialCityID);
   const [suggestions, setSuggestions] = useState<City[]>([]);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
@@ -93,6 +95,7 @@ const CustomAutocomplete = ({ cities, placeholder, handleFocus = () => {}, offse
         }}
         onFocus={handleChange}
       />
+      <input type="hidden" name={`${name}Code`} value={cityID}/>
       {inputValue.length > 0 && suggestions.length > 0 && (
         <ul className="suggestions">
           {suggestions.map((suggestion, index) => (
@@ -102,6 +105,7 @@ const CustomAutocomplete = ({ cities, placeholder, handleFocus = () => {}, offse
               className={index === selectedOption ? "selected" : ""}
               onMouseDown={(e) => {
                 e.preventDefault(); // Prevent the input from being blurred
+                setCityID(suggestion.ID);
                 setInputValue(suggestion.PersianName); // Update the input value
                 setTimeout(() => handleFocus());
               }}>

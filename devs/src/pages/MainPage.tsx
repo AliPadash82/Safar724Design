@@ -14,7 +14,7 @@ function App() {
   const [display, setDisplay] = useState(true);
 
   useEffect(() => {
-    const inputs = document.querySelectorAll("input");
+    const inputs = document.querySelectorAll<HTMLInputElement>('input["text"]');
     const boxFrom = document.querySelector(".from");
     const boxTo = document.querySelector(".to");
 
@@ -54,7 +54,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const inputs = document.querySelectorAll("input");
+    const inputs = document.querySelectorAll<HTMLInputElement>("input[type='text']");
     const handleEnter = (event: KeyboardEvent) => {
       console.log(event.key);
       if (event.key === "Enter") {

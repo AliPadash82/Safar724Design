@@ -18,7 +18,7 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
   const navigate = useNavigate();
 
   const handleFocus = () => {
-    let temp = document.querySelectorAll("input");
+    let temp = document.querySelectorAll<HTMLInputElement>('input["text"]');
     if (document.activeElement === temp[0]) {
       temp[0]?.blur();
       temp[1]?.focus();

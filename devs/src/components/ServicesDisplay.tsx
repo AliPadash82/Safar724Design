@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ServiceResponse } from "../util/Models";
 import s from "../assets/css/servicesDisplay.module.css";
 import rawData from "../util/serviceResponse.json";
 import { TbClockHour9 } from "react-icons/tb";
 import { toPersianNum, putComma, dateReverse, turnTimeToInteger } from "../util/Function";
+import defaultImg from "../assets/images/CompanyDefaultLogo.png";
 
 interface Props {
   sortBasedOnPrice: boolean;
@@ -18,7 +19,19 @@ const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinat
   const [minDepartureTime, setMinDepartureTime] = useState<string>("00:00");
   const [maxDepartureTime, setMaxDepartureTime] = useState<string>("00:00");
   const [data, setData] = useState<ServiceResponse | null>(null);
+  const [visibleCount, setVisibleCount] = useState(3);
+  const observer = useRef<IntersectionObserver>();
 
+  const lastItemRef = useCallback((node: any) => {
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && data?.Items && visibleCount < data.Items?.length) {
+        setVisibleCount(prevVisibleCount => prevVisibleCount + 3);
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, [visibleCount, data?.Items?.length]);
+  
   const setMaxAndMin = (filtered: any) => {
     try {
       let minTime = filtered.Items[0].DepartureTime;
@@ -93,10 +106,10 @@ const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinat
         <strong>{" " + toPersianNum(maxDepartureTime) + " "}</strong>
         یافت شد
       </h1>
-      {data?.Items.map((item: any, index: any) => (
-        <div className={s.panel} key={index}>
+      {data?.Items.slice(0, visibleCount).map((item: any, index: any) => (
+        <div className={s.panel} key={index} ref={index === visibleCount - 1 ? lastItemRef : null}>
           <div className={s.companyLogo}>
-            <img src={item.CompanyLogo} alt="CompanyLogo" />
+            <img src={item.CompanyLogo} alt="CompanyLogo" onError={(e) => (e.currentTarget.src = defaultImg)} />
             <span>{item.CompanyPersianName}</span>
           </div>
           <div className={s.info}>
