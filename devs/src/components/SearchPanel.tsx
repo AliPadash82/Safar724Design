@@ -4,22 +4,57 @@ import CustomAutocomplete from "./CustomAutocomplete";
 import CalenderInput from "./CalendarInput";
 import cities from "../util/cities.json";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ServiceResponse } from "../util/Models";
+import { formatDate } from "../util/Function";
 
 interface Props {
   setSelectedDate: (date: Date) => void;
   selectedDate: Date;
+  setServicesData: (data: ServiceResponse) => void;
 }
 
-const SearchPanel = ({ setSelectedDate, selectedDate }: Props) => {
+const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData }: Props) => {
   const [display, setDisplay] = useState(false);
   const location = useLocation();
   const formData = location.state?.formData;
   const navigate = useNavigate();
 
+  const fetchServices = async (date: string, originID: number, destinationID: number): Promise<ServiceResponse> => {
+    const url = new URL("http://localhost:8080/api/v1/getservices");
+    url.searchParams.append("Date", date);
+    url.searchParams.append("OriginID", originID.toString());
+    url.searchParams.append("DestinationID", destinationID.toString());
+
+    try {
+      const response = await fetch(url.toString());
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: ServiceResponse = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching services:", error);
+      throw error;
+    }
+  };
+
+  const handleSearchButtonClick = () => {
+    const hiddenInputs = document.querySelectorAll<HTMLInputElement>('input[type="hidden"]');
+    fetchServices(formatDate(selectedDate), Number(hiddenInputs[0].value), Number(hiddenInputs[1].value)).then(
+      (data) => {
+        console.log("Fetched data:", data);
+        setServicesData(data);
+      }
+    );
+  };
+
   useEffect(() => {
     if (formData) setSelectedDate(new Date(formData.date));
-
-  }, [])
+    fetchServices(formatDate(formData.date), formData.originID, formData.destinationID).then((data) => {
+      console.log("Fetched data:", data);
+      setServicesData(data);
+    });
+  }, []);
   useEffect(() => {
     const handleBeforeUnload = () => {
       let temp = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
@@ -29,11 +64,11 @@ const SearchPanel = ({ setSelectedDate, selectedDate }: Props) => {
       formData.originID = temp2[0].value;
       formData.destinationID = temp2[1].value;
       formData.date = selectedDate;
-      navigate('/services', { state: { formData } });
-    }
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [selectedDate])
+      navigate("/services", { state: { formData } });
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [selectedDate]);
 
   const handleFocus = () => {
     const temp = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
@@ -50,9 +85,11 @@ const SearchPanel = ({ setSelectedDate, selectedDate }: Props) => {
     const inputs = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
     const hiddenInputs = document.querySelectorAll<HTMLInputElement>('input[type="hidden"]');
     if (inputs.length >= 2) {
-      let temp:any = inputs[0].value;
+      console.log(inputs[0].value, inputs[1].value);
+      let temp = inputs[0].value;
       inputs[0].value = inputs[1].value;
       inputs[1].value = temp;
+      console.log(inputs[0].value, inputs[1].value);
       temp = hiddenInputs[0].value;
       hiddenInputs[0].value = hiddenInputs[1].value;
       hiddenInputs[1].value = temp;
@@ -98,7 +135,9 @@ const SearchPanel = ({ setSelectedDate, selectedDate }: Props) => {
             selectedDate={selectedDate}
           />
           <div className="custom-gap" />
-          <button className="search">جستجو</button>
+          <button className="search" onClick={handleSearchButtonClick}>
+            جستجو
+          </button>
         </div>
       </div>
     </div>

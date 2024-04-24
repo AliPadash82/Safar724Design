@@ -33,5 +33,15 @@ function getFirstWeekday(date: Date) {
   return (new Date(gregorianDate.gy, gregorianDate.gm - 1, gregorianDate.gd).getDay() + 1)%7;
 }
 
+const formatDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
 
-export { toPersianNum, putComma, dateReverse, turnTimeToInteger, getFirstWeekday };
+  let s = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+  console.log(s)
+  return s;
+}
+
+
+export { toPersianNum, putComma, dateReverse, turnTimeToInteger, getFirstWeekday, formatDate };

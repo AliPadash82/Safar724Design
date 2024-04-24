@@ -45,6 +45,12 @@ type City struct {
 	MidwayCities        []MidwayCity `gorm:"foreignKey:CityID"`
 }
 
+type SearchExpression struct {
+	ID         uint   `gorm:"primaryKey"`
+	CityID     string `gorm:"foreignKey:CityID"`
+	Expression string
+}
+
 type Service struct {
 	gorm.Model
 	BusType               string

@@ -1,52 +1,69 @@
 import json
 import psycopg2
+import psycopg2.extras
 
-# Connect to the PostgreSQL database
-conn = psycopg2.connect(
-    host="ep-polished-lab-a45rj9zc-pooler.us-east-1.aws.neon.tech",
-    database="verceldb",
-    user="default",
-    password="DE3fRxcL6ugU"
-)
-cursor = conn.cursor()
-
-# Open the JSON file
-with open('cities.json', 'r', encoding='utf-8') as file:
-    cities_data = json.load(file)
-
-# Prepare the INSERT query
-query = """
-    INSERT INTO city (ID, Code, Name, PersianName, ProvinceName, ProvincePersianName, SearchExpressions, IsCapital, "Order")
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-"""
-
-# Create a list of tuples containing data for each city
-city_values = [
-    (
-        city['ID'], 
-        city['Code'], 
-        city['Name'], 
-        city['PersianName'], 
-        city['ProvinceName'], 
-        city['ProvincePersianName'], 
-        city['SearchExpressions'], 
-        city['IsCapital'], 
-        city['Order']
+def connect_to_db():
+    return psycopg2.connect(
+        host="ep-divine-waterfall-a4qo56m0-pooler.us-east-1.aws.neon.tech",
+        database="verceldb",
+        user="default",
+        password="6v1UnCVSYkyw"
     )
-    for city in cities_data
-]
 
-print("Number of cities: ", len(city_values))
-# Execute the INSERT queries for all cities
-batch_size = 100  # Set the batch size
-for i in range(0, len(city_values), batch_size):
-    batch = city_values[i:i + batch_size]
-    cursor.executemany(query, batch)
+def load_data(filepath):
+    with open(filepath, 'r', encoding='utf-8') as file:
+        return json.load(file)
 
-    # Print progress
-    print(f"Inserted {min(i + batch_size, len(city_values))} cities")
+def insert_data(cities_data):
+    cities_query = """
+        INSERT INTO cities (id, code, name, persian_name, province_name, province_persian_name, is_capital, "order")
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        RETURNING id;
+    """
+    expressions_query = """
+        INSERT INTO search_expressions (city_id, expression)
+        VALUES (%s, %s);
+    """
 
-# Close the cursor and connection
-conn.commit()  # Commit changes after each batch
-cursor.close()
-conn.close()
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+
+       
+        cursor.execute("TRUNCATE TABLE cities, search_expressions CASCADE;")
+        print("Truncated cities and search_expressions tables.")
+
+        i = 0
+        for city in cities_data:
+            i += 1
+            cursor.execute(cities_query, (
+                city['ID'], 
+                city['Code'], 
+                city['Name'], 
+                city['PersianName'], 
+                city['ProvinceName'], 
+                city['ProvincePersianName'], 
+                city['IsCapital'], 
+                city['Order']
+            ))
+            city_id = cursor.fetchone()[0]  
+
+            expression_data = [(city_id, expr) for expr in city['SearchExpressions']]
+            psycopg2.extras.execute_batch(cursor, expressions_query, expression_data)
+            print(f"{i}. Inserted {len(expression_data)} expressions for city ID {city_id}")
+
+        conn.commit()  
+        print("All city and expression data inserted successfully.")
+
+    except psycopg2.DatabaseError as e:
+        print(f"Database error: {e}")
+        conn.rollback()
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
+if __name__ == "__main__":
+    cities_data = load_data('cities.json')
+    insert_data(cities_data)

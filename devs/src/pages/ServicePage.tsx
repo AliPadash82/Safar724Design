@@ -16,29 +16,9 @@ function ServicePage() {
   const [checkedState, setCheckedState] = useState<{ [key: string]: boolean }>({ all: true });
   const [originState, setOriginState] = useState<{ [key: string]: boolean }>({ all: true });
   const [destinationState, setDistinationState] = useState<{ [key: string]: boolean }>({ all: true });
+  const [servicesData, setServicesData] = useState<ServiceResponse | null>(null);
 
   useEffect(() => {
-    const fetchServices = async (date: string, originID: number, destinationID: number): Promise<ServiceResponse> => {
-      const url = new URL("http://localhost:8080/api/v1/getservices");
-      url.searchParams.append("Date", date);
-      url.searchParams.append("OriginID", originID.toString());
-      url.searchParams.append("DestinationID", destinationID.toString());
-  
-      try {
-        const response = await fetch(url.toString());
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: ServiceResponse = await response.json();
-        return data;
-      } catch (error) {
-        console.error("Error fetching services:", error);
-        throw error;
-      }
-    };
-    fetchServices("2024-05-10", 1, 42).then((data) => {
-      console.log("Fetched data:", data);
-    });    
     const sortBasedOnHourCheckbox = document.querySelector<HTMLInputElement>("#s1");
     const sortBasedOnPriceCheckbox = document.querySelector<HTMLInputElement>("#s2");
     sortBasedOnHourCheckbox?.click();
@@ -58,7 +38,7 @@ function ServicePage() {
     <>
       <div className="space" style={{ height: "135px", backgroundColor: "#f0f0f0", zIndex: -1000 }}></div>
       <WholeNavbar isFocused={false} />
-      <SearchPanel setSelectedDate={setSelectedDate} selectedDate={selectedDate} />
+      <SearchPanel setSelectedDate={setSelectedDate} selectedDate={selectedDate} setServicesData={setServicesData} />
       <div style={{ backgroundColor: "#FBFBFB", paddingTop: "10px" }}>
         <h1 style={{ marginTop: 0 }}>
           بلیط اتوبوس {data.OriginPersianName} {data.DestinationPersianName}
@@ -74,6 +54,7 @@ function ServicePage() {
       </div>
       <DaysTab selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <ServicesDisplay
+        servicesData={servicesData}
         sortBasedOnPrice={sortBasedOnPrice}
         checkedState={checkedState}
         originState={originState}

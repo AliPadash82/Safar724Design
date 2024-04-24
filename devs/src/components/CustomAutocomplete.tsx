@@ -103,10 +103,11 @@ const CustomAutocomplete = ({
             if (inputValue && !expressions.includes(inputValue)) {
               setInputValue("");
               setCityID(undefined);
-            }
+            } else if (inputValue === "") setCityID(undefined);
+            else setCityID(cities.find((city) => city.PersianName === inputValue)?.ID);
             setSuggestions([]);
             setSelectedOption(null);
-          }, 0);
+          });
         }}
         onFocus={handleChange}
       />
