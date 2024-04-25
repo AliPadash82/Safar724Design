@@ -97,6 +97,7 @@ const CustomAutocomplete = ({
         value={inputValue}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        autoComplete="off"
         onBlur={() => {
           setTimeout(() => {
             const expressions = suggestions.flatMap((suggestion) => suggestion.SearchExpressions);

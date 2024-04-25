@@ -54,3 +54,5 @@ export interface ServiceResponse {
   Today: string;
   Items: Service[];
 }
+
+export type SeatType = [number | null, string | null] | null;

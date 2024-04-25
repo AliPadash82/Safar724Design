@@ -1,0 +1,65 @@
+
+.busDetails {
+  width: calc(100% - 50px);
+  margin: 25px;
+  height: 400px;
+  background-color: #FEFEFE;
+}
+
+.dividerLine {
+  height: 1px;
+  width: 100%;
+  background-color: #EAEAEA;
+}
+.busInformation {
+  margin: 15px;
+  width: 650px;
+}
+
+.busSchema {
+  height: 190px;
+  display: flex;
+  flex-direction: row;
+}
+
+.busSchema img {
+  height: 100%;
+  background-color: #f5f5f5;
+  border-radius: 50% 0px 0px 50%;
+  box-sizing: border-box;
+  transform: translateX(6px);
+}
+
+.busInner {
+  height: 100%;
+  width: 100%;
+  background-color: #f5f5f5;
+  border-radius: 0 10px 10px 0;
+}
+
+.busInner .grid {
+  direction: ltr;
+  width: 82%;
+  margin-inline: auto;
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.legend div {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.legend {
+  width: 90%;
+  margin: 5px auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 12px;
+  color: #AAA;
+  justify-content: space-between;
+}
