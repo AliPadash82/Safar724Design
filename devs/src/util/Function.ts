@@ -43,5 +43,9 @@ const formatDate = (date: Date) => {
   return s;
 }
 
+const turnToDate = (s: string, persian=true) => {
+  const [year, month, day] = s.split('-').map(number => parseInt(number));
+  return persian ? new Date(year, month - 1, day).toLocaleDateString('fa-IR') : new Date(year, month - 1, day);
+}
 
-export { toPersianNum, putComma, dateReverse, turnTimeToInteger, getFirstWeekday, formatDate };
+export { toPersianNum, putComma, dateReverse, turnTimeToInteger, getFirstWeekday, formatDate, turnToDate };

@@ -2,8 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ServiceResponse } from "../util/Models";
 import s from "../assets/css/servicesDisplay.module.css";
 // import servicesData from "../util/serviceResponse.json";
-import { toPersianNum, putComma, dateReverse, turnTimeToInteger } from "../util/Function";
+import { toPersianNum, dateReverse, turnTimeToInteger, turnToDate } from "../util/Function";
 import Panel from "./Panel";
+import DummyPanel from "./DummyPanel";
 
 interface Props {
   sortBasedOnPrice: boolean;
@@ -51,7 +52,7 @@ const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinat
   };
 
   useEffect(() => {
-    if (!servicesData || servicesData.Items.length === 0) {
+    if (!servicesData || !servicesData.Items || servicesData.Items.length === 0) {
       setData(null);
       setDataBasedOnPrice(null);
       return;
@@ -90,18 +91,7 @@ const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinat
     return (
       <div className={s.service}>
         {Array.from({ length: 4 }, (_, index) => (
-          <div className={s.dummyPanel} key={index}>
-            <div className={s.dummyCompanyLogo} />
-            <div className={s.dummyInfo}>
-              <div className={s.dummyInner}>
-                <div className={s.dummyOd} />
-                <div className={s.dummyDepartureTime} />
-                <div className={s.dummyPrice} />
-                <div className={s.dummyBuy} />
-              </div>
-              <div className={s.dummyDivider} />
-            </div>
-          </div>
+          <DummyPanel index={index} />
         ))}
       </div>
     );
@@ -126,7 +116,7 @@ const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinat
         به
         <strong>{" " + data.DestinationPersianName + " "}</strong>
         در تاریخ
-        <strong> {" " + toPersianNum(dateReverse(data.Date)) + " "} </strong>
+        <strong> {" " + turnToDate(data.Date) + " "} </strong>
         از ساعت
         <strong>{" " + toPersianNum(minDepartureTime) + " "}</strong>
         تا ساعت

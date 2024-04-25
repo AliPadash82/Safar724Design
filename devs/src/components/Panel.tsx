@@ -1,7 +1,7 @@
 import React from "react";
 import { Service, ServiceResponse } from "../util/Models";
 import { TbClockHour9 } from "react-icons/tb";
-import s from "../assets/css/servicesDisplay.module.css";
+import s from "../assets/css/panel.module.css";
 import defaultImg from "../assets/images/CompanyDefaultLogo.png";
 import { toPersianNum, putComma } from "../util/Function";
 

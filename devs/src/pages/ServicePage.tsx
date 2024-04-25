@@ -17,6 +17,7 @@ function ServicePage() {
   const [originState, setOriginState] = useState<{ [key: string]: boolean }>({ all: true });
   const [destinationState, setDistinationState] = useState<{ [key: string]: boolean }>({ all: true });
   const [servicesData, setServicesData] = useState<ServiceResponse | null>(null);
+  const [errorFetching, setErrorFetching] = useState(false);
 
   useEffect(() => {
     const sortBasedOnHourCheckbox = document.querySelector<HTMLInputElement>("#s1");
@@ -38,13 +39,14 @@ function ServicePage() {
     <>
       <div className="space" style={{ height: "135px", backgroundColor: "#f0f0f0", zIndex: -1000 }}></div>
       <WholeNavbar isFocused={false} />
-      <SearchPanel setSelectedDate={setSelectedDate} selectedDate={selectedDate} setServicesData={setServicesData} />
+      <SearchPanel setSelectedDate={setSelectedDate} selectedDate={selectedDate} setServicesData={setServicesData}/>
       <div style={{ backgroundColor: "#FBFBFB", paddingTop: "10px" }}>
         <h1 style={{ marginTop: 0 }}>
           بلیط اتوبوس {data.OriginPersianName} {data.DestinationPersianName}
         </h1>
         <FilterSearch
           checkedState={checkedState}
+          servicesData={servicesData}
           setCheckedState={setCheckedState}
           originState={originState}
           setOriginState={setOriginState}

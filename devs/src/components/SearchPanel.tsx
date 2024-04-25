@@ -33,6 +33,7 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData }: Props) 
       const data: ServiceResponse = await response.json();
       return data;
     } catch (error) {
+      // setErrorFetching(true);
       console.error("Error fetching services:", error);
       throw error;
     }
@@ -53,7 +54,7 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData }: Props) 
     fetchServices(formatDate(formData.date), formData.originID, formData.destinationID).then((data) => {
       console.log("Fetched data:", data);
       setServicesData(data);
-    });
+    })
   }, []);
   useEffect(() => {
     const handleBeforeUnload = () => {
