@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ServiceResponse } from "../util/Models";
 import s from "../assets/css/servicesDisplay.module.css";
 // import servicesData from "../util/serviceResponse.json";
-import { toPersianNum, dateReverse, turnTimeToInteger, turnToDate } from "../util/Function";
+import { toPersianNum, turnTimeToInteger, turnToDate } from "../util/Function";
 import Panel from "./Panel";
 import DummyPanel from "./DummyPanel";
 
@@ -12,9 +12,17 @@ interface Props {
   originState: { [key: string]: boolean };
   destinationState: { [key: string]: boolean };
   servicesData: ServiceResponse | null;
+  errorFetching: boolean;
 }
 
-const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinationState, servicesData }: Props) => {
+const ServicesDisplay = ({
+  sortBasedOnPrice,
+  checkedState,
+  originState,
+  destinationState,
+  servicesData,
+  errorFetching,
+}: Props) => {
   const [dataBasedOnPrice, setDataBasedOnPrice] = useState<ServiceResponse | null>(null);
   const [dataBasedOnHour, setDataBasedOnHour] = useState<ServiceResponse | null>(null);
   const [minDepartureTime, setMinDepartureTime] = useState<string>("00:00");
@@ -40,7 +48,7 @@ const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinat
     try {
       let minTime = filtered.Items[0].DepartureTime;
       let maxTime = filtered.Items[0].DepartureTime;
-      data?.Items.forEach((item) => {
+      data?.Items?.forEach((item) => {
         if (turnTimeToInteger(item.DepartureTime) < turnTimeToInteger(minTime)) minTime = item.DepartureTime;
         if (turnTimeToInteger(item.DepartureTime) > turnTimeToInteger(maxTime)) maxTime = item.DepartureTime;
       });
@@ -52,26 +60,23 @@ const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinat
   };
 
   useEffect(() => {
-    if (!servicesData || !servicesData.Items || servicesData.Items.length === 0) {
-      setData(null);
-      setDataBasedOnPrice(null);
+    if (!servicesData?.Items?.length) {
       return;
     }
     const clonedDataHour = JSON.parse(JSON.stringify(servicesData));
-    clonedDataHour.Items.sort(
+    clonedDataHour?.Items?.sort(
       (a: any, b: any) => turnTimeToInteger(a.DepartureTime) - turnTimeToInteger(b.DepartureTime)
     );
     setDataBasedOnHour(clonedDataHour);
   }, [servicesData]);
 
   useEffect(() => {
-    if (!servicesData || !servicesData.Items || servicesData.Items.length === 0) {
-      setData(null);
+    if (!servicesData?.Items?.length) {
       return;
     }
     if (!dataBasedOnPrice) {
       const clonedDataPrice = JSON.parse(JSON.stringify(servicesData));
-      clonedDataPrice.Items.sort((a: any, b: any) => a.Price - b.Price);
+      clonedDataPrice?.Items?.sort((a: any, b: any) => a.Price - b.Price);
       setDataBasedOnPrice(clonedDataPrice);
     }
     const filtered = {
@@ -87,25 +92,29 @@ const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinat
     setData(filtered);
   }, [checkedState, originState, destinationState, dataBasedOnPrice, dataBasedOnHour, sortBasedOnPrice, servicesData]);
 
-  if (!data)
-    return (
+  if (!servicesData)
+    return errorFetching ? (
+      <p className={s["no-service-alert"]}>متاسفانه خطایی رخ داده است.</p>
+    ) : (
       <div className={s.service}>
-        {Array.from({ length: 4 }, (_, index) => (
+        <div className={s.dummyText} />
+        {Array.from({ length: 6 }, (_, index) => (
           <DummyPanel index={index} />
         ))}
       </div>
     );
-  else if (!data.Items || data.Items.length === 0)
+  if (!servicesData?.Items?.length)
     return (
       <p className={s["no-service-alert"]}>
-        {`متاسفانه بلیط اتوبوس ${data.OriginPersianName} به ${data.DestinationPersianName} در تاریخ ${toPersianNum(
-          dateReverse(data.Date)
-        )} وجود ندارد.`}
+        {`متاسفانه بلیط اتوبوس ${servicesData.OriginPersianName} به ${servicesData.DestinationPersianName} در تاریخ ${turnToDate(servicesData.Date)}
+         وجود ندارد.`}
         <br />
-        {`برای خرید بلیط اتوبوس و مشاهده قیمت، ساعات حرکت و اتوبوس های مسیر ${data.OriginPersianName} ${data.DestinationPersianName} لطفا روز های دیگر را بررسی کنید.`}
+        {`برای خرید بلیط اتوبوس و مشاهده قیمت، ساعات حرکت و اتوبوس های مسیر ${servicesData.OriginPersianName} ${servicesData.DestinationPersianName} لطفا روز های دیگر را بررسی کنید.`}
       </p>
     );
 
+  if (!data?.Items?.length) return <p className={s["no-service-alert"]}>متاسفانه خطایی رخ داده است.</p>;
+  
   return (
     <div className={s.service}>
       <h1>
@@ -123,14 +132,14 @@ const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinat
         <strong>{" " + toPersianNum(maxDepartureTime) + " "}</strong>
         یافت شد
       </h1>
-      {data?.Items.slice(0, visibleCount).map((item: any, index: any) => (
+      {data?.Items?.slice(0, visibleCount).map((item: any, index: any) => (
         <Panel
           data={data}
           key={index}
           item={item}
           index={index}
           visibleCount={visibleCount}
-          lastItemRef={lastItemRef}></Panel>
+          lastItemRef={lastItemRef}/>
       ))}
     </div>
   );

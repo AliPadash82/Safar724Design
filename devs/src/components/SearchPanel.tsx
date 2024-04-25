@@ -10,10 +10,11 @@ import { formatDate } from "../util/Function";
 interface Props {
   setSelectedDate: (date: Date) => void;
   selectedDate: Date;
-  setServicesData: (data: ServiceResponse) => void;
+  setServicesData: (data: ServiceResponse | null) => void;
+  setErrorFetching: (errorFetching: boolean) => void;
 }
 
-const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData }: Props) => {
+const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData, setErrorFetching }: Props) => {
   const [display, setDisplay] = useState(false);
   const location = useLocation();
   const formData = location.state?.formData;
@@ -33,7 +34,7 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData }: Props) 
       const data: ServiceResponse = await response.json();
       return data;
     } catch (error) {
-      // setErrorFetching(true);
+      setErrorFetching(true);
       console.error("Error fetching services:", error);
       throw error;
     }
@@ -41,6 +42,8 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData }: Props) 
 
   const handleSearchButtonClick = () => {
     const hiddenInputs = document.querySelectorAll<HTMLInputElement>('input[type="hidden"]');
+    setServicesData(null);
+    setErrorFetching(false);
     fetchServices(formatDate(selectedDate), Number(hiddenInputs[0].value), Number(hiddenInputs[1].value)).then(
       (data) => {
         console.log("Fetched data:", data);

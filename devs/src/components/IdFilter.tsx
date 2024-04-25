@@ -14,7 +14,6 @@ const IdFilter = ({ elements, id, allElementTitle, excheckedState, exsetCheckedS
   const checkedState = excheckedState !== undefined ? excheckedState : internalCheckedState;
   const setCheckedState = exsetCheckedState !== undefined ? exsetCheckedState : internalSetCheckedState;
 
-
   useEffect(() => {
     const initialStates: { [key: string]: boolean } = { all: true };
     elements.forEach((_, elementId) => {

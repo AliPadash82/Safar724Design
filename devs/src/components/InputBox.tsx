@@ -15,7 +15,7 @@ interface Props {
 const InputBox = ({
   className = "input-box",
   type = "checkbox",
-  name,
+  name="",
   id,
   children,
   disabled = false,
@@ -32,7 +32,7 @@ const InputBox = ({
         id={id}
         disabled={disabled}
         checked={checked}
-        onChange={onChange}  // Make sure to handle onChange to update the state
+        onChange={onChange} 
       />
       <label htmlFor={id}>{children}</label>
     </div>

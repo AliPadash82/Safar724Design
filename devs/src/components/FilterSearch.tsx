@@ -33,7 +33,7 @@ const FilterSearch = ({
     const newOriginData = new Map<string, string>();
     const newDestinationData = new Map<string, string>();
 
-    servicesData?.Items.forEach((item) => {
+    servicesData?.Items?.forEach((item) => {
       newCompanyData.set(item.CompanyId.toString(), item.CompanyPersianName);
       newOriginData.set(item.OriginTerminalCode, item.OriginTerminalPersianName);
       newDestinationData.set(item.DestinationTerminalCode, item.DestinationTerminalPersianName);

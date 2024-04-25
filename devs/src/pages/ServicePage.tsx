@@ -39,7 +39,12 @@ function ServicePage() {
     <>
       <div className="space" style={{ height: "135px", backgroundColor: "#f0f0f0", zIndex: -1000 }}></div>
       <WholeNavbar isFocused={false} />
-      <SearchPanel setSelectedDate={setSelectedDate} selectedDate={selectedDate} setServicesData={setServicesData}/>
+      <SearchPanel
+        setSelectedDate={setSelectedDate}
+        selectedDate={selectedDate}
+        setServicesData={setServicesData}
+        setErrorFetching={setErrorFetching}
+      />
       <div style={{ backgroundColor: "#FBFBFB", paddingTop: "10px" }}>
         <h1 style={{ marginTop: 0 }}>
           بلیط اتوبوس {data.OriginPersianName} {data.DestinationPersianName}
@@ -61,6 +66,7 @@ function ServicePage() {
         checkedState={checkedState}
         originState={originState}
         destinationState={destinationState}
+        errorFetching={errorFetching}
       />
       <TicketModel />
       <BottomNavbar />

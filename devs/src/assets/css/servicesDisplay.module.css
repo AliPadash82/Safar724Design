@@ -19,6 +19,14 @@
   text-align: center;
 }
 
+.dummyText {
+  width: 50%;
+  height: 15px;
+  margin: 25px 25% 5px 25%;
+  border-radius: 20px;
+  background-color: #EEE;
+}
+
 @media (max-width: 1200px) {
   .service {
     width: 90%;
