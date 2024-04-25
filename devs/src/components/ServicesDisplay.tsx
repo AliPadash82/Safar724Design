@@ -54,8 +54,7 @@ const ServicesDisplay = ({
       });
       setMinDepartureTime(minTime);
       setMaxDepartureTime(maxTime);
-    } catch (e) {
-      console.log("setMinAndMax Error:", e);
+    } catch {
     }
   };
 

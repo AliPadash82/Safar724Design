@@ -14,6 +14,7 @@ export interface Service {
   ID: number;
   IsVip: boolean;
   BusType: string;
+  BusCode: string;
   Price: number;
   MidwayCity: string;
   MidwayCityCode: string;

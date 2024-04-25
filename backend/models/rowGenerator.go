@@ -59,9 +59,9 @@ func CreateRandomMidwayCity() MidwayCity {
 func CreateRandomService() Service {
 	randomTime := time.Now().AddDate(0, 10 * rand.Intn(6) * int(time.Minute), +rand.Intn(30)).Add(-time.Duration(rand.Intn(24)) * time.Hour);
 	return Service{
-		BusType:               generateRandomString(GetRandomStringSize()),
+		BusName: generateRandomString(GetRandomStringSize()),
+		BusTypeID:             uint(1 + rand.Intn(4)),
 		Price:                 uint(rand.Intn(1500000) + 500000),
-		VIP:                   rand.Intn(2) == 1,
 		CompanyID:             uint(1 + rand.Intn(HYPERPARAMETER_INT_CONSTANT)),
 		OriginTerminalID:      uint(1 + rand.Intn(HYPERPARAMETER_INT_CONSTANT)),
 		DestinationTerminalID: uint(1 + rand.Intn(HYPERPARAMETER_INT_CONSTANT)),
@@ -69,7 +69,6 @@ func CreateRandomService() Service {
 		DepartureTime:         randomTime.Format("15:04"),
 		Description:           generateRandomString(GetRandomStringSize()),
 		BriefDescription:      generateRandomString(GetRandomStringSize()),
-		AvailableSeatCount:    rand.Intn(40),
 		DiscountPercentage:    float64(rand.Intn(500) / 10),
 	}
 }

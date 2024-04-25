@@ -53,9 +53,9 @@ type SearchExpression struct {
 
 type Service struct {
 	gorm.Model
-	BusType               string
+	BusName               string
+	BusTypeID             uint `gorm:"foreignKey:BusTypeID"`
 	Price                 uint
-	VIP                   bool
 	CompanyID             uint
 	OriginTerminalID      uint
 	DestinationTerminalID uint
@@ -63,7 +63,6 @@ type Service struct {
 	DepartureDate         string
 	Description           string
 	BriefDescription      string
-	AvailableSeatCount    int
 	DiscountPercentage    float64
 	Seats                 []Seat       `gorm:"foreignKey:ServiceID"`
 	Tickets               []Ticket     `gorm:"foreignKey:ServiceID"`
@@ -128,6 +127,7 @@ type Item struct {
 	ID                             uint    `json:"ID"`
 	IsVip                          bool    `json:"IsVip"`
 	BusType                        string  `json:"BusType"`
+	BusCode                        string  `json:"BusCode"`
 	Price                          uint    `json:"Price"`
 	MidwayCity                     string  `json:"MidwayCity"`
 	MidwayCityCode                 string  `json:"MidwayCityCode"`
@@ -155,4 +155,11 @@ type Item struct {
 	DestinationTerminalUrl         string  `json:"DestinationTerminalUrl"`
 	Status                         int     `json:"Status"`
 	// RefundRules                    []RefundRule `foreignKey:ID`
+}
+
+type BusType struct {
+	ID        uint `gorm:"primaryKey"`
+	Code      string
+	SeatCount uint
+	IsVIP     bool `gorm:"column:is_vip;default:true;"`
 }
