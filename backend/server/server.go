@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"main/db"
 	"net/http"
 	"strconv"
@@ -16,6 +17,7 @@ func InitServer() {
 		v1 := api.Group("/v1")
 		{
 			v1.GET("/getservices", GetServicesHandler)
+			v1.GET("/getseats", GetSeatsByServiceIDHandler)
 		}
 	}
 	c := cors.New(cors.Options{
@@ -74,4 +76,20 @@ func GetServicesHandler(c *gin.Context) {
 		"Logo":                   nil,
 		"Items":                  items,
 	})
+}
+
+func GetSeatsByServiceIDHandler(c *gin.Context) {
+	var serviceIDstr string = c.Query("ServiceID")
+	fmt.Println(serviceIDstr)
+	serviceID, err := strconv.ParseUint(serviceIDstr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid serviceID format - " + err.Error()})
+		return
+	}
+	seats, err := db.GetSeatsWithGender(uint(serviceID))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, seats)
 }

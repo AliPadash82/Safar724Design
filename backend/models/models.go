@@ -90,12 +90,12 @@ type Ticket struct {
 }
 
 type Passenger struct {
-	TicketID     uint
-	SeatID       uint
+	TicketID     uint `gorm:"primaryKey"`
+	SeatID       uint `gorm:"primaryKey"`
 	FirstName    string
 	LastName     string
 	Gender       string
-	BirthDate    time.Time
+	BirthDate    string
 	NationalCode string
 	Ticket       Ticket `gorm:"foreignKey:TicketID"`
 	Seat         Seat   `gorm:"foreignKey:SeatID"`
@@ -162,4 +162,9 @@ type BusType struct {
 	Code      string
 	SeatCount uint
 	IsVIP     bool `gorm:"column:is_vip;default:true;"`
+}
+
+type SeatWithGender struct{
+	SeatNumber uint `json:"SeatNumber"`
+	Gender *string `json:"Gender"`
 }

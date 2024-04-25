@@ -84,3 +84,14 @@ func GetItem(date string, originID uint, destinationID uint) ([]m.Item, error) {
 	}
 	return items, nil
 }
+
+func GetSeatsWithGender(serviceID uint) ([]m.SeatWithGender, error){
+	var seatsWithGender []m.SeatWithGender
+	err := db.Model(&m.Seat{}).Where("service_id = ?", serviceID).Select(
+		"seats.seat_number, passengers.gender as gender",	
+	).Joins("left join passengers on passengers.seat_id = seats.id").Order("seat_number").Find(&seatsWithGender).Error
+	if err != nil {
+		return nil, err 
+	}
+	return seatsWithGender, nil
+}

@@ -97,7 +97,7 @@ func CreateRandomPassenger() Passenger {
 		FirstName:    generateRandomString(GetRandomStringSize()),
 		LastName:     generateRandomString(GetRandomStringSize()),
 		Gender:       []string{"male", "female"}[rand.Intn(2)],
-		BirthDate:    time.Now().AddDate(-rand.Intn(50), -rand.Intn(12), -rand.Intn(30)),
+		BirthDate:    time.Now().AddDate(-rand.Intn(50), -rand.Intn(12), -rand.Intn(30)).Format("2006-01-02"),
 		NationalCode: generateRandomNumberString(10),
 	}
 }
