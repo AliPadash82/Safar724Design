@@ -141,6 +141,7 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData, setErrorF
           <div className="custom-gap" />
           <button className="search" onClick={handleSearchButtonClick}>
             جستجو
+            <i className="fas fa-search"/>
           </button>
         </div>
       </div>

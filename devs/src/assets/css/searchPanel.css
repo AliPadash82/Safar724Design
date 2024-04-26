@@ -36,6 +36,7 @@
     min-width: 32px;
     text-align: center;
     color: #3498db;
+    z-index: 1;
 }
 
 
@@ -69,13 +70,13 @@
 }
 
 .search {
-    flex: 1;
     position: relative;
+    flex: 1;
     bottom: 0;
     overflow: hidden;
     font-size: 16px;
     height: 100%;
-        background-color: #3498db;
+    background-color: #3498db;
     border: none;
     border-radius: 8px;
     color: white;
@@ -92,6 +93,14 @@
     background-color: #2980b9;
 }
 
+.fas.fa-search {
+    position: absolute;
+    color: transparent;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
 h1 {
     direction: rtl;
     text-align: center;
@@ -102,12 +111,44 @@ h1 {
 
 @media (max-width: 1200px) {
     .container {
-      padding-inline: 5%;
+        padding-inline: 5%;
     }
-  }
-  
-  @media (max-width: 1024px) {
+}
+
+@media (max-width: 1024px) {
     .container {
-      padding-inline: 2.5%;
+        padding-inline: 2.5%;
     }
-  }
+
+    .custom-gap {
+        min-width: 24px;
+    }
+}
+
+@media (max-width: 900px) {
+    .search {
+        flex: 0.14;
+        color: transparent;
+    }
+
+    .container {
+        padding-inline: 8%;
+    }
+
+    .fas.fa-search {
+        color: white;
+    }
+
+    .custom-gap {
+        min-width: 12px;
+    }
+
+    .row .text.special {
+        flex: 0.14;
+        color: transparent;
+    }
+
+    .fas.fa-exchange-alt {
+        transform: scale(1.4) translateX(2px);
+    }
+}
