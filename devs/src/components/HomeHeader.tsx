@@ -73,7 +73,7 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
             setDisplay={setDisplay}
             setSelectedDate={setSelectedDate}
           />
-          <button type="submit" className={styles.search}>
+          <button type="submit" id="search-button" className={styles.search}>
             <div className={`element-cover${isFocused || isFocusedTo ? ` ${" show"}` : ""}`} />
             جستوجو
           </button>

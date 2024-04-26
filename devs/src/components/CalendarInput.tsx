@@ -9,7 +9,7 @@ interface Props {
   selectedDate: Date;
 }
 
-const CalendarInput = ({ display, setDisplay, setSelectedDate, selectedDate }: Props) => {
+const CalendarInput = ({ display, setDisplay, setSelectedDate, selectedDate}: Props) => {
   const contentRef = React.useRef<HTMLDivElement>(null);
   const handleClick = (e: MouseEvent) => {
     if (contentRef.current && !contentRef.current.contains(e.target as Node)) {

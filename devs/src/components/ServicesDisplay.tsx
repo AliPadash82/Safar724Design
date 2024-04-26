@@ -29,6 +29,7 @@ const ServicesDisplay = ({
   const [maxDepartureTime, setMaxDepartureTime] = useState<string>("00:00");
   const [data, setData] = useState<ServiceResponse | null>(null);
   const [visibleCount, setVisibleCount] = useState(3);
+  const [trigger, setTrigger] = useState(false);
   const observer = useRef<IntersectionObserver>();
 
   const lastItemRef = useCallback(
@@ -133,6 +134,8 @@ const ServicesDisplay = ({
       </h1>
       {data?.Items?.slice(0, visibleCount).map((item: any, index: any) => (
         <Panel
+          trigger={trigger}
+          setTrigger={setTrigger}
           data={data}
           key={index}
           item={item}

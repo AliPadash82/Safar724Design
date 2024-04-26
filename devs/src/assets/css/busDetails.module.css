@@ -1,9 +1,21 @@
 
 .busDetails {
+  position: relative;
   width: calc(100% - 50px);
-  margin: 25px;
+  margin-inline: 25px;
   height: 400px;
   background-color: #FEFEFE;
+  opacity: 0;
+  pointer-events: none;
+  max-height: 0;
+  transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out 0.5s;
+  overflow: hidden;
+}
+
+.busDetails.show {
+  opacity: 1;
+  max-height: 400px;
+  transition: max-height 0.5s ease-in-out, opacity 0.2s ease-in-out 0s;
 }
 
 .dividerLine {
@@ -62,4 +74,40 @@
   font-size: 12px;
   color: #AAA;
   justify-content: space-between;
+}
+
+.logo {
+  width: 80px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.quarterCircle {
+  position: absolute;
+  top: calc(40% - 68px);
+  left: calc(50% - 72px) ;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  border-top: 2px solid #3498db;
+  /* background-color:  rgba(255, 0, 0, 0.1); */
+  animation-name: spin;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-duration: 1.25s;
+
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }

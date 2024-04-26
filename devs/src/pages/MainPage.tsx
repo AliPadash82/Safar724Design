@@ -7,6 +7,7 @@ import TwoColumns from "../components/TwoColumns";
 import PositivePoints from "../components/PositivePoints";
 import BottomNavbar from "../components/BottomNavbar";
 import { useEffect, useState } from "react";
+import { BsPass } from "react-icons/bs";
 
 function App() {
   const [isFocused, setIsFocused] = useState(false);
@@ -56,13 +57,14 @@ function App() {
   useEffect(() => {
     const inputs = document.querySelectorAll<HTMLInputElement>("input[type='text']");
     const handleEnter = (event: KeyboardEvent) => {
-      console.log(event.key);
       if (event.key === "Enter") {
+        event.preventDefault()
         if (!display && !isFocused && !isFocusedTo) {
           if (!inputs[0]?.value) inputs[0]?.focus();
           else if (inputs[0]?.value && !inputs[1]?.value) inputs[1]?.focus();
           else if (inputs[0]?.value && inputs[1]?.value) setDisplay(true);
         }
+        if (inputs[0]?.value && inputs[1]?.value && display) document.getElementById("search-button")?.click();
       }
     };
     window.addEventListener("keydown", handleEnter);

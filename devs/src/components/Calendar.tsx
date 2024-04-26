@@ -13,8 +13,6 @@ const Calendar = ({ className, setSelectedDate, selectedDate }: Props) => {
   const [searchDate, setSearchDate] = useState(new Date());
   const clickHandler = (day: number) => {
     const jalaaliDate = jalaali.toJalaali(searchDate);
-
-    // Setting the selected date using the Jalaali date to create a new Gregorian date
     const newGregorianDate = jalaali.toGregorian(jalaaliDate.jy, jalaaliDate.jm, day);
     setSelectedDate(new Date(newGregorianDate.gy, newGregorianDate.gm - 1, newGregorianDate.gd));
   };

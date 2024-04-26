@@ -41,12 +41,12 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData, setErrorF
   };
 
   const handleSearchButtonClick = () => {
+    console.log("handleSearchButtonClick called");
     const hiddenInputs = document.querySelectorAll<HTMLInputElement>('input[type="hidden"]');
     setServicesData(null);
     setErrorFetching(false);
     fetchServices(formatDate(selectedDate), Number(hiddenInputs[0].value), Number(hiddenInputs[1].value)).then(
       (data) => {
-        console.log("Fetched data:", data);
         setServicesData(data);
       }
     );
@@ -57,7 +57,7 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData, setErrorF
     fetchServices(formatDate(formData.date), formData.originID, formData.destinationID).then((data) => {
       console.log("Fetched data:", data);
       setServicesData(data);
-    })
+    });
   }, []);
   useEffect(() => {
     const handleBeforeUnload = () => {

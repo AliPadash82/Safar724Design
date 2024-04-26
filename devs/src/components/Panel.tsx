@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Service, ServiceResponse } from "../util/Models";
 import { TbClockHour9 } from "react-icons/tb";
 import s from "../assets/css/panel.module.css";
@@ -12,11 +12,17 @@ interface Props {
   index: number;
   visibleCount: number;
   lastItemRef: React.LegacyRef<HTMLDivElement>;
+  trigger: boolean;
+  setTrigger: (trigger: boolean) => void;
 }
 
-const Panel = ({ data, item, index, visibleCount, lastItemRef }: Props) => {
+const Panel = ({ data, item, index, visibleCount, lastItemRef, trigger, setTrigger }: Props) => {
+  const [showDetails, setShowDetails] = useState(false);
+  // useEffect(() => {
+  //   if (trigger) setShowDetails(false);
+  // }, [trigger]);
   return (
-    <div className={s.panel} key={index} ref={index === visibleCount - 1 ? lastItemRef : null}>
+    <div className={s.panel} key={index} ref={index === visibleCount - 1 ? lastItemRef : null} style={{ zIndex: index }}>
       <div className={s.flexRow}>
         <div className={s.companyLogo}>
           <img src={item.CompanyLogo} alt="CompanyLogo" onError={(e) => (e.currentTarget.src = defaultImg)} />
@@ -38,7 +44,7 @@ const Panel = ({ data, item, index, visibleCount, lastItemRef }: Props) => {
               {toPersianNum(putComma(item.Price))} <span> ریال</span>
             </div>
             <div className={s.buy}>
-              <button>مشاهده و خرید</button>
+              <button onClick={() => setShowDetails(!showDetails)}>مشاهده و خرید</button>
               <span className={s.availableSeatCount}>
                 تعداد صندلی های خالی: {toPersianNum(item.AvailableSeatCount)}
               </span>
@@ -49,7 +55,7 @@ const Panel = ({ data, item, index, visibleCount, lastItemRef }: Props) => {
           {!item.Description && <div style={{ height: "30px" }}></div>}
         </div>
       </div>
-      <BusDetails serviceID={item.ID} busCode={item.BusCode}/>
+      <BusDetails serviceID={item.ID} busCode={item.BusCode} showDetails={showDetails} trigger={trigger} setTrigger={setTrigger} setShowDetails={setShowDetails}/>
     </div>
   );
 };
