@@ -49,7 +49,7 @@ const Panel = ({ data, item, index, visibleCount, lastItemRef }: Props) => {
           {!item.Description && <div style={{ height: "30px" }}></div>}
         </div>
       </div>
-      <BusDetails serviceID={item.ID} />
+      <BusDetails serviceID={item.ID} busCode={item.BusCode}/>
     </div>
   );
 };
