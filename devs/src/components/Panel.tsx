@@ -19,6 +19,7 @@ interface Props {
 const Panel = ({ data, item, index, visibleCount, lastItemRef, trigger, setTrigger }: Props) => {
   const [showDetails, setShowDetails] = useState(false);
   const [numberOfAvailableSeats, setNumberOfAvailableSeats] = useState(item.AvailableSeatCount);
+  const [loadingSeatCount, setLoadingSeatCount] = useState(false);
   const fetchNumberOfAvailableSeats = (serviceID: number) => {
     const url = new URL("http://localhost:8080/api/v1/getnumberofavailableseat");
     url.searchParams.append("ServiceID", serviceID.toString());
@@ -37,19 +38,22 @@ const Panel = ({ data, item, index, visibleCount, lastItemRef, trigger, setTrigg
   };
 
   useEffect(() => {
-    setNumberOfAvailableSeats(item.AvailableSeatCount)
-  }, [data])
+    setNumberOfAvailableSeats(item.AvailableSeatCount);
+  }, [data]);
 
   useEffect(() => {
-      if (!showDetails) return;
-      fetchNumberOfAvailableSeats(item.ID)
-        .then(result => {
-          console.log('Fetched result:', result);
-          setNumberOfAvailableSeats(result);
-        })
-        .catch(err => {
-          console.error('Error fetching details:', err);
-        });
+    if (!showDetails) return;
+    setLoadingSeatCount(true);
+    fetchNumberOfAvailableSeats(item.ID)
+      .then((result) => {
+        console.log("Fetched result:", result);
+        setNumberOfAvailableSeats(result);
+        setLoadingSeatCount(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching details:", err);
+        setLoadingSeatCount(false);
+      });
   }, [showDetails, item.ID]);
   return (
     <div
@@ -79,7 +83,13 @@ const Panel = ({ data, item, index, visibleCount, lastItemRef, trigger, setTrigg
             </div>
             <div className={s.buy}>
               <button onClick={() => setShowDetails(!showDetails)}>مشاهده و خرید</button>
-              <span className={s.availableSeatCount}>تعداد صندلی های خالی: {toPersianNum(numberOfAvailableSeats)}</span>
+              <span>
+                تعداد صندلی های خالی:
+                <span className={s.availableSeatCount}>
+                  {!loadingSeatCount && toPersianNum(numberOfAvailableSeats)}
+                  {loadingSeatCount && <i className="fas fa-spinner"></i>}
+                </span>
+              </span>
             </div>
           </div>
           {item.Description && <div className={s.divider}></div>}

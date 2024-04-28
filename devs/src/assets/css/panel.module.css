@@ -132,3 +132,25 @@
   color: #777;
   padding: 10px 0px 16px 0;
 }
+
+.panel .buy i {
+  color: #3498db;
+  transform-origin: 5.5px 4.5px;
+  animation: spin 1.5s linear infinite;
+}
+
+.panel .availableSeatCount {
+  position: absolute;
+  top: -11px;
+  right: 110px;
+  text-align: right;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
