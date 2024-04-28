@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import s from "../assets/css/busDetails.module.css";
-import busFront from "../assets/images/BusFront.png";
 import { SeatType, SeatArrayType } from "../util/Models";
 import { seatsArray_25_1, seatsArray_26_1, seatsArray_29_1, seatsArray_32_1 } from "../util/BusModels";
 import Seat from "./Seat";
 import transparentLogo from "../assets/images/logo-transparent.png";
+import BusSchema from "./BusSchema";
+import RefuncBox from "./RefundBox";
 
 interface Props {
   serviceID: number;
@@ -35,7 +36,7 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
       throw error;
     }
   };
-  
+
   useEffect(() => {
     setExceptMe(false);
     if (trigger && !exceptMe) {
@@ -55,7 +56,6 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
     setTimeout(() => setTrigger(true));
     fetchServices(serviceID)
       .then((data) => {
-        console.log("Fetched data:", data);
         let seatsArray: SeatType[] = [];
         switch (busCode) {
           case "VIP_25_1":
@@ -98,20 +98,11 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
   }, [showDetails]);
 
   return isFetched ? (
-    <div className={s.busDetails + (showDetails ? " " + s.show : "")} >
+    <div className={s.busDetails + (showDetails ? " " + s.show : "")}>
       <div className={s.dividerLine} />
-      <div className={s.cancelationCondition}></div>
+      <RefuncBox />
       <div className={s.busInformation}>
-        <div className={s.busSchema + " unselectable"}>
-          <div className={s.busInner}>
-            <div className={s.grid} style={{ gridTemplateColumns: `repeat(${column}, 1fr)` }}>
-              {convertedSeatsArray.map((seat, index) => (
-                <Seat seat={seat} key={index} />
-              ))}
-            </div>
-          </div>
-          <img src={busFront} alt="bus front" />
-        </div>
+        <BusSchema convertedSeatsArray={convertedSeatsArray} column={column} />
         <div className={s.legend}>
           <div>
             <Seat size="20px" seat={[null, "M"]} /> خریداری شده برای آقایان
@@ -130,7 +121,7 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
     </div>
   ) : (
     showDetails && (
-      <div className={s.busDetails + (render ? " " + s.show : "")} >
+      <div className={s.busDetails + (render ? " " + s.show : "")}>
         <div className={s.quarterCircle} style={{ margin: "10px" }}></div>
         <div className={s.quarterCircle} style={{ padding: "5px", margin: "5px", animationDuration: "2s" }}></div>
         <div className={s.quarterCircle} style={{ padding: "10px", animationDuration: "2.5s" }}></div>

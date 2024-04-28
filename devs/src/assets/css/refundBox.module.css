@@ -1,0 +1,18 @@
+.cancelationCondition {
+  display: inline-flex;
+  flex-direction: column;
+  margin-top: 10px;
+  direction: rtl;
+}
+
+.cancelationCondition span {
+  color: #777;
+  font-size: 14px;
+}
+
+.cancelationCondition .divider {
+  width: 80px;
+  height: 0.5px;
+  background-color: #e74c3c;
+  margin-top: 5px;
+}

@@ -1,0 +1,55 @@
+.refundItem {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 0 5px 5px 0;
+  box-shadow: 2px 2px 4.25px rgba(0, 0, 0, 0.07);
+}
+
+.refundItem .refundTitle {
+  position: relative;
+  display: flex;
+  width: 40px;
+  background-color: #e74c3c;
+  border-radius: 0 5px 5px 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.refundItem .refundTitle .title {
+  text-align: center;
+  color: white;
+  letter-spacing: 3px;
+  font-weight: bolder;
+}
+
+.refundItem .refundTitle .percentage {
+  text-align: center;
+  color: white;
+  letter-spacing: 3px;
+  font-size: 12px;
+  transform: translateY(1px);
+}
+
+.triangleLeft {
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 10px solid #e74c3c;
+}
+
+.refundDescription {
+  padding: 10px 15px 10px 0;
+}
+
+.description {
+  color: #555;
+  font-size: 13px !important;
+  font-weight: bold;
+  word-spacing: 3px;  
+}
