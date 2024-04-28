@@ -37,6 +37,10 @@ const Panel = ({ data, item, index, visibleCount, lastItemRef, trigger, setTrigg
   };
 
   useEffect(() => {
+    setNumberOfAvailableSeats(item.AvailableSeatCount)
+  }, [data])
+
+  useEffect(() => {
       if (!showDetails) return;
       fetchNumberOfAvailableSeats(item.ID)
         .then(result => {

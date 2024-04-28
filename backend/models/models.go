@@ -166,5 +166,6 @@ type BusType struct {
 
 type SeatWithGender struct{
 	SeatNumber uint `json:"SeatNumber"`
+	Accessible bool `json:"Accessible"`
 	Gender *string `json:"Gender"`
 }

@@ -1,7 +1,6 @@
 package db
 
 import (
-	"errors"
 	"fmt"
 
 	m "main/models"
@@ -82,7 +81,7 @@ func GetItem(date string, originID uint, destinationID uint) ([]m.Item, error) {
 		Joins(`left join (
 			SELECT service_id, COUNT(*) as count 
 			FROM seats 
-			WHERE seats.accessible = TRUE 
+			WHERE seats.accessible = false OR EXISTS (SELECT 1 FROM passengers WHERE passengers.seat_id = seats.id)
 			GROUP BY service_id
 		) as filled_seats ON filled_seats.service_id = services.id`).
 		Where("departure_date = ? AND origin_terminal_id = ? AND destination_terminal_id = ?", date, originID, destinationID).
@@ -90,43 +89,34 @@ func GetItem(date string, originID uint, destinationID uint) ([]m.Item, error) {
 	if err != nil {
 		return nil, err
 	}
-	for i := 0; i < len(items); i++ {
-		availableSeatCount, _ := GetNumberOfAvailableSeats(items[i].ID)
-		items[i].AvailableSeatCount = int(availableSeatCount);
-	}
 	return items, nil
 }
 
-func GetSeatsWithGender(serviceID uint) ([]m.SeatWithGender, error){
+func GetSeatsWithGender(serviceID uint) ([]m.SeatWithGender, error) {
 	var seatsWithGender []m.SeatWithGender
 	err := db.Model(&m.Seat{}).Where("service_id = ?", serviceID).Select(
-		"seats.seat_number, passengers.gender as gender",	
+		"seats.seat_number, seats.accessible,  passengers.gender as gender",
 	).Joins("left join passengers on passengers.seat_id = seats.id").Order("seat_number").Find(&seatsWithGender).Error
 	if err != nil {
-		return nil, err 
+		return nil, err
 	}
 	return seatsWithGender, nil
 }
 
 func GetNumberOfAvailableSeats(serviceID uint) (uint, error) {
 	var numberOfFilledSeats int64
-	var numberOfBusSeats uint
+	err := db.Model(&m.Service{}).
+	Select(
+			"bus_types.seat_count - COALESCE(filled_seats.count, 0) as available_seat_count").
+	Joins("left join bus_types on bus_types.id = services.bus_type_id").
+	Joins(`left join (
+		SELECT service_id, COUNT(*) as count 
+		FROM seats 
+		WHERE seats.accessible = false OR EXISTS (SELECT 1 FROM passengers WHERE passengers.seat_id = seats.id)
+		GROUP BY service_id
+	) as filled_seats ON filled_seats.service_id = services.id`).
+	Where("services.id = ?", serviceID).
+	Scan(&numberOfFilledSeats).Error
 
-	err := db.Model(&m.Seat{}).Where("service_id = ?", serviceID).Select(
-		"seats.seat_number, passengers.gender as gender",	
-	).Joins("left join passengers on passengers.seat_id = seats.id").Where("passengers.gender is not null and seats.accessible = true").Count(&numberOfFilledSeats).Error
-	if err != nil {
-		return 0, err
-	}
-
-	err = db.Model(&m.Service{}).Select("bus_types.seat_count").Joins("left join bus_types on services.bus_type_id = bus_types.id").Where("services.id = ?", serviceID).Find(&numberOfBusSeats).Error
-	if err != nil {
-		return 0, err
-	}
-
-	if numberOfBusSeats < uint(numberOfFilledSeats) {
-		return 0, errors.New("data inconsistency: filled seats exceed total seats")
-	}
-	availableSeats := numberOfBusSeats - uint(numberOfFilledSeats)
-	return availableSeats, nil
+	return uint(numberOfFilledSeats), err
 }

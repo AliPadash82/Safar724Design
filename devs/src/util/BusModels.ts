@@ -47,7 +47,7 @@ export const seatsArray_25_1: SeatType[] = [
   [9, null],
   [12, null],
   [13, null],
-  [15, null],
+  [16, null],
   [18, null],
   [21, null],
   [25, null],

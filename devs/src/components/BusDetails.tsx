@@ -87,9 +87,10 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
             const matchedData = data.filter((re) => re.SeatNumber === seat[0]);
             if (matchedData.length > 0) {
               newSeatsArray[i] = [matchedData[0].SeatNumber, matchedData[0].Gender];
-            } else if (data[i]?.Accessible) {
-              newSeatsArray[i] = [seat[0], "N"];
-            } else newSeatsArray[i] = [seat[0], null];
+              if (!matchedData[0].Accessible) {
+                newSeatsArray[i] = [seat[0], "N"];
+              }
+            }
           }
         }
         setConvertedSeatsArray(newSeatsArray);
