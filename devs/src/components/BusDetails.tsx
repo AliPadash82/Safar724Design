@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import s from "../assets/css/busDetails.module.css";
 import busFront from "../assets/images/BusFront.png";
 import { SeatType, SeatArrayType } from "../util/Models";
@@ -35,10 +35,7 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
       throw error;
     }
   };
-  useEffect(() => {
-    setTimeout(() => setRender(showDetails));
-  }, [showDetails]);
-
+  
   useEffect(() => {
     setExceptMe(false);
     if (trigger && !exceptMe) {
@@ -48,6 +45,7 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
   }, [trigger]);
 
   useEffect(() => {
+    setTimeout(() => setRender(showDetails));
     if (!showDetails) {
       setTimeout(() => setIsFetched(false), 500);
       setExceptMe(false);
@@ -100,11 +98,11 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
   }, [showDetails]);
 
   return isFetched ? (
-    <div className={s.busDetails + (showDetails ? " " + s.show : "")}>
+    <div className={s.busDetails + (showDetails ? " " + s.show : "")} >
       <div className={s.dividerLine} />
       <div className={s.cancelationCondition}></div>
       <div className={s.busInformation}>
-        <div className={s.busSchema}>
+        <div className={s.busSchema + " unselectable"}>
           <div className={s.busInner}>
             <div className={s.grid} style={{ gridTemplateColumns: `repeat(${column}, 1fr)` }}>
               {convertedSeatsArray.map((seat, index) => (
@@ -132,7 +130,7 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
     </div>
   ) : (
     showDetails && (
-      <div className={s.busDetails + (render ? " " + s.show : "")}>
+      <div className={s.busDetails + (render ? " " + s.show : "")} >
         <div className={s.quarterCircle} style={{ margin: "10px" }}></div>
         <div className={s.quarterCircle} style={{ padding: "5px", margin: "5px", animationDuration: "2s" }}></div>
         <div className={s.quarterCircle} style={{ padding: "10px", animationDuration: "2.5s" }}></div>

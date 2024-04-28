@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Service, ServiceResponse } from "../util/Models";
 import { TbClockHour9 } from "react-icons/tb";
 import s from "../assets/css/panel.module.css";
@@ -10,16 +10,17 @@ interface Props {
   data: ServiceResponse;
   item: Service;
   index: number;
-  visibleCount: number;
-  lastItemRef: React.LegacyRef<HTMLDivElement>;
+  visibleCount?: number;
+  lastItemRef?: React.LegacyRef<HTMLDivElement>;
   trigger: boolean;
   setTrigger: (trigger: boolean) => void;
 }
 
-const Panel = ({ data, item, index, visibleCount, lastItemRef, trigger, setTrigger }: Props) => {
+const Panel = ({ data, item, index, trigger, setTrigger }: Props) => {
   const [showDetails, setShowDetails] = useState(false);
   const [numberOfAvailableSeats, setNumberOfAvailableSeats] = useState(item.AvailableSeatCount);
   const [loadingSeatCount, setLoadingSeatCount] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   const fetchNumberOfAvailableSeats = (serviceID: number) => {
     const url = new URL("http://localhost:8080/api/v1/getnumberofavailableseat");
     url.searchParams.append("ServiceID", serviceID.toString());
@@ -43,6 +44,11 @@ const Panel = ({ data, item, index, visibleCount, lastItemRef, trigger, setTrigg
 
   useEffect(() => {
     if (!showDetails) return;
+    setTimeout(() => {
+      const yOffset = -90; 
+      const y = ref.current?.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    } , 500)
     setLoadingSeatCount(true);
     fetchNumberOfAvailableSeats(item.ID)
       .then((result) => {
@@ -59,7 +65,7 @@ const Panel = ({ data, item, index, visibleCount, lastItemRef, trigger, setTrigg
     <div
       className={s.panel}
       key={index}
-      ref={index === visibleCount - 1 ? lastItemRef : null}
+      ref={ref}
       style={{ zIndex: index }}>
       <div className={s.flexRow}>
         <div className={s.companyLogo}>
@@ -86,8 +92,7 @@ const Panel = ({ data, item, index, visibleCount, lastItemRef, trigger, setTrigg
               <span>
                 تعداد صندلی های خالی:
                 <span className={s.availableSeatCount}>
-                  {!loadingSeatCount && toPersianNum(numberOfAvailableSeats)}
-                  {loadingSeatCount && <i className="fas fa-spinner"></i>}
+                  {!loadingSeatCount ? toPersianNum(numberOfAvailableSeats) : <i className="fas fa-spinner"></i>}
                 </span>
               </span>
             </div>
