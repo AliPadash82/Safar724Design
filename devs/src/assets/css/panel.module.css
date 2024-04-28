@@ -119,6 +119,10 @@
   cursor: pointer;
 }
 
+.panel .info .inner .buy button:hover {
+  background-color: #2980b9;
+}
+
 .panel .info .divider {
   width: 50%;
   border-top: 1px solid #EAEAEA;

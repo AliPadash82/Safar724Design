@@ -132,7 +132,7 @@ const ServicesDisplay = ({
         <strong>{" " + toPersianNum(maxDepartureTime) + " "}</strong>
         یافت شد
       </h1>
-      {data?.Items?.slice(0, visibleCount).map((item: any, index: any) => (
+      {data?.Items?.map((item: any, index: any) => (
         <Panel
           trigger={trigger}
           setTrigger={setTrigger}

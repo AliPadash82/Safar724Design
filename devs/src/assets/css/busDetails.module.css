@@ -2,7 +2,7 @@
   position: relative;
   width: calc(100% - 50px);
   margin-inline: 25px;
-  height: 400px;
+  height: 350px;
   background-color: #FEFEFE;
   opacity: 0;
   pointer-events: none;
@@ -25,7 +25,8 @@
 
 .busInformation {
   margin: 15px;
-  width: 675px;
+  margin-right: 0;
+  width: 62%;
   float: left;
 }
 
@@ -46,37 +47,24 @@
   justify-content: space-between;
 }
 
-.logo {
-  width: 80px;
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
+.busDetails button {
+  position: absolute;
+  bottom: calc(100% - 320px);
+  left: 0;
+  overflow: hidden;
+  padding: 10px 55px;
+  font-size: 24px;
+  text-wrap: nowrap;
+  background-color: #2ecc71;
+  border: none;
+  border-radius: 8px; 
+  color: white;
+  font-family: 'IRANSansWeb', sans-serif;
+  transition: 0.4s;
+  cursor: pointer;
 }
 
-.quarterCircle {
-  position: absolute;
-  top: calc(40% - 68px);
-  left: calc(50% - 72px);
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  /* border: 1px solid transparent; */
-  border-top: 3px solid #3498db;
-  animation-name: spin;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  animation-duration: 1.25s;
-
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(360deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-  }
+.busDetails button:hover {
+  background-color: #2980b9;
 }

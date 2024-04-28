@@ -1,6 +1,6 @@
 .service {
   direction: rtl;
-  width: 75%;
+  width: 1170px;
   margin: auto;
 }
 
@@ -29,18 +29,6 @@
 
 @media (max-width: 1200px) {
   .service {
-    width: 90%;
-  }
-}
-
-@media (max-width: 1024px) {
-  .service {
-    width: 95%
-  }
-}
-
-@media (max-width: 900px) {
-  .service {
-    width: 98%
+    width: clamp(500px, 1050px,95%);
   }
 }
