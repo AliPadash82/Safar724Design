@@ -24,7 +24,6 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
   const fetchServices = async (serviceID: number): Promise<SeatArrayType[]> => {
     const url = new URL("http://localhost:8080/api/v1/getseats");
     url.searchParams.append("ServiceID", serviceID.toString());
-
     try {
       const response = await fetch(url.toString());
       if (!response.ok) {
@@ -88,9 +87,9 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
             const matchedData = data.filter((re) => re.SeatNumber === seat[0]);
             if (matchedData.length > 0) {
               newSeatsArray[i] = [matchedData[0].SeatNumber, matchedData[0].Gender];
-            } else {
+            } else if (data[i]?.Accessible) {
               newSeatsArray[i] = [seat[0], "N"];
-            }
+            } else newSeatsArray[i] = [seat[0], null];
           }
         }
         setConvertedSeatsArray(newSeatsArray);

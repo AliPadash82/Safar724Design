@@ -89,12 +89,11 @@
   position: absolute;
   top: calc(40% - 68px);
   left: calc(50% - 72px) ;
-  transform: translate(-50%, -50%);
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  border: 1px solid transparent;
-  border-top: 2px solid #3498db;
+  /* border: 1px solid transparent; */
+  border-top: 3px solid #3498db;
   /* background-color:  rgba(255, 0, 0, 0.1); */
   animation-name: spin;
   animation-iteration-count: infinite;

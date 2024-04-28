@@ -74,6 +74,7 @@ type Seat struct {
 	ID         uint `gorm:"primaryKey"`
 	ServiceID  uint
 	SeatNumber uint
+	Accessible bool
 	Service    Service `gorm:"foreignKey:ServiceID"`
 }
 
@@ -122,7 +123,6 @@ type MidwayCity struct {
 	Service   Service `gorm:"foreignKey:ServiceID"`
 	City      City    `gorm:"foreignKey:CityID"`
 }
-
 type Item struct {
 	ID                             uint    `json:"ID"`
 	IsVip                          bool    `json:"IsVip"`

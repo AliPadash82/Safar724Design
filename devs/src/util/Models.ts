@@ -60,4 +60,5 @@ export type SeatType = [number | null, string | null] | null;
 export interface SeatArrayType {
   SeatNumber: number;
   Gender: string;
+  Accessible: boolean;
 };

@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"main/db"
 	"net/http"
 	"strconv"
@@ -18,6 +17,7 @@ func InitServer() {
 		{
 			v1.GET("/getservices", GetServicesHandler)
 			v1.GET("/getseats", GetSeatsByServiceIDHandler)
+			v1.GET("/getnumberofavailableseat", getNumberOfAvailableSeatHandler)
 		}
 	}
 	c := cors.New(cors.Options{
@@ -80,7 +80,6 @@ func GetServicesHandler(c *gin.Context) {
 
 func GetSeatsByServiceIDHandler(c *gin.Context) {
 	var serviceIDstr string = c.Query("ServiceID")
-	fmt.Println(serviceIDstr)
 	serviceID, err := strconv.ParseUint(serviceIDstr, 10, 32)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid serviceID format - " + err.Error()})
@@ -92,4 +91,19 @@ func GetSeatsByServiceIDHandler(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, seats)
+}
+
+func getNumberOfAvailableSeatHandler(c *gin.Context) {
+	var serviceIDstr string = c.Query("ServiceID")
+	serviceID, err := strconv.ParseUint(serviceIDstr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid serviceID format - " + err.Error()})
+		return
+	}
+	number, err := db.GetNumberOfAvailableSeats(uint(serviceID))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, number)
 }
