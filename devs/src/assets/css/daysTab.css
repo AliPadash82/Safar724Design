@@ -36,7 +36,7 @@
 }
 
 .days-tab-container {
-  width: 75%;
+  width: 1170px;
   display: flex;
   align-items: center;
 }
@@ -52,12 +52,6 @@
 
 @media (max-width: 1200px) {
   .days-tab-container {
-    width: 90%;
-  }
-}
-
-@media (max-width: 1024px) {
-  .days-tab-container {
-    width: 95%
+    width: clamp(500px, 1050px,95%);
   }
 }

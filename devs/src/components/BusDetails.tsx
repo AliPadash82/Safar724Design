@@ -20,7 +20,6 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
   const [column, setColumn] = useState(9);
   const [convertedSeatsArray, setConvertedSeatsArray] = useState<SeatType[]>(Array(5 * column).fill([null, null]));
   const [isFetched, setIsFetched] = useState(false);
-  const [render, setRender] = useState(false);
   const [exceptMe, setExceptMe] = useState(false);
   const fetchServices = async (serviceID: number): Promise<SeatArrayType[]> => {
     const url = new URL("http://localhost:8080/api/v1/getseats");
@@ -46,7 +45,6 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
   }, [trigger]);
 
   useEffect(() => {
-    setTimeout(() => setRender(showDetails));
     if (!showDetails) {
       setTimeout(() => setIsFetched(false), 500);
       setExceptMe(false);
@@ -97,22 +95,25 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
       .catch((error) => console.error("Failed to fetch or update seats:", error));
   }, [showDetails]);
 
-  return isFetched ? (
-    <div className={s.busDetails + (showDetails ? " " + s.show : "")}>
-      <div className={s.dividerLine} />
-      <RefundBox />
-      <div className={s.busInformation}>
-        <BusSchema convertedSeatsArray={convertedSeatsArray} column={column} />
-        <Legend className={s.legend} />
-      </div>
-      <button>خرید</button>
+  const busDetailsClasses = `${s.busDetails} ${showDetails ? s.show : ""}`;
+
+  return (
+    <div className={busDetailsClasses}>
+      {isFetched ? (
+        <>
+          <div className={s.cover} />
+          <div className={s.dividerLine} />
+          <RefundBox />
+          <div className={s.busInformation}>
+            <BusSchema convertedSeatsArray={convertedSeatsArray} column={column} />
+            <Legend className={s.legend} />
+          </div>
+          <button>خرید</button>
+        </>
+      ) : (
+        <BusLoading />
+      )}
     </div>
-  ) : (
-    showDetails && (
-      <div className={s.busDetails + (render ? " " + s.show : "")}>
-        <BusLoading/>
-      </div>
-    )
   );
 };
 

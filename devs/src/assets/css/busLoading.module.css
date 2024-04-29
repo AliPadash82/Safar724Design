@@ -4,7 +4,6 @@
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-
 }
 
 .quarterCircle {
@@ -14,12 +13,12 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  /* border: 1px solid transparent; */
-  border-top: 3px solid #3498db;
+  border-top: 3px solid rgb(52, 152, 219);
+  background: radial-gradient(circle, rgba(52, 152, 219, 0.07) 1%, rgba(255, 255, 255, 0) 99%);
   animation-name: spin;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  animation-duration: 1.25s;
+  animation-duration: 1.5s;
 
 }
 

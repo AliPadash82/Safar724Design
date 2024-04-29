@@ -1,7 +1,8 @@
 .cancelationCondition {
   display: inline-flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 25px;
+  margin-inline: 15px;
   direction: rtl;
 }
 

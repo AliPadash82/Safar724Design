@@ -1,3 +1,8 @@
+::selection {
+    background-color: #2980b9 !important;
+    color: white !important;
+}
+
 @font-face {
     font-family: 'CustomIcon';
     src: url('../icons/line-icons-custom.woff') format('woff');
@@ -100,7 +105,7 @@ input[type="radio"] {
     -moz-appearance: none;
     width: 20px;
     height: 20px;
-    outline: 1px solid #ccc  ;
+    outline: 1px solid #ccc;
     border: 2px solid white;
     cursor: pointer;
     border-radius: 50%;
@@ -141,11 +146,15 @@ input[type="checkbox"]:disabled {
     border: 2px solid #ccc;
     background-color: #ccc;
     cursor: auto;
-} 
+}
 
 .unselectable {
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Standard syntax */
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Standard syntax */
 }

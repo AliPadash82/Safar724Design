@@ -66,7 +66,7 @@ const Panel = ({ data, item, index, trigger, setTrigger }: Props) => {
       className={s.panel}
       key={index}
       ref={ref}
-      style={{ zIndex: index }}>
+      >
       <div className={s.flexRow}>
         <div className={s.companyLogo}>
           <img src={item.CompanyLogo} alt="CompanyLogo" onError={(e) => (e.currentTarget.src = defaultImg)} />
