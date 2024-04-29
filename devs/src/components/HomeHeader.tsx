@@ -11,9 +11,18 @@ interface Props {
   isFocusedTo: boolean;
   display: boolean;
   setDisplay: (display: boolean) => void;
+  alert?: [boolean, boolean];
+  setAlert?: (alert: [boolean, boolean]) => void;
 }
 
-const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
+const HomeHeader = ({
+  isFocused,
+  isFocusedTo,
+  display,
+  setDisplay,
+  alert = [false, false],
+  setAlert = () => {},
+}: Props) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const navigate = useNavigate();
 
@@ -29,7 +38,10 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
   };
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Prepare the payload to send
+    if (!e.currentTarget.origin.value || !e.currentTarget.destination.value) {
+      setAlert([!e.currentTarget.origin.value, !e.currentTarget.destination.value]);
+      return;
+    }
     const formData = {
       origin: e.currentTarget.origin.value,
       destination: e.currentTarget.destination.value,
@@ -56,6 +68,8 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
             cities={citiesJSON}
             handleFocus={handleFocus}
             placeholder="مبداء را تایپ نمایید"
+            alertMassage="لطفا مبداء را انتخاب نمایید"
+            alertBoolean={alert[0]}
           />
           <CustomInput
             className={`${styles.in} to`}
@@ -65,6 +79,9 @@ const HomeHeader = ({ isFocused, isFocusedTo, display, setDisplay }: Props) => {
             display={display}
             handleFocus={handleFocus}
             placeholder="مقصد را تایپ نمایید"
+            alertMassage="لطفا مقصد را انتخاب نمایید"
+            alertBoolean={alert[1]}
+            delay="0.1s"
           />
           <DateDiv className={"date-div"} setDisplay={setDisplay} selectedDate={selectedDate} />
           <DateBox

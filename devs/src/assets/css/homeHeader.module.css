@@ -35,18 +35,46 @@
     font-size: 20px;
 }
 
+.home-header .container .in p {
+    position: absolute;
+    font-size: 14px;
+    bottom: -40px;
+    right: 2px;
+    color: #e74c3c;
+    overflow: hidden;
+    text-wrap: nowrap;
+    transition: transform 0 ease-out;
+}
+
+.home-header .container .in p.show {
+    transition: transform 0.5s ease-out;
+    transform: translateY(-20px);
+}
+
+.alert-container {
+    position: absolute;
+    bottom: 0px;
+    right: 95px;
+    background-color: transparent;
+    height: 30px;
+    width: 50%;
+    overflow: hidden;
+}
+
 .home-header .container input {
     width: 80%;
     padding: 24px 5% 24px 5%;
     outline: none;
     border: none;
     font-family: 'IRANSansWeb', sans-serif;
-    font-size: 22px;
+    font-size: 24px;
     direction: rtl;
 }
 
 .home-header .container input::placeholder {
-    font-size: 16px;
+    color: #999;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .home-header .container input:focus {
@@ -92,6 +120,9 @@
     .home-header {
         height: 510px;
     }
+    .alert-container {
+        right: 105px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -102,6 +133,15 @@
     }
     .home-header {
         height: 520px;
+    }
+    .home-header .container input::placeholder {
+        color: #999;
+        font-size: 16px;
+        font-weight: 100;
+    }
+    .alert-container {
+        font-size: 13px;
+        right: 120px;
     }
 }
 
@@ -182,6 +222,9 @@
     .home-header {
         height: 490px;
     }
+    .alert-container {
+        right: 90px;
+    }
 }
 
 @media (max-width: 320px) {
@@ -204,5 +247,8 @@
     }
     .home-header .container .search {
         padding: 8px 30%;
+    }
+    .alert-container {
+        right: 70px;
     }
 }

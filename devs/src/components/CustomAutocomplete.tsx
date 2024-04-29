@@ -29,7 +29,7 @@ const CustomAutocomplete = ({
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setInputValue(value);
-    setSelectedOption(null); // Reset selection on input change
+    setSelectedOption(0);
 
     if (!value) {
       setSuggestions([]);
@@ -46,18 +46,13 @@ const CustomAutocomplete = ({
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     let newSelectedOption;
 
-    // Arrow Down
     if (event.key === "ArrowDown") {
-      event.preventDefault(); // Prevent cursor movements
+      event.preventDefault();
       newSelectedOption = selectedOption === null || selectedOption === suggestions.length - 1 ? 0 : selectedOption + 1;
-    }
-    // Arrow Up
-    else if (event.key === "ArrowUp") {
-      event.preventDefault(); // Prevent cursor movements
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
       newSelectedOption = selectedOption === 0 || selectedOption === null ? suggestions.length - 1 : selectedOption - 1;
-    }
-    // Enter
-    else if (event.key === "Enter") {
+    } else if (event.key === "Enter") {
       event.preventDefault();
       if (selectedOption == null)
         if (suggestions.length > 0) {
@@ -69,10 +64,9 @@ const CustomAutocomplete = ({
         setCityID(suggestions[selectedOption].ID);
       }
       setTimeout(() => handleFocus());
-      return; // Prevent further processing
+      return;
     }
 
-    // Update the selected option and the input value as you navigate with arrow keys
     if (newSelectedOption !== undefined) {
       setSelectedOption(newSelectedOption);
       setInputValue(suggestions[newSelectedOption].PersianName);
@@ -121,9 +115,9 @@ const CustomAutocomplete = ({
               key={index}
               className={index === selectedOption ? "selected" : ""}
               onMouseDown={(e) => {
-                e.preventDefault(); // Prevent the input from being blurred
+                e.preventDefault();
                 setCityID(suggestion.ID);
-                setInputValue(suggestion.PersianName); // Update the input value
+                setInputValue(suggestion.PersianName);
                 setTimeout(() => handleFocus());
               }}>
               {suggestion.PersianName}
