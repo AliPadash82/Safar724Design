@@ -18,7 +18,7 @@ interface Props {
 const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData, setErrorFetching }: Props) => {
   const [display, setDisplay] = useState(false);
   const location = useLocation();
-  const formData = location.state?.formData;
+  var formData = location.state?.formData;
   const navigate = useNavigate();
 
 
@@ -38,7 +38,12 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData, setErrorF
   };
 
   useEffect(() => {
-    if (formData) setSelectedDate(new Date(formData.date));
+    if (!formData) {
+      setSelectedDate(new Date());
+      setErrorFetching(true);
+      return;
+    }   
+    setSelectedDate(new Date(formData.date));
     fetchServices(formatDate(formData.date), formData.originID, formData.destinationID).then((data) => {
       console.log("Fetched data:", data);
       setServicesData(data);
@@ -103,8 +108,8 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData, setErrorF
               placeholder="مبداء را تایپ نمایید"
               cities={cities}
               handleFocus={handleFocus}
-              initialInputValue={formData.origin}
-              initialCityID={formData.originID}
+              initialInputValue={formData?.origin ? formData.origin : ""}
+              initialCityID={formData?.originID ? formData.originID : 0}
             />
           </div>
           <i className="fas fa-exchange-alt custom-gap" onClick={handleExchange}></i>
@@ -114,8 +119,8 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData, setErrorF
               placeholder="مقصد را تایپ نمایید"
               cities={cities}
               handleFocus={handleFocus}
-              initialInputValue={formData.destination}
-              initialCityID={formData.destinationID}
+              initialInputValue={formData?.destination ? formData.destination : ""}
+              initialCityID={formData?.destinationID ? formData.destinationID : 0}
             />
           </div>
           <div className="custom-gap" />
