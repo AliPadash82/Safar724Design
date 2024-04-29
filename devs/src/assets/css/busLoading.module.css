@@ -4,22 +4,26 @@
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 1%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  padding: 25px;
+  animation: fadeAndReappear 2s ease-in-out infinite;
 }
 
 .quarterCircle {
   position: absolute;
   top: calc(40% - 68px);
   left: calc(50% - 72px);
+  color: white;
+
   width: 120px;
   height: 120px;
   border-radius: 50%;
   border-top: 3px solid rgb(52, 152, 219);
-  background: radial-gradient(circle, rgba(52, 152, 219, 0.07) 1%, rgba(255, 255, 255, 0) 99%);
   animation-name: spin;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   animation-duration: 1.5s;
-
 }
 
 @keyframes spin {
@@ -30,4 +34,15 @@
   100% {
     transform: rotate(0deg);
   }
+}
+
+@keyframes fadeAndReappear {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  
+  40%, 60% {
+    opacity: 1;
+  }
+
 }

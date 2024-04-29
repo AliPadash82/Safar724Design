@@ -101,14 +101,16 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
     <div className={busDetailsClasses}>
       {isFetched ? (
         <>
-          <div className={s.cover} />
+          <div className={s.cover} >
+            <button>خرید</button>
+          </div>
           <div className={s.dividerLine} />
           <RefundBox />
           <div className={s.busInformation}>
             <BusSchema convertedSeatsArray={convertedSeatsArray} column={column} />
             <Legend className={s.legend} />
           </div>
-          <button>خرید</button>
+          <button className={s.greenBuy}>خرید</button>
         </>
       ) : (
         <BusLoading />

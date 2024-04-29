@@ -48,7 +48,7 @@
 
 .legend div {
   display: flex;
-  align-items: center;
+  align-items: center;  
   gap: 4px;
 }
 
@@ -64,23 +64,15 @@
 }
 
 
-.busDetails button {
+.busDetails .greenBuy {
   position: absolute;
   bottom: calc(100% - 320px);
   left: 0;
-  overflow: hidden;
   padding: 10px 55px;
   font-size: 24px;
-  text-wrap: nowrap;
   background-color: #2ecc71;
-  border: none;
-  border-radius: 8px; 
-  color: white;
-  font-family: 'IRANSansWeb', sans-serif;
-  transition: 0.4s;
-  cursor: pointer;
 }
 
-.busDetails button:hover {
+.busDetails .greenBuy:hover {
   background-color: #22b25e;
 }

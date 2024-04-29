@@ -70,19 +70,10 @@
 }
 
 .search {
-    position: relative;
     flex: 1;
-    bottom: 0;
-    overflow: hidden;
     font-size: 16px;
     height: 100%;
     background-color: #3498db;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-family: 'IRANSansWeb', sans-serif;
-    transition: 0.4s;
-    cursor: pointer;
 }
 
 .search.place {

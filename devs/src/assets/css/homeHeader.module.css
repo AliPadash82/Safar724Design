@@ -66,19 +66,11 @@
 }
 
 .home-header .search {
-    position: relative;
-    bottom: 0;
-    overflow: hidden;
     padding: 12px 40%;
     font-size: 20px;
     z-index: 1000;
     background-color: #3498db;
-    border: none;
     border-radius: 12px;
-    color: white;
-    font-family: 'IRANSansWeb', sans-serif;
-    transition: 0.4s;
-    cursor: pointer;
 }
 
 .home-header .search.place {

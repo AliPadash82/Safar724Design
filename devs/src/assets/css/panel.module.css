@@ -104,19 +104,9 @@
 }
 
 .panel .info .inner .buy button {
-  position: relative;
-  bottom: 0;
-  overflow: hidden;
   padding: 4px 20%;
   font-size: 14px;
-  text-wrap: nowrap;
   background-color: #3498db;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-family: 'IRANSansWeb', sans-serif;
-  transition: 0.4s;
-  cursor: pointer;
 }
 
 .panel .info .inner .buy button:hover {

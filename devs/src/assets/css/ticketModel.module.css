@@ -134,15 +134,11 @@
 }
 
 .theBody button {
-  font-family: 'IRANSansWeb', sans-serif;
   width: 90%;
   margin-inline: auto;
   height: 50px;
   margin-top: 20px;
-  border: none;
   background-color: blue;
-  color: white;
   font-size: 14px;
   border-radius: 11px;
-  cursor: pointer;
 }
