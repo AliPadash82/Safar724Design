@@ -46,7 +46,7 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
 
   useEffect(() => {
     if (!showDetails) {
-      setTimeout(() => setIsFetched(false), 500);
+      setTimeout(() => setIsFetched(false), 400);
       setExceptMe(false);
       return;
     }
@@ -102,7 +102,8 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
       {isFetched ? (
         <>
           <div className={s.cover} >
-            <button>خرید</button>
+            <button className={s.transparentBuy}>خرید</button>
+            <button className={s.backButton} onClick={() => setShowDetails(false)}>بازگشت</button>
           </div>
           <div className={s.dividerLine} />
           <RefundBox />

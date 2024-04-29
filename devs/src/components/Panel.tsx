@@ -48,7 +48,7 @@ const Panel = ({ data, item, index, trigger, setTrigger }: Props) => {
       const yOffset = -90; 
       const y = ref.current?.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
-    } , 500)
+    } , 350)
     setLoadingSeatCount(true);
     fetchNumberOfAvailableSeats(item.ID)
       .then((result) => {
