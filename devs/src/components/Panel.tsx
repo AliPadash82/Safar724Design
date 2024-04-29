@@ -5,6 +5,7 @@ import s from "../assets/css/panel.module.css";
 import defaultImg from "../assets/images/CompanyDefaultLogo.png";
 import { toPersianNum, putComma } from "../util/Function";
 import BusDetails from "./BusDetails";
+import { fetchNumberOfAvailableSeats } from "../util/FetchFunction";
 
 interface Props {
   data: ServiceResponse;
@@ -21,22 +22,6 @@ const Panel = ({ data, item, index, trigger, setTrigger }: Props) => {
   const [numberOfAvailableSeats, setNumberOfAvailableSeats] = useState(item.AvailableSeatCount);
   const [loadingSeatCount, setLoadingSeatCount] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const fetchNumberOfAvailableSeats = (serviceID: number) => {
-    const url = new URL("http://localhost:8080/api/v1/getnumberofavailableseat");
-    url.searchParams.append("ServiceID", serviceID.toString());
-
-    return fetch(url.toString())
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return res.json();
-      })
-      .catch((err) => {
-        console.error("Failed to fetch number of available seats:", err);
-        throw err;
-      });
-  };
 
   useEffect(() => {
     setNumberOfAvailableSeats(item.AvailableSeatCount);
@@ -46,7 +31,7 @@ const Panel = ({ data, item, index, trigger, setTrigger }: Props) => {
     if (!showDetails) return;
     setTimeout(() => {
       const yOffset = -90; 
-      const y = ref.current?.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      const y = ref.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     } , 350)
     setLoadingSeatCount(true);

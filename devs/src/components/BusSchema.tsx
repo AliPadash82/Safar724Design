@@ -8,11 +8,12 @@ interface Props {
   convertedSeatsArray: SeatType[];
   column: number;
   className?: string;
+  blur?: boolean;
 }
 
-const BusSchema = ({ convertedSeatsArray, column, className="" }: Props) => {
+const BusSchema = ({ convertedSeatsArray, column, className="" , blur=false }: Props) => {
   return (
-    <div className={s.busSchema + " " + className + " unselectable"}>
+    <div className={s.busSchema + " " + className + " unselectable"} style={{filter: blur ? "blur(2px)" : ""}}>
       <div className={s.busInner}>
         <div className={s.grid} style={{ gridTemplateColumns: `repeat(${column}, 1fr)` }}>
           {convertedSeatsArray.map((seat, index) => (

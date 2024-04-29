@@ -6,6 +6,7 @@ import cities from "../util/cities.json";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ServiceResponse } from "../util/Models";
 import { formatDate } from "../util/Function";
+import { fetchServices } from "../util/FetchFunction";
 
 interface Props {
   setSelectedDate: (date: Date) => void;
@@ -20,25 +21,7 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData, setErrorF
   const formData = location.state?.formData;
   const navigate = useNavigate();
 
-  const fetchServices = async (date: string, originID: number, destinationID: number): Promise<ServiceResponse> => {
-    const url = new URL("http://localhost:8080/api/v1/getservices");
-    url.searchParams.append("Date", date);
-    url.searchParams.append("OriginID", originID.toString());
-    url.searchParams.append("DestinationID", destinationID.toString());
 
-    try {
-      const response = await fetch(url.toString());
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data: ServiceResponse = await response.json();
-      return data;
-    } catch (error) {
-      setErrorFetching(true);
-      console.error("Error fetching services:", error);
-      throw error;
-    }
-  };
 
   const handleSearchButtonClick = () => {
     console.log("handleSearchButtonClick called");
@@ -49,7 +32,9 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData, setErrorF
       (data) => {
         setServicesData(data);
       }
-    );
+    ).catch(() => {
+      setErrorFetching(true);
+    });
   };
 
   useEffect(() => {
@@ -57,6 +42,8 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData, setErrorF
     fetchServices(formatDate(formData.date), formData.originID, formData.destinationID).then((data) => {
       console.log("Fetched data:", data);
       setServicesData(data);
+    }).catch(() => {
+      setErrorFetching(true);
     });
   }, []);
   useEffect(() => {

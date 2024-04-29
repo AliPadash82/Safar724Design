@@ -57,6 +57,38 @@
   font-size: 18px;
 }
 
+.busDetails .errorCover {
+  gap: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  opacity: 1;
+  height: 330px;
+}
+
+
+.busDetails .errorCover .retryButton {
+  background-color: transparent;
+  padding: 5px 10px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border: 2px solid white;
+  border-radius: 15px;
+  font-size: 18px;
+}
+.busDetails .errorCover .retryButton i {
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.busDetails .errorCover h1{
+  color: white;
+  font-size: 28px;
+}
+
+.busDetails .errorCover i {
+  color: white;
+  font-size: 35px;
+}
+
 .dividerLine {
   transform: translateY(8px);
   height: 1px;
@@ -102,3 +134,4 @@
 .busDetails .greenBuy:hover {
   background-color: #22b25e;
 }
+

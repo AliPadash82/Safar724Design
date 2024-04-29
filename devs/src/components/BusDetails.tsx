@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import s from "../assets/css/busDetails.module.css";
-import { SeatType, SeatArrayType } from "../util/Models";
+import { SeatType } from "../util/Models";
 import { seatsArray_25_1, seatsArray_26_1, seatsArray_29_1, seatsArray_32_1 } from "../util/BusModels";
-import BusSchema from "./BusSchema";
-import RefundBox from "./RefundBox";
-import Legend from "./Legend";
 import BusLoading from "./BusLoading";
+import BusSchemaError from "./BusDisplayError";
+import BusDetailsDisplay from "./BusDetailsDisplay";
+import { fetchSeats } from "../util/FetchFunction";
 
 interface Props {
   serviceID: number;
@@ -20,21 +20,8 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
   const [column, setColumn] = useState(9);
   const [convertedSeatsArray, setConvertedSeatsArray] = useState<SeatType[]>(Array(5 * column).fill([null, null]));
   const [isFetched, setIsFetched] = useState(false);
+  const [errorFetching, setErrorFetching] = useState(false);
   const [exceptMe, setExceptMe] = useState(false);
-  const fetchServices = async (serviceID: number): Promise<SeatArrayType[]> => {
-    const url = new URL("http://localhost:8080/api/v1/getseats");
-    url.searchParams.append("ServiceID", serviceID.toString());
-    try {
-      const response = await fetch(url.toString());
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching services:", error);
-      throw error;
-    }
-  };
 
   useEffect(() => {
     setExceptMe(false);
@@ -52,7 +39,7 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
     }
     setExceptMe(true);
     setTimeout(() => setTrigger(true));
-    fetchServices(serviceID)
+    fetchSeats(serviceID)
       .then((data) => {
         let seatsArray: SeatType[] = [];
         switch (busCode) {
@@ -92,7 +79,11 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
         setConvertedSeatsArray(newSeatsArray);
         setIsFetched(true);
       })
-      .catch((error) => console.error("Failed to fetch or update seats:", error));
+      .catch((error) => {
+        console.error(error);
+        setIsFetched(false);
+        setErrorFetching(true);
+      });
   }, [showDetails]);
 
   const busDetailsClasses = `${s.busDetails} ${showDetails ? s.show : ""}`;
@@ -100,21 +91,11 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
   return (
     <div className={busDetailsClasses}>
       {isFetched ? (
-        <>
-          <div className={s.cover} >
-            <button className={s.transparentBuy}>خرید</button>
-            <button className={s.backButton} onClick={() => setShowDetails(false)}>بازگشت</button>
-          </div>
-          <div className={s.dividerLine} />
-          <RefundBox />
-          <div className={s.busInformation}>
-            <BusSchema convertedSeatsArray={convertedSeatsArray} column={column} />
-            <Legend className={s.legend} />
-          </div>
-          <button className={s.greenBuy}>خرید</button>
-        </>
-      ) : (
+        <BusDetailsDisplay convertedSeatsArray={convertedSeatsArray} column={column} setShowDetails={setShowDetails} />
+      ) : !errorFetching ? (
         <BusLoading />
+      ) : (
+        <BusSchemaError setShowDetails={setShowDetails} setErrorFetching={setErrorFetching} />
       )}
     </div>
   );
