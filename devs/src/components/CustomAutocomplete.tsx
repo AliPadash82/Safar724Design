@@ -27,6 +27,7 @@ const CustomAutocomplete = ({
   const [cityID, setCityID] = useState(initialCityID);
   const [suggestions, setSuggestions] = useState<City[]>([]);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [alertNoMatch, setAlertNoMatch] = useState(false);
   const [correct, setCorrect] = useState(false);
 
   useEffect(() => {
@@ -56,13 +57,19 @@ const CustomAutocomplete = ({
           city.SearchExpressions.some((expression) => expression.toLowerCase().startsWith(value.toLowerCase()))
         )
         .sort((a, b) => b.Order - a.Order);
+      setAlertNoMatch(!filteredSuggestions?.length);
       setSuggestions(filteredSuggestions);
     }
+    document.querySelector(".selected")?.scrollIntoView({
+      behavior: "instant",
+      block: "end",
+      inline: "start",
+    });
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (!suggestions?.length) return;
     let newSelectedOption;
-
     if (event.key === "ArrowDown") {
       event.preventDefault();
       newSelectedOption = selectedOption === null || selectedOption === suggestions.length - 1 ? 0 : selectedOption + 1;
@@ -71,8 +78,7 @@ const CustomAutocomplete = ({
       newSelectedOption = selectedOption === 0 || selectedOption === null ? suggestions.length - 1 : selectedOption - 1;
     } else if (event.key === "Enter") {
       event.preventDefault();
-      if (selectedOption != null && suggestions.length !== 0)
-      {
+      if (selectedOption != null && suggestions.length !== 0) {
         setInputValue(suggestions[selectedOption].PersianName);
         setCityID(suggestions[selectedOption].ID);
         setCorrect(true);
@@ -122,6 +128,7 @@ const CustomAutocomplete = ({
               }
             }
             setCorrect(false);
+            setAlertNoMatch(false);
             setSuggestions([]);
             setSelectedOption(null);
           });
@@ -129,7 +136,7 @@ const CustomAutocomplete = ({
         onFocus={handleChange}
       />
       <input type="hidden" name={`${name}ID`} value={cityID} />
-      {inputValue.length > 0 && suggestions.length > 0 && (
+      {inputValue.length > 1 && suggestions.length > 0 ? (
         <ul className="suggestions">
           {suggestions.map((suggestion, index) => (
             <li
@@ -148,6 +155,13 @@ const CustomAutocomplete = ({
             </li>
           ))}
         </ul>
+      ) : (
+        inputValue.length > 1 &&
+        alertNoMatch && (
+          <ul className="suggestions">
+            <li className="no-match" style={{ paddingRight: offset }}>موردی یافت نشد</li>
+          </ul>
+        )
       )}
     </>
   );
