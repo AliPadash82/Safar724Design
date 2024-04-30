@@ -14,17 +14,16 @@ interface Props {
 }
 
 const SearchPanel = ({ setErrorFetching }: Props) => {
-  const [_, setServicesData] = useAtom(GlobalServiceData);
+  const [servicesData, setServicesData] = useAtom(GlobalServiceData);
   const [selectedDate] = useAtom(GlobalSelectedDate);
   const [display, setDisplay] = useState(false);
   const location = useLocation();
   var formData = location.state?.formData;
   const navigate = useNavigate();
-
-  const handleSearchButtonClick = () => {
-    console.log("handleSearchButtonClick called");
+  
+  useEffect(() => {
+    if (servicesData) return;
     const hiddenInputs = document.querySelectorAll<HTMLInputElement>('input[type="hidden"]');
-    setServicesData(null);
     setErrorFetching(false);
     fetchServices(formatDate(selectedDate), Number(hiddenInputs[0].value), Number(hiddenInputs[1].value))
       .then((data) => {
@@ -33,22 +32,15 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
       .catch(() => {
         setErrorFetching(true);
       });
-  };
+  }, [servicesData])
 
   useEffect(() => {
     if (!formData) {
       setErrorFetching(true);
       return;
     }
-    fetchServices(formatDate(selectedDate), formData.originID, formData.destinationID)
-      .then((data) => {
-        console.log("Fetched data:", data);
-        setServicesData(data);
-      })
-      .catch(() => {
-        setErrorFetching(true);
-      });
   }, []);
+
   useEffect(() => {
     const handleBeforeUnload = () => {
       let temp = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
@@ -124,7 +116,7 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
           <div className="custom-gap" />
           <CalenderInput display={display} setDisplay={setDisplay} />
           <div className="custom-gap" />
-          <button className="search" onClick={handleSearchButtonClick}>
+          <button className="search" onClick={() => setServicesData(null)}>
             جستجو
             <i className="fas fa-search" />
           </button>
