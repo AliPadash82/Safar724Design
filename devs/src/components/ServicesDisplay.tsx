@@ -1,18 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ServiceResponse } from "../util/Models";
 import s from "../assets/css/servicesDisplay.module.css";
-// import servicesData from "../util/serviceResponse.json";
-import { toPersianNum, turnTimeToInteger, turnToDate } from "../util/Function";
+import { turnTimeToInteger, turnToDate } from "../util/Function";
 import Panel from "./Panel";
 import DummyPanel from "./DummyPanel";
 import ServicesDisplayTitle from "./ServicesDisplayTitle";
+import { useAtom } from "jotai";
+import { GlobalServiceData } from "../util/GlobalState";
 
 interface Props {
   sortBasedOnPrice: boolean;
   checkedState: { [key: string]: boolean };
   originState: { [key: string]: boolean };
   destinationState: { [key: string]: boolean };
-  servicesData: ServiceResponse | null;
   errorFetching: boolean;
 }
 
@@ -21,13 +21,13 @@ const ServicesDisplay = ({
   checkedState,
   originState,
   destinationState,
-  servicesData,
   errorFetching,
 }: Props) => {
   const [dataBasedOnPrice, setDataBasedOnPrice] = useState<ServiceResponse | null>(null);
   const [dataBasedOnHour, setDataBasedOnHour] = useState<ServiceResponse | null>(null);
   const [minDepartureTime, setMinDepartureTime] = useState<string>("00:00");
   const [maxDepartureTime, setMaxDepartureTime] = useState<string>("00:00");
+  const [servicesData] = useAtom(GlobalServiceData);
   const [data, setData] = useState<ServiceResponse | null>(null);
   const [visibleCount, setVisibleCount] = useState(3);
   const [trigger, setTrigger] = useState(false);
@@ -123,12 +123,11 @@ const ServicesDisplay = ({
 
   return (
     <div className={s.service}>
-      <ServicesDisplayTitle data={data} minDepartureTime={minDepartureTime} maxDepartureTime={maxDepartureTime} />
+      <ServicesDisplayTitle minDepartureTime={minDepartureTime} maxDepartureTime={maxDepartureTime} />
       {data?.Items?.map((item: any, index: any) => (
         <Panel
           trigger={trigger}
           setTrigger={setTrigger}
-          data={data}
           key={index}
           item={item}
           index={index}

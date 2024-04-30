@@ -1,14 +1,16 @@
 import React from "react";
 import { toPersianNum, turnToDate } from "../util/Function";
 import { ServiceResponse } from "../util/Models";
+import { GlobalServiceData } from "../util/GlobalState";
+import { useAtom } from "jotai";
 
 interface Props {
-  data: ServiceResponse;
   minDepartureTime: string;
   maxDepartureTime: string;
 }
 
-const ServicesDisplayTitle = ({data, minDepartureTime = "00:00", maxDepartureTime = "23:59"} : Props) => {
+const ServicesDisplayTitle = ({minDepartureTime = "00:00", maxDepartureTime = "23:59"} : Props) => {
+  const [data] = useAtom(GlobalServiceData);
   return (
     <h1>
       تعداد

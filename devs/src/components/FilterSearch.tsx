@@ -3,7 +3,8 @@ import ExpandableCard2 from "./ExpandableCard2";
 import InputBox from "./InputBox";
 import "../assets/css/filterSearch.css";
 import IdFilter from "./IdFilter";
-import { ServiceResponse } from "../util/Models";
+import { GlobalServiceData } from "../util/GlobalState";
+import { useAtom } from "jotai";
 
 interface Props {
   checkedState?: { [key: string]: boolean };
@@ -12,7 +13,6 @@ interface Props {
   setOriginState?: React.Dispatch<React.SetStateAction<{ [key: string]: boolean }>>;
   destinationState?: { [key: string]: boolean };
   setDistinationState?: React.Dispatch<React.SetStateAction<{ [key: string]: boolean }>>;
-  servicesData?: ServiceResponse | null;
 }
 
 const FilterSearch = ({
@@ -22,11 +22,11 @@ const FilterSearch = ({
   setOriginState,
   destinationState,
   setDistinationState,
-  servicesData,
 }: Props) => {
   const [companyData, setCompanyData] = useState<Map<string, string>>(new Map());
   const [originData, setOriginData] = useState<Map<string, string>>(new Map());
   const [destinationData, setDestinationData] = useState<Map<string, string>>(new Map());
+  const [servicesData] = useAtom(GlobalServiceData);
 
   const extractCompanies = () => {
     const newCompanyData = new Map<string, string>();
@@ -39,7 +39,6 @@ const FilterSearch = ({
       newDestinationData.set(item.DestinationTerminalCode, item.DestinationTerminalPersianName);
     });
 
-    // Update state with the new Maps
     setCompanyData(newCompanyData);
     setOriginData(newOriginData);
     setDestinationData(newDestinationData);

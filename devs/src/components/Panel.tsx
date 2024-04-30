@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Service, ServiceResponse } from "../util/Models";
+import { Service } from "../util/Models";
 import { TbClockHour9 } from "react-icons/tb";
 import s from "../assets/css/panel.module.css";
 import defaultImg from "../assets/images/CompanyDefaultLogo.png";
 import { toPersianNum, putComma } from "../util/Function";
 import BusDetails from "./BusDetails";
 import { fetchNumberOfAvailableSeats } from "../util/FetchFunction";
+import { useAtom } from "jotai";
+import { GlobalServiceData } from "../util/GlobalState";
 
 interface Props {
-  data: ServiceResponse;
   item: Service;
   index: number;
   visibleCount?: number;
@@ -17,7 +18,8 @@ interface Props {
   setTrigger: (trigger: boolean) => void;
 }
 
-const Panel = ({ data, item, index, trigger, setTrigger }: Props) => {
+const Panel = ({ item, index, trigger, setTrigger }: Props) => {
+  const [servicesData] = useAtom(GlobalServiceData);
   const [showDetails, setShowDetails] = useState(false);
   const [numberOfAvailableSeats, setNumberOfAvailableSeats] = useState(item.AvailableSeatCount);
   const [loadingSeatCount, setLoadingSeatCount] = useState(false);
@@ -25,7 +27,7 @@ const Panel = ({ data, item, index, trigger, setTrigger }: Props) => {
 
   useEffect(() => {
     setNumberOfAvailableSeats(item.AvailableSeatCount);
-  }, [data]);
+  }, [servicesData]);
 
   useEffect(() => {
     if (!showDetails) return;
@@ -60,9 +62,9 @@ const Panel = ({ data, item, index, trigger, setTrigger }: Props) => {
           <h6>نوع اتوبوس {item.BusType}</h6>
           <div className={s.inner}>
             <div className={s.od}>
-              {data.OriginPersianName + " - پایانه " + item.OriginTerminalPersianName}
+              {servicesData?.OriginPersianName + " - پایانه " + item.OriginTerminalPersianName}
               <i className="fas fa-arrow-left" />
-              {data.DestinationPersianName + " - پایانه " + item.DestinationTerminalPersianName}
+              {servicesData?.DestinationPersianName + " - پایانه " + item.DestinationTerminalPersianName}
             </div>
             <div className={s.departureTime}>
               {toPersianNum(item.DepartureTime)}

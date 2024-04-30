@@ -4,18 +4,17 @@ import CustomAutocomplete from "./CustomAutocomplete";
 import CalenderInput from "./CalendarInput";
 import cities from "../util/cities.json";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ServiceResponse } from "../util/Models";
 import { formatDate } from "../util/Function";
 import { fetchServices } from "../util/FetchFunction";
-import { GlobalSelectedDate } from "../util/GlobalState";
+import { GlobalSelectedDate, GlobalServiceData } from "../util/GlobalState";
 import { useAtom } from "jotai";
 
 interface Props {
-  setServicesData: (data: ServiceResponse | null) => void;
   setErrorFetching: (errorFetching: boolean) => void;
 }
 
-const SearchPanel = ({ setServicesData, setErrorFetching }: Props) => {
+const SearchPanel = ({ setErrorFetching }: Props) => {
+  const [_, setServicesData] = useAtom(GlobalServiceData);
   const [selectedDate] = useAtom(GlobalSelectedDate);
   const [display, setDisplay] = useState(false);
   const location = useLocation();

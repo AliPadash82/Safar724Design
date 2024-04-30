@@ -5,17 +5,17 @@ import SearchPanel from "../components/SearchPanel";
 import DaysTab from "../components/DaysTab";
 import ServicesDisplay from "../components/ServicesDisplay";
 import FilterSearch from "../components/FilterSearch";
-import data from "../util/serviceResponse.json";
 import { useEffect, useState } from "react";
 import TicketModel from "../components/TicketModel";
-import { ServiceResponse } from "../util/Models";
+import { GlobalServiceData } from "../util/GlobalState";
+import { useAtom } from "jotai";
 
 function ServicePage() {
   const [sortBasedOnPrice, setSortBasedOnPrice] = useState(false);
   const [checkedState, setCheckedState] = useState<{ [key: string]: boolean }>({ all: true });
   const [originState, setOriginState] = useState<{ [key: string]: boolean }>({ all: true });
   const [destinationState, setDistinationState] = useState<{ [key: string]: boolean }>({ all: true });
-  const [servicesData, setServicesData] = useState<ServiceResponse | null>(null);
+  const [servicesData] = useAtom(GlobalServiceData);
   const [errorFetching, setErrorFetching] = useState(false);
 
   useEffect(() => {
@@ -26,31 +26,25 @@ function ServicePage() {
       setSortBasedOnPrice(sortBasedOnPriceCheckbox?.checked ? true : false);
     };
     checkInput();
-    sortBasedOnPriceCheckbox?.addEventListener("change", checkInput); // Add change listener
+    sortBasedOnPriceCheckbox?.addEventListener("change", checkInput);
     sortBasedOnHourCheckbox?.addEventListener("change", checkInput);
     return () => {
-      sortBasedOnPriceCheckbox?.removeEventListener("change", checkInput); // Cleanup listener on unmount
+      sortBasedOnPriceCheckbox?.removeEventListener("change", checkInput);
       sortBasedOnHourCheckbox?.removeEventListener("change", checkInput);
     };
   }, []);
-
-  
 
   return (
     <>
       <div className="space" style={{ height: "135px", backgroundColor: "#f0f0f0", zIndex: -1000 }}></div>
       <WholeNavbar isFocused={false} />
-      <SearchPanel
-        setServicesData={setServicesData}
-        setErrorFetching={setErrorFetching}
-      />
+      <SearchPanel setErrorFetching={setErrorFetching} />
       <div style={{ backgroundColor: "#FBFBFB", paddingTop: "10px" }}>
         <h1 style={{ marginTop: 0 }}>
-          بلیط اتوبوس {data.OriginPersianName} {data.DestinationPersianName}
+          بلیط اتوبوس {servicesData?.OriginPersianName} {servicesData?.DestinationPersianName}
         </h1>
         <FilterSearch
           checkedState={checkedState}
-          servicesData={servicesData}
           setCheckedState={setCheckedState}
           originState={originState}
           setOriginState={setOriginState}
@@ -60,7 +54,6 @@ function ServicePage() {
       </div>
       <DaysTab />
       <ServicesDisplay
-        servicesData={servicesData}
         sortBasedOnPrice={sortBasedOnPrice}
         checkedState={checkedState}
         originState={originState}

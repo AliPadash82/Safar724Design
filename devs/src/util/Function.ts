@@ -1,11 +1,15 @@
 import jalaali from 'jalaali-js'
 
-function toPersianNum(num: string | number): string {
-  const numbers: { [key: string]: string } = {
-    '0': '۰', '1': '۱', '2': '۲', '3': '۳', '4': '۴',
-    '5': '۵', '6': '۶', '7': '۷', '8': '۸', '9': '۹'
-  };
-  return num.toString().split('').map(char => numbers[char] || char).join('');
+const toPersianNum = (num: string | number | undefined) => {
+  try {
+    const numbers: { [key: string]: string } = {
+      '0': '۰', '1': '۱', '2': '۲', '3': '۳', '4': '۴',
+      '5': '۵', '6': '۶', '7': '۷', '8': '۸', '9': '۹'
+    };
+    return num?.toString().split('').map(char => numbers[char] || char).join('');
+  } catch {
+    return undefined;
+  }
 }
 
 function putComma(num: string | number): string {
@@ -43,7 +47,8 @@ const formatDate = (date: Date) => {
   return s;
 }
 
-const turnToDate = (s: string, persian=true) => {
+const turnToDate = (s: string | undefined, persian=true) => {
+  if (s == undefined) { return undefined;}
   const [year, month, day] = s.split('-').map(number => parseInt(number));
   return persian ? new Date(year, month - 1, day).toLocaleDateString('fa-IR') : new Date(year, month - 1, day);
 }
