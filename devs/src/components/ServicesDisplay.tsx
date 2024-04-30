@@ -16,13 +16,7 @@ interface Props {
   errorFetching: boolean;
 }
 
-const ServicesDisplay = ({
-  sortBasedOnPrice,
-  checkedState,
-  originState,
-  destinationState,
-  errorFetching,
-}: Props) => {
+const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinationState, errorFetching }: Props) => {
   const [dataBasedOnPrice, setDataBasedOnPrice] = useState<ServiceResponse | null>(null);
   const [dataBasedOnHour, setDataBasedOnHour] = useState<ServiceResponse | null>(null);
   const [minDepartureTime, setMinDepartureTime] = useState<string>("00:00");
@@ -56,8 +50,7 @@ const ServicesDisplay = ({
       });
       setMinDepartureTime(minTime);
       setMaxDepartureTime(maxTime);
-    } catch {
-    }
+    } catch {}
   };
 
   useEffect(() => {
@@ -108,11 +101,13 @@ const ServicesDisplay = ({
         ))}
       </div>
     );
-  
+
   if (!servicesData?.Items?.length)
     return (
       <p className={s["no-service-alert"]}>
-        {`متاسفانه بلیط اتوبوس ${servicesData.OriginPersianName} به ${servicesData.DestinationPersianName} در تاریخ ${turnToDate(servicesData.Date)}
+        {`متاسفانه بلیط اتوبوس ${servicesData.OriginPersianName} به ${
+          servicesData.DestinationPersianName
+        } در تاریخ ${turnToDate(servicesData.Date)}
          وجود ندارد.`}
         <br />
         {`برای خرید بلیط اتوبوس و مشاهده قیمت، ساعات حرکت و اتوبوس های مسیر ${servicesData.OriginPersianName} ${servicesData.DestinationPersianName} لطفا روز های دیگر را بررسی کنید.`}
@@ -132,7 +127,8 @@ const ServicesDisplay = ({
           item={item}
           index={index}
           visibleCount={visibleCount}
-          lastItemRef={lastItemRef}/>
+          lastItemRef={lastItemRef}
+        />
       ))}
     </div>
   );

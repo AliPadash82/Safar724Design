@@ -4,28 +4,18 @@ import DateBox from "./DateBox";
 import styles from "../assets/css/homeHeader.module.css";
 import citiesJSON from "../util/cities.json";
 import { useNavigate } from "react-router-dom";
+import { useAtom } from "jotai";
+import { GlobalAlertDoubleBoolean, GlobalDisplayBoolean, GlobalIsFocused, GlobalIsFocusedTo } from "../util/GlobalState";
 
-interface Props {
-  isFocused: boolean;
-  isFocusedTo: boolean;
-  display: boolean;
-  setDisplay: (display: boolean) => void;
-  alert?: [boolean, boolean];
-  setAlert?: (alert: [boolean, boolean]) => void;
-}
-
-const HomeHeader = ({
-  isFocused,
-  isFocusedTo,
-  display,
-  setDisplay,
-  alert = [false, false],
-  setAlert = () => {},
-}: Props) => {
+const HomeHeader = () => {
   const navigate = useNavigate();
+  const [display, setDisplay] = useAtom(GlobalDisplayBoolean);
+  const [isFocused] = useAtom(GlobalIsFocused);
+  const [isFocusedTo] = useAtom(GlobalIsFocusedTo);
+  const [alert, setAlert] = useAtom(GlobalAlertDoubleBoolean);
 
   const handleFocus = () => {
-    let temp = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
+    const temp = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
     if (document.activeElement === temp[0]) {
       temp[0]?.blur();
       temp[1]?.focus();
@@ -40,6 +30,7 @@ const HomeHeader = ({
       setAlert([!e.currentTarget.origin.value, !e.currentTarget.destination.value]);
       return;
     }
+    setDisplay(false);
     const formData = {
       origin: e.currentTarget.origin.value,
       destination: e.currentTarget.destination.value,
@@ -61,7 +52,6 @@ const HomeHeader = ({
             className={`${styles.in} from`}
             name="origin"
             isFocused={isFocusedTo || display}
-            display={display}
             cities={citiesJSON}
             handleFocus={handleFocus}
             placeholder="مبداء را تایپ نمایید"
@@ -73,15 +63,14 @@ const HomeHeader = ({
             name="destination"
             isFocused={isFocused || display}
             cities={citiesJSON}
-            display={display}
             handleFocus={handleFocus}
             placeholder="مقصد را تایپ نمایید"
             alertMassage="لطفا مقصد را انتخاب نمایید"
             alertBoolean={alert[1]}
             delay="0.1s"
           />
-          <DateDiv className={"date-div"} setDisplay={setDisplay} />
-          <DateBox display={display} setDisplay={setDisplay} />
+          <DateDiv className={"date-div"} />
+          <DateBox />
           <button type="submit" id="search-button" className={styles.search}>
             <div className={`element-cover${isFocused || isFocusedTo ? ` ${" show"}` : ""}`} />
             جستوجو

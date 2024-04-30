@@ -53,4 +53,14 @@ const turnToDate = (s: string | undefined, persian=true) => {
   return persian ? new Date(year, month - 1, day).toLocaleDateString('fa-IR') : new Date(year, month - 1, day);
 }
 
-export { toPersianNum, putComma, dateReverse, turnTimeToInteger, getFirstWeekday, formatDate, turnToDate };
+const addDays = (date: Date, days: number): Date => {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+};
+
+const getWeekdayName = (date: Date): string => {
+  return date.toLocaleDateString("fa-IR", { weekday: "long" });
+};
+
+export { toPersianNum, putComma, dateReverse, turnTimeToInteger, getFirstWeekday, formatDate, turnToDate, addDays, getWeekdayName };

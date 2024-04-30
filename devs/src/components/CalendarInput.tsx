@@ -1,15 +1,11 @@
 import React from "react";
 import "../assets/css/calendarInput.css";
 import Calendar from "./Calendar";
-import { GlobalSelectedDate } from "../util/GlobalState";
+import { GlobalDisplayBoolean, GlobalSelectedDate } from "../util/GlobalState";
 import { useAtom } from "jotai";
 
-interface Props {
-  display: boolean;
-  setDisplay: (display: boolean) => void;
-}
-
-const CalendarInput = ({ display, setDisplay }: Props) => {
+const CalendarInput = () => {
+  const [display, setDisplay] = useAtom(GlobalDisplayBoolean);
   const contentRef = React.useRef<HTMLDivElement>(null);
   const [selectedDate] = useAtom(GlobalSelectedDate);
   const handleClick = (e: MouseEvent) => {

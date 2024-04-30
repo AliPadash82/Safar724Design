@@ -1,16 +1,12 @@
 import { useEffect, useRef } from "react";
 import "../assets/css/dateBox.css";
 import Calendar from "./Calendar";
-import { GlobalSelectedDate } from "../util/GlobalState";
+import { GlobalDisplayBoolean } from "../util/GlobalState";
 import { useAtom } from "jotai";
-interface Props {
-  display: boolean;
-  setDisplay: (display: boolean) => void;
-}
 
-const DateBox = ({ display, setDisplay }: Props) => {
+const DateBox = () => {
+  const [display, setDisplay] = useAtom(GlobalDisplayBoolean);
   const dateBoxRef = useRef<HTMLDivElement>(null);
-  const [selectedDate, setSelectedDate] = useAtom(GlobalSelectedDate);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dateBoxRef.current && !dateBoxRef.current.contains(event.target as Node)) {
@@ -30,7 +26,7 @@ const DateBox = ({ display, setDisplay }: Props) => {
       style={{
         pointerEvents: display ? "auto" : "none",
         opacity: display ? 1 : 0,
-        transition: display ? "opacity 0.3s" : "opacity 0.2s", // Add visibility to the transition
+        transition: display ? "opacity 0.3s" : "opacity 0.2s",
         direction: "rtl",
       }}>
       <i className="cross" onClick={() => setDisplay(false)} />

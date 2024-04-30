@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import CustomAutocomplete from "./CustomAutocomplete";
 import s from "../assets/css/homeHeader.module.css";
 import { City } from "../util/Models";
+import { useAtom } from "jotai";
+import { GlobalDisplayBoolean } from "../util/GlobalState";
 
 interface Props {
   isFocused: boolean;
   cities: City[];
   className: string;
   placeholder: string;
-  display?: boolean;
   handleFocus?: () => void;
   offset?: string;
   name?: string;
@@ -22,17 +23,16 @@ const CustomInput = ({
   cities,
   className,
   placeholder,
-  display,
   handleFocus = () => {},
   offset = "21%",
   name,
-  alertMassage: alert = "",
+  alertMassage = "",
   alertBoolean = false,
-  delay = ""
+  delay = "",
 }: Props) => {
   const [render, setRender] = useState(false);
   const [render2, setRender2] = useState(false);
-
+  const [display] = useAtom(GlobalDisplayBoolean);
   useEffect(() => {
     if (!display) {
       setTimeout(() => {
@@ -68,7 +68,9 @@ const CustomInput = ({
         name={name}
       />
       <div className={s["alert-container"]}>
-        <p className={alertBoolean ? s.show : ''} style={{transitionDelay: alertBoolean ? delay : "0s"}}>{alert}</p>
+        <p className={alertBoolean ? s.show : ""} style={{ transitionDelay: alertBoolean ? delay : "0s" }}>
+          {alertMassage}
+        </p>
       </div>
       <i className="icon-location"></i>
     </div>

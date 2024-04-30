@@ -1,4 +1,3 @@
-import React from "react";
 import "../assets/css/index.css";
 import HomeHeader from "../components/HomeHeader";
 import BlueHeader from "../components/BlueHeader";
@@ -6,14 +5,20 @@ import WholeNavbar from "../components/WholeNavbar";
 import TwoColumns from "../components/TwoColumns";
 import PositivePoints from "../components/PositivePoints";
 import BottomNavbar from "../components/BottomNavbar";
-import { useEffect, useState } from "react";
-import { BsPass } from "react-icons/bs";
+import { useEffect } from "react";
+import { useAtom } from "jotai";
+import {
+  GlobalAlertDoubleBoolean,
+  GlobalDisplayBoolean,
+  GlobalIsFocused,
+  GlobalIsFocusedTo,
+} from "../util/GlobalState";
 
 function App() {
-  const [isFocused, setIsFocused] = useState(false);
-  const [isFocusedTo, setIsFocusedTo] = useState(false);
-  const [display, setDisplay] = useState(true);
-  const [alert, setAlert] = useState<[boolean, boolean]>([false, false]);
+  const [_, setAlert] = useAtom(GlobalAlertDoubleBoolean);
+  const [isFocused, setIsFocused] = useAtom(GlobalIsFocused);
+  const [isFocusedTo, setIsFocusedTo] = useAtom(GlobalIsFocusedTo);
+  const [display, setDisplay] = useAtom(GlobalDisplayBoolean);
 
   useEffect(() => {
     const inputs = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
@@ -92,14 +97,7 @@ function App() {
         className="space"
         style={{ height: "170px", backgroundColor: "#cbe6f8", zIndex: -1000, transform: "translateY(40px)" }}></div>
       <WholeNavbar isFocused={isFocused || isFocusedTo || display} />
-      <HomeHeader
-        isFocused={isFocused}
-        isFocusedTo={isFocusedTo}
-        display={display}
-        setDisplay={setDisplay}
-        alert={alert}
-        setAlert={setAlert}
-      />
+      <HomeHeader />
       <BlueHeader />
       <TwoColumns />
       <PositivePoints />

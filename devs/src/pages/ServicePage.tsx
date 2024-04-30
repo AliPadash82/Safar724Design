@@ -28,7 +28,19 @@ function ServicePage() {
     checkInput();
     sortBasedOnPriceCheckbox?.addEventListener("change", checkInput);
     sortBasedOnHourCheckbox?.addEventListener("change", checkInput);
+    const inputs = document.querySelectorAll<HTMLInputElement>("input[type='text']");
+    const handleEnter = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        if (!inputs[0]?.value) inputs[0]?.focus();
+        else if (inputs[0]?.value && !inputs[1]?.value) inputs[1]?.focus();
+        else if (inputs[0]?.value && inputs[1]?.value) null;
+        if (inputs[0]?.value && inputs[1]?.value) document.getElementById("search-button")?.click();
+      }
+    };
+    window.addEventListener("keydown", handleEnter);
     return () => {
+      window.removeEventListener("keydown", handleEnter);
       sortBasedOnPriceCheckbox?.removeEventListener("change", checkInput);
       sortBasedOnHourCheckbox?.removeEventListener("change", checkInput);
     };
