@@ -10,6 +10,7 @@ import TicketModel from "../components/TicketModel";
 import { GlobalServiceData } from "../util/GlobalState";
 import { useAtom } from "jotai";
 
+//
 function ServicePage() {
   const [sortBasedOnPrice, setSortBasedOnPrice] = useState(false);
   const [checkedState, setCheckedState] = useState<{ [key: string]: boolean }>({ all: true });
