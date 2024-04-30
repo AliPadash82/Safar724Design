@@ -71,6 +71,10 @@ const ServicesDisplay = ({
   }, [servicesData]);
 
   useEffect(() => {
+    setTrigger(true);
+    setTimeout(() => setTrigger(false));
+    setTimeout(() => setTrigger(true), 1);
+    setTimeout(() => setTrigger(false), 2);
     if (!servicesData?.Items?.length) {
       return;
     }

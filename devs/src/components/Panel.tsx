@@ -37,7 +37,6 @@ const Panel = ({ data, item, index, trigger, setTrigger }: Props) => {
     setLoadingSeatCount(true);
     fetchNumberOfAvailableSeats(item.ID)
       .then((result) => {
-        console.log("Fetched result:", result);
         setNumberOfAvailableSeats(result);
         setLoadingSeatCount(false);
       })
