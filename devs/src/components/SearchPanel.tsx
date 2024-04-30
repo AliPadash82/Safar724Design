@@ -6,7 +6,7 @@ import cities from "../util/cities.json";
 import { useLocation, useNavigate } from "react-router-dom";
 import { formatDate } from "../util/Function";
 import { fetchServices } from "../util/FetchFunction";
-import { GlobalDisplayBoolean, GlobalSelectedDate, GlobalServiceData } from "../util/GlobalState";
+import { GlobalSelectedDate, GlobalServiceData } from "../util/GlobalState";
 import { useAtom } from "jotai";
 
 interface Props {
@@ -14,9 +14,9 @@ interface Props {
 }
 
 const SearchPanel = ({ setErrorFetching }: Props) => {
-  const [_ , setServicesData] = useAtom(GlobalServiceData);
+  const [servicesData , setServicesData] = useAtom(GlobalServiceData);
   const [selectedDate] = useAtom(GlobalSelectedDate);
-  const [__, setDisplay] = useAtom(GlobalDisplayBoolean);
+  const [triggerFetch, setTriggerFetch] = useState(false);
   const location = useLocation();
   var formData = location.state?.formData;
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
       .catch(() => {
         setErrorFetching(true);
       });
-  }, [selectedDate])
+  }, [selectedDate, triggerFetch])
 
   useEffect(() => {
     if (!formData) {
@@ -54,7 +54,7 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
     };
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [selectedDate]);
+  }, [servicesData]);
 
   const handleFocus = () => {
     const temp = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
@@ -63,7 +63,6 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
       temp[1]?.focus();
     } else if (document.activeElement === temp[1]) {
       temp[1]?.blur();
-      setDisplay(true);
     }
   };
 
@@ -116,7 +115,7 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
           <div className="custom-gap" />
           <CalenderInput />
           <div className="custom-gap" />
-          <button className="search" onClick={() => setServicesData(null)}>
+          <button className="search" id="search-button" onClick={() => setTriggerFetch(prev =>  !prev)}>
             جستجو
             <i className="fas fa-search" />
           </button>

@@ -97,7 +97,7 @@ const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinat
       <div className={s.service}>
         <div className={s.dummyText} />
         {Array.from({ length: 6 }, (_, index) => (
-          <DummyPanel index={index} />
+          <DummyPanel key={index} />
         ))}
       </div>
     );
@@ -125,7 +125,6 @@ const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinat
           setTrigger={setTrigger}
           key={index}
           item={item}
-          index={index}
           visibleCount={visibleCount}
           lastItemRef={lastItemRef}
         />

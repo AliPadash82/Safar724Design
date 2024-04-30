@@ -11,14 +11,13 @@ import { GlobalServiceData } from "../util/GlobalState";
 
 interface Props {
   item: Service;
-  index: number;
   visibleCount?: number;
   lastItemRef?: React.LegacyRef<HTMLDivElement>;
   trigger: boolean;
   setTrigger: (trigger: boolean) => void;
 }
 
-const Panel = ({ item, index, trigger, setTrigger }: Props) => {
+const Panel = ({ item, trigger, setTrigger }: Props) => {
   const [servicesData] = useAtom(GlobalServiceData);
   const [showDetails, setShowDetails] = useState(false);
   const [numberOfAvailableSeats, setNumberOfAvailableSeats] = useState(item.AvailableSeatCount);
@@ -50,7 +49,6 @@ const Panel = ({ item, index, trigger, setTrigger }: Props) => {
   return (
     <div
       className={s.panel}
-      key={index}
       ref={ref}
       >
       <div className={s.flexRow}>

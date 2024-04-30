@@ -19,7 +19,7 @@ const CalendarInput = () => {
     return () => {
       document.removeEventListener("click", handleClick);
     };
-  });
+  }, [setDisplay]);
 
   return (
     <div className="calendar-div">

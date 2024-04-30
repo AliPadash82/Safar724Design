@@ -10,8 +10,8 @@ import { GlobalAlertDoubleBoolean, GlobalDisplayBoolean, GlobalIsFocused, Global
 const HomeHeader = () => {
   const navigate = useNavigate();
   const [display, setDisplay] = useAtom(GlobalDisplayBoolean);
-  const [isFocused] = useAtom(GlobalIsFocused);
-  const [isFocusedTo] = useAtom(GlobalIsFocusedTo);
+  const [isFocused, setIsFocused] = useAtom(GlobalIsFocused);
+  const [isFocusedTo, setIsFocusedTo] = useAtom(GlobalIsFocusedTo);
   const [alert, setAlert] = useAtom(GlobalAlertDoubleBoolean);
 
   const handleFocus = () => {
@@ -31,6 +31,9 @@ const HomeHeader = () => {
       return;
     }
     setDisplay(false);
+    setIsFocused(false);
+    setIsFocusedTo(false);
+    setAlert([false, false]);
     const formData = {
       origin: e.currentTarget.origin.value,
       destination: e.currentTarget.destination.value,

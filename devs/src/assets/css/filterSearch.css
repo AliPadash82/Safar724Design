@@ -67,7 +67,6 @@
 
 .calendar-div .expandable-card2-content {
     pointer-events: none;
-    /* height: auto; */
     max-height: 0;
     opacity: 0;
     transition: max-height 0.5s, opacity 0.5s 0.1s;

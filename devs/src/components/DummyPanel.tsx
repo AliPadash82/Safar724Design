@@ -1,13 +1,8 @@
-import React from "react";
 import s from "../assets/css/dummyPanel.module.css";
 
-interface Props {
-  index: number;
-}
-
-const DummyPanel = ({ index }: Props) => {
+const DummyPanel = () => {
   return (
-    <div className={s.dummyPanel} key={index}>
+    <div className={s.dummyPanel}>
       <div className={s.dummyCover} />
       <div className={s.dummyCompanyLogo}>
         <span></span>
