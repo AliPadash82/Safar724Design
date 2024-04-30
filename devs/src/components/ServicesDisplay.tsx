@@ -5,6 +5,7 @@ import s from "../assets/css/servicesDisplay.module.css";
 import { toPersianNum, turnTimeToInteger, turnToDate } from "../util/Function";
 import Panel from "./Panel";
 import DummyPanel from "./DummyPanel";
+import ServicesDisplayTitle from "./ServicesDisplayTitle";
 
 interface Props {
   sortBasedOnPrice: boolean;
@@ -107,6 +108,7 @@ const ServicesDisplay = ({
         ))}
       </div>
     );
+  
   if (!servicesData?.Items?.length)
     return (
       <p className={s["no-service-alert"]}>
@@ -118,24 +120,10 @@ const ServicesDisplay = ({
     );
 
   if (!data?.Items?.length) return <p className={s["no-service-alert"]}>متاسفانه خطایی رخ داده است.</p>;
-  
+
   return (
     <div className={s.service}>
-      <h1>
-        تعداد
-        <strong>{" " + toPersianNum(data.Items.length) + " "}</strong>
-        سرویس از
-        <strong>{" " + data.OriginPersianName + " " + " "}</strong>
-        به
-        <strong>{" " + data.DestinationPersianName + " "}</strong>
-        در تاریخ
-        <strong> {" " + turnToDate(data.Date) + " "} </strong>
-        از ساعت
-        <strong>{" " + toPersianNum(minDepartureTime) + " "}</strong>
-        تا ساعت
-        <strong>{" " + toPersianNum(maxDepartureTime) + " "}</strong>
-        یافت شد
-      </h1>
+      <ServicesDisplayTitle data={data} minDepartureTime={minDepartureTime} maxDepartureTime={maxDepartureTime} />
       {data?.Items?.map((item: any, index: any) => (
         <Panel
           trigger={trigger}
