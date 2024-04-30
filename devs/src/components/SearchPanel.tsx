@@ -18,7 +18,7 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
   const [selectedDate] = useAtom(GlobalSelectedDate);
   const [triggerFetch, setTriggerFetch] = useState(false);
   const [_, setDisplay] = useAtom(GlobalDisplayBoolean);
-  const [forceInput, setForceInput] = useState<[string, string]>(["", ""]);
+  const [forceInput, setForceInput] = useState([undefined, undefined]);
   const location = useLocation();
   var formData = location.state?.formData;
   const navigate = useNavigate();

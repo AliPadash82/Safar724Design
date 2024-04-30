@@ -61,4 +61,4 @@ const getWeekdayName = (date: Date): string => {
   return date.toLocaleDateString("fa-IR", { weekday: "long" });
 };
 
-export { toPersianNum, putComma, dateReverse, turnTimeToInteger, getFirstWeekday, formatDate, turnToDate, addDays, getWeekdayName, swap };
+export { toPersianNum, putComma, dateReverse, turnTimeToInteger, getFirstWeekday, formatDate, turnToDate, addDays, getWeekdayName };
