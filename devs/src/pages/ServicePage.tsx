@@ -38,12 +38,12 @@ function ServicePage() {
   useEffect(() => {
     const inputs = document.querySelectorAll<HTMLInputElement>("input[type='text']");
     const handleEnter = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        console.log(display);
+      const tagName = document.activeElement?.tagName.toUpperCase() || "";
+      if (event.key === "Enter" && !['BUTTON', 'INPUT', 'A'].includes(tagName)) {
         event.preventDefault();
         if (!inputs[0]?.value) inputs[0]?.focus();
         else if (inputs[0]?.value && !inputs[1]?.value) setTimeout(() => inputs[1]?.focus());
-        else if (inputs[0]?.value && inputs[1]?.value && !display && document.activeElement !== inputs[0]) setDisplay(true);
+        else if (inputs[0]?.value && inputs[1]?.value && !display) setDisplay(true);
         if (inputs[0]?.value && inputs[1]?.value && display) document.getElementById("search-button")?.click();
       }
       if (event.key == "Escape") {

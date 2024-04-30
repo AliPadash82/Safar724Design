@@ -6,7 +6,7 @@ import cities from "../util/cities.json";
 import { useLocation, useNavigate } from "react-router-dom";
 import { formatDate } from "../util/Function";
 import { fetchServices } from "../util/FetchFunction";
-import { GlobalSelectedDate, GlobalServiceData } from "../util/GlobalState";
+import { GlobalDisplayBoolean, GlobalSelectedDate, GlobalServiceData } from "../util/GlobalState";
 import { useAtom } from "jotai";
 
 interface Props {
@@ -17,6 +17,7 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
   const [servicesData , setServicesData] = useAtom(GlobalServiceData);
   const [selectedDate] = useAtom(GlobalSelectedDate);
   const [triggerFetch, setTriggerFetch] = useState(false);
+  const [_, setDisplay] = useAtom(GlobalDisplayBoolean);
   const location = useLocation();
   var formData = location.state?.formData;
   const navigate = useNavigate();
@@ -63,6 +64,7 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
       temp[1]?.focus();
     } else if (document.activeElement === temp[1]) {
       temp[1]?.blur();
+      setDisplay(true);
     }
   };
 
