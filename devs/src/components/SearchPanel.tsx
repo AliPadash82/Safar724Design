@@ -4,7 +4,7 @@ import CustomAutocomplete from "./CustomAutocomplete";
 import CalenderInput from "./CalendarInput";
 import cities from "../util/cities.json";
 import { useLocation, useNavigate } from "react-router-dom";
-import { formatDate } from "../util/Function";
+import { formatDate, swap } from "../util/Function";
 import { fetchServices } from "../util/FetchFunction";
 import { GlobalDisplayBoolean, GlobalSelectedDate, GlobalServiceData } from "../util/GlobalState";
 import { useAtom } from "jotai";
@@ -14,15 +14,17 @@ interface Props {
 }
 
 const SearchPanel = ({ setErrorFetching }: Props) => {
-  const [servicesData , setServicesData] = useAtom(GlobalServiceData);
+  const [servicesData, setServicesData] = useAtom(GlobalServiceData);
   const [selectedDate] = useAtom(GlobalSelectedDate);
   const [triggerFetch, setTriggerFetch] = useState(false);
   const [_, setDisplay] = useAtom(GlobalDisplayBoolean);
+  const [forceInput, setForceInput] = useState<[string, string]>(["", ""]);
   const location = useLocation();
   var formData = location.state?.formData;
   const navigate = useNavigate();
-  
+
   useEffect(() => {
+    
     setServicesData(null);
     const hiddenInputs = document.querySelectorAll<HTMLInputElement>('input[type="hidden"]');
     setErrorFetching(false);
@@ -33,7 +35,7 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
       .catch(() => {
         setErrorFetching(true);
       });
-  }, [selectedDate, triggerFetch])
+  }, [selectedDate, triggerFetch, forceInput]);
 
   useEffect(() => {
     if (!formData) {
@@ -70,17 +72,7 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
 
   const handleExchange = () => {
     const inputs = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
-    const hiddenInputs = document.querySelectorAll<HTMLInputElement>('input[type="hidden"]');
-    if (inputs.length >= 2) {
-      console.log(inputs[0].value, inputs[1].value);
-      let temp = inputs[0].value;
-      inputs[0].value = inputs[1].value;
-      inputs[1].value = temp;
-      console.log(inputs[0].value, inputs[1].value);
-      temp = hiddenInputs[0].value;
-      hiddenInputs[0].value = hiddenInputs[1].value;
-      hiddenInputs[1].value = temp;
-    } else console.error("Expected at least two input elements, but found", inputs.length);
+    setForceInput([inputs[1].value, inputs[0].value]);
   };
 
   return (
@@ -101,6 +93,7 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
               handleFocus={handleFocus}
               initialInputValue={formData?.origin ? formData.origin : ""}
               initialCityID={formData?.originID ? formData.originID : 0}
+              ForceInputValue={forceInput[0]}
             />
           </div>
           <i className="fas fa-exchange-alt custom-gap" onClick={handleExchange}></i>
@@ -112,12 +105,13 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
               handleFocus={handleFocus}
               initialInputValue={formData?.destination ? formData.destination : ""}
               initialCityID={formData?.destinationID ? formData.destinationID : 0}
+              ForceInputValue={forceInput[1]}
             />
           </div>
           <div className="custom-gap" />
           <CalenderInput />
           <div className="custom-gap" />
-          <button className="search" id="search-button" onClick={() => setTriggerFetch(prev =>  !prev)}>
+          <button className="search" id="search-button" onClick={() => setTriggerFetch((prev) => !prev)}>
             جستجو
             <i className="fas fa-search" />
           </button>

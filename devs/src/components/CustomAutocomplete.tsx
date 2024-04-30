@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, KeyboardEvent } from "react";
+import { useState, ChangeEvent, KeyboardEvent, useEffect } from "react";
 import "../assets/css/autocomplete.css";
 import { City } from "../util/Models";
 
@@ -10,6 +10,7 @@ interface Props {
   name?: string;
   initialInputValue?: string;
   initialCityID?: number;
+  ForceInputValue?: string;
 }
 
 const CustomAutocomplete = ({
@@ -20,11 +21,21 @@ const CustomAutocomplete = ({
   name = undefined,
   initialInputValue = "",
   initialCityID = undefined,
+  ForceInputValue = undefined,
 }: Props) => {
   const [inputValue, setInputValue] = useState(initialInputValue);
   const [cityID, setCityID] = useState(initialCityID);
   const [suggestions, setSuggestions] = useState<City[]>([]);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+
+  useEffect(() => {
+    if(ForceInputValue == undefined) {
+      setCityID(undefined);
+      return
+    } 
+    setInputValue(ForceInputValue);
+    setCityID(cities.find((city) => city.PersianName === ForceInputValue)?.ID);
+  }, [ForceInputValue]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;

@@ -41,9 +41,7 @@ const formatDate = (date: Date) => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
-
   let s = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-  console.log(s)
   return s;
 }
 
@@ -63,4 +61,4 @@ const getWeekdayName = (date: Date): string => {
   return date.toLocaleDateString("fa-IR", { weekday: "long" });
 };
 
-export { toPersianNum, putComma, dateReverse, turnTimeToInteger, getFirstWeekday, formatDate, turnToDate, addDays, getWeekdayName };
+export { toPersianNum, putComma, dateReverse, turnTimeToInteger, getFirstWeekday, formatDate, turnToDate, addDays, getWeekdayName, swap };
