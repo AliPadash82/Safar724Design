@@ -5,7 +5,6 @@ import MainPage from "./pages/MainPage"
 import ServicePage from "./pages/ServicePage"
 
 
-
 function App() {
   return (
     <>

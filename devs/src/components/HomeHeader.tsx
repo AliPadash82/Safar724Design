@@ -2,7 +2,6 @@ import CustomInput from "./CustomInput";
 import DateDiv from "./DateDiv";
 import DateBox from "./DateBox";
 import styles from "../assets/css/homeHeader.module.css";
-import { useState } from "react";
 import citiesJSON from "../util/cities.json";
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +22,6 @@ const HomeHeader = ({
   alert = [false, false],
   setAlert = () => {},
 }: Props) => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const navigate = useNavigate();
 
   const handleFocus = () => {
@@ -47,7 +45,6 @@ const HomeHeader = ({
       destination: e.currentTarget.destination.value,
       originID: e.currentTarget.originID.value,
       destinationID: e.currentTarget.destinationID.value,
-      date: selectedDate,
     };
 
     navigate("/services", { state: { formData } });
@@ -83,13 +80,8 @@ const HomeHeader = ({
             alertBoolean={alert[1]}
             delay="0.1s"
           />
-          <DateDiv className={"date-div"} setDisplay={setDisplay} selectedDate={selectedDate} />
-          <DateBox
-            selectedDate={selectedDate}
-            display={display}
-            setDisplay={setDisplay}
-            setSelectedDate={setSelectedDate}
-          />
+          <DateDiv className={"date-div"} setDisplay={setDisplay} />
+          <DateBox display={display} setDisplay={setDisplay} />
           <button type="submit" id="search-button" className={styles.search}>
             <div className={`element-cover${isFocused || isFocusedTo ? ` ${" show"}` : ""}`} />
             جستوجو

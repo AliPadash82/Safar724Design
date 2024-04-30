@@ -1,16 +1,17 @@
 import React from "react";
 import "../assets/css/calendarInput.css";
 import Calendar from "./Calendar";
+import { GlobalSelectedDate } from "../util/GlobalState";
+import { useAtom } from "jotai";
 
 interface Props {
   display: boolean;
   setDisplay: (display: boolean) => void;
-  setSelectedDate: (date: Date) => void;
-  selectedDate: Date;
 }
 
-const CalendarInput = ({ display, setDisplay, setSelectedDate, selectedDate}: Props) => {
+const CalendarInput = ({ display, setDisplay }: Props) => {
   const contentRef = React.useRef<HTMLDivElement>(null);
+  const [selectedDate] = useAtom(GlobalSelectedDate);
   const handleClick = (e: MouseEvent) => {
     if (contentRef.current && !contentRef.current.contains(e.target as Node)) {
       setDisplay(false);
@@ -37,7 +38,7 @@ const CalendarInput = ({ display, setDisplay, setSelectedDate, selectedDate}: Pr
         ref={contentRef}
         className={`expandable-card2-content${display ? " show" : ""}`}
         style={{ width: "400px", paddingInline: "0", paddingBottom: "0" }}>
-        <Calendar className="calendar-2" setSelectedDate={setSelectedDate} selectedDate={selectedDate}/>
+        <Calendar className="calendar-2" />
         <div className="bottom-calendar">
           <div className="crosss unselectable" onClick={() => setDisplay(false)}>
             ×

@@ -11,7 +11,6 @@ import TicketModel from "../components/TicketModel";
 import { ServiceResponse } from "../util/Models";
 
 function ServicePage() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [sortBasedOnPrice, setSortBasedOnPrice] = useState(false);
   const [checkedState, setCheckedState] = useState<{ [key: string]: boolean }>({ all: true });
   const [originState, setOriginState] = useState<{ [key: string]: boolean }>({ all: true });
@@ -42,8 +41,6 @@ function ServicePage() {
       <div className="space" style={{ height: "135px", backgroundColor: "#f0f0f0", zIndex: -1000 }}></div>
       <WholeNavbar isFocused={false} />
       <SearchPanel
-        setSelectedDate={setSelectedDate}
-        selectedDate={selectedDate}
         setServicesData={setServicesData}
         setErrorFetching={setErrorFetching}
       />
@@ -61,7 +58,7 @@ function ServicePage() {
           setDistinationState={setDistinationState}
         />
       </div>
-      <DaysTab selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+      <DaysTab />
       <ServicesDisplay
         servicesData={servicesData}
         sortBasedOnPrice={sortBasedOnPrice}

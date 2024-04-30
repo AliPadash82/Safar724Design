@@ -1,10 +1,7 @@
 import "../assets/css/daysTab.css";
 import { toPersianNum } from "../util/Function";
-
-interface Props {
-  selectedDate: Date;
-  setSelectedDate: (date: Date) => void;
-}
+import { GlobalSelectedDate } from "../util/GlobalState";
+import { useAtom } from "jotai";
 
 const addDays = (date: Date, days: number): Date => {
   const result = new Date(date);
@@ -16,8 +13,9 @@ const getWeekdayName = (date: Date): string => {
   return date.toLocaleDateString("fa-IR", { weekday: "long" });
 };
 
-const DaysTab = ({ selectedDate, setSelectedDate }: Props) => {
+const DaysTab = () => {
   const currentDate = new Date();
+  const [selectedDate, setSelectedDate] = useAtom(GlobalSelectedDate);
   currentDate.setHours(0, 0, 0, 0);
 
   let startDate;

@@ -7,49 +7,48 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ServiceResponse } from "../util/Models";
 import { formatDate } from "../util/Function";
 import { fetchServices } from "../util/FetchFunction";
+import { GlobalSelectedDate } from "../util/GlobalState";
+import { useAtom } from "jotai";
 
 interface Props {
-  setSelectedDate: (date: Date) => void;
-  selectedDate: Date;
   setServicesData: (data: ServiceResponse | null) => void;
   setErrorFetching: (errorFetching: boolean) => void;
 }
 
-const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData, setErrorFetching }: Props) => {
+const SearchPanel = ({ setServicesData, setErrorFetching }: Props) => {
+  const [selectedDate] = useAtom(GlobalSelectedDate);
   const [display, setDisplay] = useState(false);
   const location = useLocation();
   var formData = location.state?.formData;
   const navigate = useNavigate();
-
-
 
   const handleSearchButtonClick = () => {
     console.log("handleSearchButtonClick called");
     const hiddenInputs = document.querySelectorAll<HTMLInputElement>('input[type="hidden"]');
     setServicesData(null);
     setErrorFetching(false);
-    fetchServices(formatDate(selectedDate), Number(hiddenInputs[0].value), Number(hiddenInputs[1].value)).then(
-      (data) => {
+    fetchServices(formatDate(selectedDate), Number(hiddenInputs[0].value), Number(hiddenInputs[1].value))
+      .then((data) => {
         setServicesData(data);
-      }
-    ).catch(() => {
-      setErrorFetching(true);
-    });
+      })
+      .catch(() => {
+        setErrorFetching(true);
+      });
   };
 
   useEffect(() => {
     if (!formData) {
-      setSelectedDate(new Date());
       setErrorFetching(true);
       return;
-    }   
-    setSelectedDate(new Date(formData.date));
-    fetchServices(formatDate(formData.date), formData.originID, formData.destinationID).then((data) => {
-      console.log("Fetched data:", data);
-      setServicesData(data);
-    }).catch(() => {
-      setErrorFetching(true);
-    });
+    }
+    fetchServices(formatDate(selectedDate), formData.originID, formData.destinationID)
+      .then((data) => {
+        console.log("Fetched data:", data);
+        setServicesData(data);
+      })
+      .catch(() => {
+        setErrorFetching(true);
+      });
   }, []);
   useEffect(() => {
     const handleBeforeUnload = () => {
@@ -124,16 +123,11 @@ const SearchPanel = ({ setSelectedDate, selectedDate, setServicesData, setErrorF
             />
           </div>
           <div className="custom-gap" />
-          <CalenderInput
-            display={display}
-            setDisplay={setDisplay}
-            setSelectedDate={setSelectedDate}
-            selectedDate={selectedDate}
-          />
+          <CalenderInput display={display} setDisplay={setDisplay} />
           <div className="custom-gap" />
           <button className="search" onClick={handleSearchButtonClick}>
             جستجو
-            <i className="fas fa-search"/>
+            <i className="fas fa-search" />
           </button>
         </div>
       </div>

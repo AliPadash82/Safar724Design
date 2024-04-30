@@ -2,15 +2,16 @@ import { useState } from "react";
 import "../assets/css/calendar.css";
 import { getFirstWeekday, toPersianNum } from "../util/Function";
 import jalaali from "jalaali-js";
+import { GlobalSelectedDate } from "../util/GlobalState";
+import { useAtom } from "jotai";
 
 interface Props {
   className: string;
-  setSelectedDate: (date: Date) => void;
-  selectedDate: Date;
 }
 
-const Calendar = ({ className, setSelectedDate, selectedDate }: Props) => {
+const Calendar = ({ className }: Props) => {
   const [searchDate, setSearchDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useAtom(GlobalSelectedDate);
   const clickHandler = (day: number) => {
     const jalaaliDate = jalaali.toJalaali(searchDate);
     const newGregorianDate = jalaali.toGregorian(jalaaliDate.jy, jalaaliDate.jm, day);

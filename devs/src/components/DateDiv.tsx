@@ -1,12 +1,13 @@
 import "../assets/css/dateDiv.css";
-
+import { GlobalSelectedDate } from "../util/GlobalState";
+import { useAtom } from "jotai";
 interface Props {
   className: string;
   setDisplay: (display: boolean) => void;
-  selectedDate: Date;
 }
 
-const DateDiv = ({ className, setDisplay, selectedDate }: Props) => {
+const DateDiv = ({ className, setDisplay }: Props) => {
+  const [selectedDate] = useAtom(GlobalSelectedDate);
   return (
     <div className={className} onMouseDown={() => setTimeout(() => setDisplay(true))}>
       <div className="date">
