@@ -27,14 +27,20 @@ const CustomAutocomplete = ({
   const [cityID, setCityID] = useState(initialCityID);
   const [suggestions, setSuggestions] = useState<City[]>([]);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [correct, setCorrect] = useState(false);
 
   useEffect(() => {
-    if(ForceInputValue == undefined) {
+    if (ForceInputValue == undefined) {
       setCityID(undefined);
-      return
-    } 
+      return;
+    }
     setInputValue(ForceInputValue);
-    setCityID(cities.find((city) => city.PersianName === ForceInputValue)?.ID);
+    let temp = cities.filter((city) => city.PersianName === ForceInputValue);
+    if (temp.length == 1) setCityID(temp[0].ID);
+    else {
+      setInputValue("");
+      setCityID(undefined);
+    }
   }, [ForceInputValue]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -65,14 +71,11 @@ const CustomAutocomplete = ({
       newSelectedOption = selectedOption === 0 || selectedOption === null ? suggestions.length - 1 : selectedOption - 1;
     } else if (event.key === "Enter") {
       event.preventDefault();
-      if (selectedOption == null)
-        if (suggestions.length > 0) {
-          setInputValue(suggestions[0].PersianName);
-          setCityID(suggestions[0].ID);
-        } else return;
-      else {
+      if (selectedOption != null && suggestions.length !== 0)
+      {
         setInputValue(suggestions[selectedOption].PersianName);
         setCityID(suggestions[selectedOption].ID);
+        setCorrect(true);
       }
       setTimeout(() => handleFocus());
       return;
@@ -110,7 +113,15 @@ const CustomAutocomplete = ({
               setInputValue("");
               setCityID(undefined);
             } else if (inputValue === "") setCityID(undefined);
-            else setCityID(cities.find((city) => city.PersianName === inputValue)?.ID);
+            else if (!correct) {
+              let temp = suggestions.filter((city) => city.PersianName === inputValue);
+              if (temp.length == 1) setCityID(temp[0].ID);
+              else {
+                setInputValue("");
+                setCityID(undefined);
+              }
+            }
+            setCorrect(false);
             setSuggestions([]);
             setSelectedOption(null);
           });
