@@ -4,9 +4,14 @@ import CustomAutocomplete from "./CustomAutocomplete";
 import CalenderInput from "./CalendarInput";
 import cities from "../util/cities.json";
 import { useLocation, useNavigate } from "react-router-dom";
-import { formatDate, swap } from "../util/Function";
+import { formatDate } from "../util/Function";
 import { fetchServices } from "../util/FetchFunction";
-import { GlobalDisplayBoolean, GlobalSelectedDate, GlobalServiceData } from "../util/GlobalState";
+import {
+  GlobalAlertDoubleBoolean,
+  GlobalDisplayBoolean,
+  GlobalSelectedDate,
+  GlobalServiceData,
+} from "../util/GlobalState";
 import { useAtom } from "jotai";
 
 interface Props {
@@ -18,15 +23,21 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
   const [selectedDate] = useAtom(GlobalSelectedDate);
   const [triggerFetch, setTriggerFetch] = useState(false);
   const [_, setDisplay] = useAtom(GlobalDisplayBoolean);
+  const [alert, setAlert] = useAtom(GlobalAlertDoubleBoolean);
   const [forceInput, setForceInput] = useState<[string | undefined, string | undefined]>([undefined, undefined]);
   const location = useLocation();
   var formData = location.state?.formData;
   const navigate = useNavigate();
 
   useEffect(() => {
-    
-    setServicesData(null);
     const hiddenInputs = document.querySelectorAll<HTMLInputElement>('input[type="hidden"]');
+    const inputs = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
+    if (!inputs[1].value || !inputs[0].value) {
+      setAlert([!Boolean(inputs[0].value), !Boolean(inputs[1].value)]);
+      return;
+    }
+    setAlert([false,  false]);
+    setServicesData(null);
     setErrorFetching(false);
     fetchServices(formatDate(selectedDate), Number(hiddenInputs[0].value), Number(hiddenInputs[1].value))
       .then((data) => {
@@ -75,6 +86,16 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
     setForceInput([inputs[1].value, inputs[0].value]);
   };
 
+  const alertMessage = () => {
+    if (Array.isArray(alert) && alert.length === 2) {
+      const [isSourceMissing, isDestinationMissing] = alert;
+      if (isSourceMissing && isDestinationMissing) return "لطفا مبداء و مقصد را وارد نمایید";
+      else if (isSourceMissing) return "لطفا مبداء را وارد نمایید";
+      else if (isDestinationMissing) return "لطفا مقصد را وارد نمایید";
+    }
+    return "";
+  };
+
   return (
     <div className="search-panel" style={{ direction: "rtl" }}>
       <div className="container">
@@ -82,7 +103,7 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
           <div className="text">مبداء</div>
           <div className="text">مقصد</div>
           <div className="text">تاریخ حرکت</div>
-          <div className="text special">لطفا مقصد را وارد نمایید</div>
+          <div className="text special">{alertMessage()}</div>
         </div>
         <div className="row">
           <div className="in to">
