@@ -55,6 +55,7 @@
 .suggestions::-webkit-scrollbar {
     width: 10px;
 }
+
 .suggestions::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: #EEE;

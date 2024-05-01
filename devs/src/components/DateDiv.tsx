@@ -10,6 +10,11 @@ const DateDiv = ({ className }: Props) => {
   const [_, setDisplay] = useAtom(GlobalDisplayBoolean);
   return (
     <div className={className} onMouseDown={() => setTimeout(() => setDisplay(true))}>
+      <input
+        type="text"
+        onFocus={() => setTimeout(() => setDisplay(true))}
+        style={{ position: "absolute", opacity: 0, pointerEvents: "none" }}
+      />
       <div className="date">
         <span>{selectedDate.toLocaleString("fa-IR", { weekday: "long" })}</span>{" "}
         <span>{selectedDate.toLocaleString("fa-IR", { day: "numeric" })}</span>{" "}

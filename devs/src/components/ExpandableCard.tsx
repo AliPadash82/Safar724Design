@@ -12,7 +12,7 @@ const ExpandableCard = ({ title, children }: Props) => {
     <div className="expandable-card">
       <div className={`expandable-card-header ${expanded ? "expanded" : ""}`} onClick={() => setExpanded(!expanded)}>
         <p>{title}</p>
-        <i className={`fas fa-chevron-down ${expanded ? "rotate" : ""}`}></i>
+        <i className={`fas fa-chevron-down ${expanded ? "rotate" : ""}`} tabIndex={0} onKeyDownCapture={(e) => setExpanded(e.key === "Enter" ? !expanded : expanded)}></i>
       </div>
       <p className={`expandable-card-content ${expanded ? "expanded" : ""}`}>{children}</p>
     </div>

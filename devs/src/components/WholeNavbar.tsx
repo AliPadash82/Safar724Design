@@ -45,14 +45,6 @@ const WholeNavbar = ({ isFocused }: Props) => {
   }, []);
   return (
     <>
-      <LowerNavbar
-        scrolled={scrolled}
-        bringList={bringList}
-        setBringList={setBringList}
-        menuListRef={menuListRef}
-        iconListRef={iconListRef}
-        isFocused={isFocused}
-      />
       <UpperNavbar
         isFocused={isFocused}
         setBringList={setBringList}
@@ -61,6 +53,14 @@ const WholeNavbar = ({ isFocused }: Props) => {
           transform: scrolled ? "translateY(-40px)" : "translateY(0px)",
           transition: "all 0.3s ease-in-out",
         }}
+      />
+      <LowerNavbar
+        scrolled={scrolled}
+        bringList={bringList}
+        setBringList={setBringList}
+        menuListRef={menuListRef}
+        iconListRef={iconListRef}
+        isFocused={isFocused}
       />
       <Sidebar bringList={bringList} setBringList={setBringList} sidebarRef={sidebarRef} />
     </>

@@ -11,7 +11,7 @@ interface Props {
 
 const UpperNavbar = ({ scrolled, style, isFocused, setBringList }: Props) => {
   return (
-    <div className={`upper-top-bar${scrolled ? " show" : ""}`} style={style}>
+    <div className={`upper-top-bar${scrolled ? " show" : ""}`} style={style} tabIndex={0}> 
       <div className={"element-cover" + (isFocused ? " show" : "")} />
       <div className="one">
         <a href="#" className="register">

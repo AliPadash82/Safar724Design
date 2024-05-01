@@ -75,7 +75,8 @@ function App() {
   useEffect(() => {
     const inputs = document.querySelectorAll<HTMLInputElement>("input[type='text']");
     const handleEnter = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
+      const tagName = document.activeElement?.tagName.toUpperCase() || "";
+      if (event.key === "Enter" && !['A', 'I'].includes(tagName)) {
         event.preventDefault();
         if (!display && !isFocused && !isFocusedTo) {
           if (!inputs[0]?.value) inputs[0]?.focus();
@@ -95,7 +96,7 @@ function App() {
     <>
       <div
         className="space"
-        style={{ height: "170px", backgroundColor: "#cbe6f8", zIndex: -1000, transform: "translateY(40px)" }}></div>
+        style={{ height: "170px", backgroundColor: "#cbe6f8", zIndex: -1000, transform: "translateY(40px)" }}/>
       <WholeNavbar isFocused={isFocused || isFocusedTo || display} />
       <HomeHeader />
       <BlueHeader />
