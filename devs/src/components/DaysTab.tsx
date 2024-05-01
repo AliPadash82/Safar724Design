@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "../assets/css/daysTab.css";
 import { addDays, getWeekdayName, toPersianNum } from "../util/Function";
 import { GlobalSelectedDate } from "../util/GlobalState";
@@ -6,14 +7,13 @@ import { useAtom } from "jotai";
 const DaysTab = () => {
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useAtom(GlobalSelectedDate);
+  const [numberOfTabs, setNumberOfTabs] = useState(7);
 
   const handleChange = (variable: number | Date) => {
     if (typeof variable === "number") setSelectedDate(addDays(selectedDate, variable));
     else setSelectedDate(variable);
   };
-
   currentDate.setHours(0, 0, 0, 0);
-
   let startDate;
   if (selectedDate > currentDate) {
     startDate = addDays(selectedDate, -1);
@@ -21,7 +21,20 @@ const DaysTab = () => {
     startDate = currentDate;
   }
 
-  const daysToShow = Array.from({ length: 7 }, (_, i) => addDays(startDate, i));
+  const getTabCountBasedOnWidth = () => {
+    const width = window.innerWidth;
+    if (width < 768) return 3;
+    if (width < 1024) return 5;
+    return 7;
+  };
+
+  useEffect(() => {
+    const handleResize = () => setNumberOfTabs(getTabCountBasedOnWidth());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const daysToShow = Array.from({ length: numberOfTabs }, (_, i) => addDays(startDate, i));
   return (
     <div className="days-tab unselectable" style={{ direction: "rtl" }}>
       <div className="days-tab-container">
