@@ -32,14 +32,14 @@ export const fetchNumberOfAvailableSeats = (serviceID: number) => {
     });
 };
 
-export const fetchServices = async (date: string, originID: number, destinationID: number): Promise<ServiceResponse> => {
+export const fetchServices = async (date: string, originID: number, destinationID: number, signal?: AbortSignal): Promise<ServiceResponse> => {
   const url = new URL("http://localhost:8080/api/v1/getservices");
   url.searchParams.append("Date", date);
   url.searchParams.append("OriginID", originID.toString());
   url.searchParams.append("DestinationID", destinationID.toString());
 
   try {
-    const response = await fetch(url.toString());
+    const response = await fetch(url.toString(), {signal});
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

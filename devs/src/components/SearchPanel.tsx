@@ -41,12 +41,12 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
     setAlert([false, false]);
     setServicesData(null);
     setErrorFetching(false);
-    fetchServices(formatDate(selectedDate), Number(hiddenInputs[0].value), Number(hiddenInputs[1].value))
+    fetchServices(formatDate(selectedDate), Number(hiddenInputs[0].value), Number(hiddenInputs[1].value), signal)
       .then((data) => {
-        if (!signal.aborted) setServicesData(data);
+        setServicesData(data);
       })
-      .catch(() => {
-        setErrorFetching(true);
+      .catch((err) => {
+        if (err.name !== 'AbortError') setErrorFetching(true);
       });
       return () => abortController.abort();
   }, [selectedDate, triggerFetch, forceInput]);

@@ -35,6 +35,7 @@ const Panel = ({ item, trigger, setTrigger, index = 0 }: Props) => {
 
   useEffect(() => {
     if (!showDetails) return;
+    setTimeout(() => setTrigger(!trigger))
     setTimeout(() => {
       if (!showDetailsRef.current) return;
       const yOffset = -90;

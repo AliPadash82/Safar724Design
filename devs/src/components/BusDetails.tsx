@@ -13,10 +13,9 @@ interface Props {
   showDetails: boolean;
   setShowDetails: (showDetails: boolean) => void;
   trigger: boolean;
-  setTrigger: (trigger: boolean) => void;
 }
 
-const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, setTrigger }: Props) => {
+const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger }: Props) => {
   const [column, setColumn] = useState(9);
   const [convertedSeatsArray, setConvertedSeatsArray] = useState<SeatType[]>(Array(5 * column).fill([null, null]));
   const [isFetched, setIsFetched] = useState(false);
@@ -25,9 +24,8 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
 
   useEffect(() => {
     setExceptMe(false);
-    if (trigger && !exceptMe) {
+    if (!exceptMe) {
       setShowDetails(false);
-      setTrigger(false);
     }
   }, [trigger]);
 
@@ -38,7 +36,6 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger, 
       return;
     }
     setExceptMe(true);
-    setTimeout(() => setTrigger(true));
     fetchSeats(serviceID)
       .then((data) => {
         let seatsArray: SeatType[] = [];
