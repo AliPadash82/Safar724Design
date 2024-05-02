@@ -1,25 +1,24 @@
 import { SeatArrayType, ServiceResponse } from "./Models";
 
-export const fetchSeats = async (serviceID: number): Promise<SeatArrayType[]> => {
+export const fetchSeats = async (serviceID: number, signal?: AbortSignal): Promise<SeatArrayType[]> => {
   const url = new URL("http://localhost:8080/api/v1/getseats");
   url.searchParams.append("ServiceID", serviceID.toString());
   try {
-    const response = await fetch(url.toString());
+    const response = await fetch(url.toString(), { signal });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     return await response.json();
   } catch (error) {
-    console.error("Error fetching services:", error);
     throw error;
   }
 };
 
-export const fetchNumberOfAvailableSeats = (serviceID: number) => {
+export const fetchNumberOfAvailableSeats = (serviceID: number, signal?: AbortSignal) => {
   const url = new URL("http://localhost:8080/api/v1/getnumberofavailableseat");
   url.searchParams.append("ServiceID", serviceID.toString());
 
-  return fetch(url.toString())
+  return fetch(url.toString(), { signal })
     .then((res) => {
       if (!res.ok) {
         throw new Error("Network response was not ok");

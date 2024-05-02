@@ -30,13 +30,15 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger }
   }, [trigger]);
 
   useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
     if (!showDetails) {
       setTimeout(() => setIsFetched(false), 400);
       setExceptMe(false);
       return;
     }
     setExceptMe(true);
-    fetchSeats(serviceID)
+    fetchSeats(serviceID, signal)
       .then((data) => {
         let seatsArray: SeatType[] = [];
         switch (busCode) {
@@ -77,10 +79,12 @@ const BusDetails = ({ serviceID, busCode, showDetails, setShowDetails, trigger }
         setIsFetched(true);
       })
       .catch((error) => {
+        if (error.name === "AbortError") return;
         console.error(error);
         setIsFetched(false);
         setErrorFetching(true);
       });
+      return () => abortController.abort();
   }, [showDetails]);
 
   const busDetailsClasses = `${s.busDetails} ${showDetails ? s.show : ""}`;

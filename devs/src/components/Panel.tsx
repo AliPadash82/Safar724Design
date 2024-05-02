@@ -34,8 +34,10 @@ const Panel = ({ item, trigger, setTrigger, index = 0 }: Props) => {
   }, [showDetails]);
 
   useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
     if (!showDetails) return;
-    setTimeout(() => setTrigger(!trigger))
+    setTimeout(() => setTrigger(!trigger));
     setTimeout(() => {
       if (!showDetailsRef.current) return;
       const yOffset = -90;
@@ -43,7 +45,7 @@ const Panel = ({ item, trigger, setTrigger, index = 0 }: Props) => {
       window.scrollTo({ top: y, behavior: "smooth" });
     }, 350);
     setLoadingSeatCount(true);
-    fetchNumberOfAvailableSeats(item.ID)
+    fetchNumberOfAvailableSeats(item.ID, signal)
       .then((result) => {
         setNumberOfAvailableSeats(result);
         setLoadingSeatCount(false);
@@ -52,6 +54,7 @@ const Panel = ({ item, trigger, setTrigger, index = 0 }: Props) => {
         console.error("Error fetching details:", err);
         setLoadingSeatCount(false);
       });
+    return () => abortController.abort();
   }, [showDetails, item.ID]);
   return (
     <div className={s.panel} ref={ref} style={{ animationDuration: `${Math.min(index * 0.05 + 0.3, 0.6)}s` }}>
