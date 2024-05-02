@@ -1,9 +1,11 @@
 .refundItem {
   margin-top: 10px;
   display: flex;
+  width: 100%;
   flex-direction: row;
   border-radius: 0 5px 5px 0;
   box-shadow: 2px 2px 4.25px rgba(0, 0, 0, 0.07);
+  font-size: 13px;
 }
 
 .refundItem .refundTitle {
@@ -27,7 +29,7 @@
   text-align: center;
   color: white;
   letter-spacing: 3px;
-  font-size: 12px;
+  font-size: inherit;
   transform: translateY(1px);
 }
 
@@ -45,12 +47,21 @@
 
 .refundDescription {
   padding: 10px 15px 10px 0;
-  width: 270px;
 }
 
 .description {
   color: #555;
-  font-size: 13px !important;
+  font-size: inherit !important;
   font-weight: bold;
-  word-spacing: 3px;  
+  word-spacing: 3px;
+}
+
+@media (max-width: 1024px) {
+  .refundItem {
+    font-size: 12px;
+  }
+
+  .description {
+    word-spacing: 1px;
+  }
 }

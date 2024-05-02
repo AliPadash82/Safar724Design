@@ -1,0 +1,54 @@
+.blackCover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000000;
+}
+
+.alertBox {
+  position: relative;
+  width: 400px;
+  background-color: white;
+  margin: auto;
+  margin-top: 40px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+}
+
+.alertBox h1 {
+  margin: 0;
+  color: #555;
+  border-bottom: 1px solid #DDD;
+  padding: 15px;
+  font-size: 18px;
+  text-align: right;
+}
+
+.alertBox p {
+  text-align: justify;
+  color: #555;
+  line-height: 30px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.alertBox .content {
+  padding: 15px;
+}
+
+.cross {
+  position: absolute;
+  font-style: normal;
+  color: #CCC;
+  font-size: 22px;
+  padding: 0px 13px;
+  cursor: pointer;
+  top: 5px;
+  left: 0px;
+}
+
+.cross::before {
+  content: "×";
+}

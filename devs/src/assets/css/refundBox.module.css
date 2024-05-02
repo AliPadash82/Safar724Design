@@ -1,6 +1,7 @@
 .cancelationCondition {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
+  max-width: 370px;
   margin-top: 25px;
   margin-inline: 15px;
   direction: rtl;
@@ -16,4 +17,27 @@
   height: 0.5px;
   background-color: #e74c3c;
   margin-top: 5px;
+}
+
+button.seeCondition {
+  position: absolute;
+  bottom: calc(100% - 300px);
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid #79d5b3;
+  color: #79d5b3;
+  padding: 5px 15px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+button.seeCondition:hover {
+  border-color: #68b79a;
+  color: #68b79a;
+}
+
+
+@media (max-width: 1024px) {
+  .cancelationCondition {
+    margin-inline: 0px;
+  }
 }

@@ -21,11 +21,11 @@ const BusDetailsDisplay = ({ setShowDetails, convertedSeatsArray, column }: Prop
       </button>
     </div>
     <div className={s.dividerLine} />
-    <RefundBox />
     <div className={s.busInformation}>
       <BusSchema convertedSeatsArray={convertedSeatsArray} column={column} />
       <Legend className={s.legend} />
     </div>
+    <RefundBox />
     <button className={s.greenBuy}>خرید</button>
   </>
   )
