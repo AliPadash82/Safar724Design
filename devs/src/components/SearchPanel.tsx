@@ -105,9 +105,9 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
           <div className="text">تاریخ حرکت</div>
           <div className="text special">{alertMessage()}</div>
         </div>
-        <div className="row">
+        <div className="row" style={{color: "#333"}}>
           <div className="in to">
-            <i className="fas fa-map-marker-alt"></i>
+            <i className="fas fa-map-marker-alt" style={{color: "#555"}}></i>
             <CustomAutocomplete
               placeholder="مبداء را تایپ نمایید"
               cities={cities}
@@ -115,11 +115,12 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
               initialInputValue={formData?.origin ? formData.origin : ""}
               initialCityID={formData?.originID ? formData.originID : 0}
               ForceInputValue={forceInput[0]}
+              style={{color: "#333"}}
             />
           </div>
           <i className="fas fa-exchange-alt custom-gap" onClick={handleExchange}></i>
           <div className="in from">
-            <i className="fas fa-map-marker-alt"></i>
+            <i className="fas fa-map-marker-alt" style={{color: "#555"}}></i>
             <CustomAutocomplete
               placeholder="مقصد را تایپ نمایید"
               cities={cities}
@@ -127,6 +128,7 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
               initialInputValue={formData?.destination ? formData.destination : ""}
               initialCityID={formData?.destinationID ? formData.destinationID : 0}
               ForceInputValue={forceInput[1]}
+              style={{color: "#333"}}
             />
           </div>
           <div className="custom-gap" />

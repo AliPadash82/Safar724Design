@@ -20,6 +20,7 @@
     color: #2980b9;
     transform: translate(-3px, 2px);
     padding: 7.5px;
+    cursor: pointer;
 }
 
 .seperator-line-calendar {
@@ -57,13 +58,22 @@
     margin: auto;
     cursor: pointer;
 }
+.grid.days .day.today {
+    background-color: #F2F2F2;
+    color: black;
+}
 
 .grid.days .day:hover {
-    background-color: rgba(210, 205, 190, 0.2);
+    background-color: rgba(210, 205, 190, 0.3);
 }
 
 .grid.days .day.selected {
     background-color: #3498db;
+    color: white;
+}
+
+.grid.days .day.selected:hover {
+    background-color: #2980b9;
     color: white;
 }
 

@@ -11,6 +11,7 @@ interface Props {
   initialInputValue?: string;
   initialCityID?: number;
   ForceInputValue?: string;
+  style?: React.CSSProperties;
 }
 
 const CustomAutocomplete = ({
@@ -22,6 +23,7 @@ const CustomAutocomplete = ({
   initialInputValue = "",
   initialCityID = undefined,
   ForceInputValue = undefined,
+  style = undefined,
 }: Props) => {
   const [inputValue, setInputValue] = useState(initialInputValue);
   const [cityID, setCityID] = useState(initialCityID);
@@ -112,6 +114,7 @@ const CustomAutocomplete = ({
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         autoComplete="off"
+        style={style}
         onBlur={() => {
           setTimeout(() => {
             const expressions = suggestions.flatMap((suggestion) => suggestion.SearchExpressions);

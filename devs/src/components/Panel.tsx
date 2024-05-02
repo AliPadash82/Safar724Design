@@ -15,9 +15,10 @@ interface Props {
   lastItemRef?: React.LegacyRef<HTMLDivElement>;
   trigger: boolean;
   setTrigger: (trigger: boolean) => void;
+  index?: number;
 }
 
-const Panel = ({ item, trigger, setTrigger }: Props) => {
+const Panel = ({ item, trigger, setTrigger, index=0 }: Props) => {
   const [servicesData] = useAtom(GlobalServiceData);
   const [showDetails, setShowDetails] = useState(false);
   const [numberOfAvailableSeats, setNumberOfAvailableSeats] = useState(item.AvailableSeatCount);
@@ -50,6 +51,7 @@ const Panel = ({ item, trigger, setTrigger }: Props) => {
     <div
       className={s.panel}
       ref={ref}
+      style={{ animationDuration: `${Math.min(index * 0.05 + 0.3, 0.6)}s` }}
       >
       <div className={s.flexRow}>
         <div className={s.companyLogo}>

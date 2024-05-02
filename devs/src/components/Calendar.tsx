@@ -12,6 +12,7 @@ interface Props {
 const Calendar = ({ className }: Props) => {
   const [searchDate, setSearchDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useAtom(GlobalSelectedDate);
+  const today = new Date();
   const clickHandler = (day: number) => {
     const jalaaliDate = jalaali.toJalaali(searchDate);
     const newGregorianDate = jalaali.toGregorian(jalaaliDate.jy, jalaaliDate.jm, day);
@@ -76,7 +77,13 @@ const Calendar = ({ className }: Props) => {
               ? " selected"
               : ""
           }
-           unselectable`}
+           unselectable${
+             jalaali.toJalaali(today).jd === day &&
+             jalaali.toJalaali(today).jm === jalaali.toJalaali(searchDate).jm &&
+             jalaali.toJalaali(today).jy === jalaali.toJalaali(searchDate).jy
+               ? " today"
+               : ""
+           }`}
             onClick={() => clickHandler(day)}>
             {toPersianNum(day)}
           </div>

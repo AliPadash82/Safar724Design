@@ -37,9 +37,9 @@
     color: #3498db;
     font-size: 20px;
     padding: 5px;
-    cursor: pointer;
     top: 25px;
     right: calc(5% + 10px);
+    cursor: pointer;
 }
 
 .tooltip-message {
@@ -52,15 +52,12 @@
     padding: 5px 0;
     font-size: 12px;
 
-    /* Positioning */
     position: absolute;
     z-index: 1;
     top: 86%;
     left: 50%;
-    /* Use half of the width value to align it center */
     margin-left: -40px;
 
-    /* Fade in */
     opacity: 0;
     transition: opacity 0.3s;
 }

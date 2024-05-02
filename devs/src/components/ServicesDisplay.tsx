@@ -124,6 +124,7 @@ const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinat
           trigger={trigger}
           setTrigger={setTrigger}
           key={index}
+          index={index}
           item={item}
           visibleCount={visibleCount}
           lastItemRef={lastItemRef}

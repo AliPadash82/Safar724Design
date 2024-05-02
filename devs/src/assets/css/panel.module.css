@@ -5,6 +5,16 @@
   margin-top: 22px;
   margin-bottom: 12px;
   border-bottom: 1px solid #DADADA !important;
+  animation: scaleUp 0.3s;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.1);
+  }
+  100% {
+    transform: scale(1);
+  } 
 }
 
 .panel .flexRow {
