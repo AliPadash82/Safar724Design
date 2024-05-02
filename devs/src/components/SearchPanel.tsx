@@ -32,6 +32,8 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
   useEffect(() => {
     const hiddenInputs = document.querySelectorAll<HTMLInputElement>('input[type="hidden"]');
     const inputs = document.querySelectorAll<HTMLInputElement>('input[type="text"]');
+    const abortController = new AbortController();
+    const signal = abortController.signal;
     if (!inputs[1].value || !inputs[0].value) {
       setAlert([!Boolean(inputs[0].value), !Boolean(inputs[1].value)]);
       return;
@@ -41,11 +43,12 @@ const SearchPanel = ({ setErrorFetching }: Props) => {
     setErrorFetching(false);
     fetchServices(formatDate(selectedDate), Number(hiddenInputs[0].value), Number(hiddenInputs[1].value))
       .then((data) => {
-        setServicesData(data);
+        if (!signal.aborted) setServicesData(data);
       })
       .catch(() => {
         setErrorFetching(true);
       });
+      return () => abortController.abort();
   }, [selectedDate, triggerFetch, forceInput]);
 
   useEffect(() => {
