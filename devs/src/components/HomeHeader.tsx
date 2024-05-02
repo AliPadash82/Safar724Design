@@ -5,11 +5,12 @@ import styles from "../assets/css/homeHeader.module.css";
 import citiesJSON from "../util/cities.json";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
-import { GlobalAlertDoubleBoolean, GlobalDisplayBoolean, GlobalIsFocused, GlobalIsFocusedTo } from "../util/GlobalState";
+import { GlobalAlertDoubleBoolean, GlobalDisplayBoolean, GlobalIsFocused, GlobalIsFocusedTo, GlobalSelectedDate } from "../util/GlobalState";
 
 const HomeHeader = () => {
   const navigate = useNavigate();
   const [display, setDisplay] = useAtom(GlobalDisplayBoolean);
+  const [selectedDate] = useAtom(GlobalSelectedDate)
   const [isFocused, setIsFocused] = useAtom(GlobalIsFocused);
   const [isFocusedTo, setIsFocusedTo] = useAtom(GlobalIsFocusedTo);
   const [alert, setAlert] = useAtom(GlobalAlertDoubleBoolean);
@@ -39,6 +40,7 @@ const HomeHeader = () => {
       destination: e.currentTarget.destination.value,
       originID: e.currentTarget.originID.value,
       destinationID: e.currentTarget.destinationID.value,
+      date: selectedDate,
     };
 
     navigate("/services", { state: { formData } });

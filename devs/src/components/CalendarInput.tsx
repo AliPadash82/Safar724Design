@@ -33,8 +33,8 @@ const CalendarInput = () => {
       </div>
       <div
         ref={contentRef}
-        className={`expandable-card2-content${display ? " show" : ""}`}
-        style={{ width: "400px", paddingInline: "0", paddingBottom: "0" }}>
+        className={`expandable-card2-content${display ? " show" : ""} calendar`}
+        style={{ width: "400px", paddingInline: "0", paddingBottom: "0"}}>
         <Calendar className="calendar-2" />
         <div className="bottom-calendar">
           <div className="crosss unselectable" onClick={() => setDisplay(false)}>

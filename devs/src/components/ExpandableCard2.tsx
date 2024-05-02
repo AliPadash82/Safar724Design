@@ -4,9 +4,10 @@ interface Props {
   children?: React.ReactNode;
   title: string;
   direction?: "column" | "row";
+  offset?: string;
 }
 
-const ExpandableCard2 = ({ children, title, direction = "column" }: Props) => {
+const ExpandableCard2 = ({ children, title, direction = "column", offset = undefined }: Props) => {
   const [expanded, setExpanded] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -38,6 +39,7 @@ const ExpandableCard2 = ({ children, title, direction = "column" }: Props) => {
         style={{
           display: expanded ? "flex" : "none",
           flexDirection: direction,
+          transform: offset,
         }}>
         {children}
       </div>
