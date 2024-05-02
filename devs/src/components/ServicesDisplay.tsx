@@ -66,9 +66,7 @@ const ServicesDisplay = ({ sortBasedOnPrice, checkedState, originState, destinat
 
   useEffect(() => {
     setTrigger(true);
-    setTimeout(() => setTrigger(false));
-    setTimeout(() => setTrigger(true), 1);
-    setTimeout(() => setTrigger(false), 2);
+    setTimeout(() => setTrigger(true), 2);
     if (!servicesData?.Items?.length) {
       return;
     }

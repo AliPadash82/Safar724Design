@@ -18,24 +18,29 @@ interface Props {
   index?: number;
 }
 
-const Panel = ({ item, trigger, setTrigger, index=0 }: Props) => {
+const Panel = ({ item, trigger, setTrigger, index = 0 }: Props) => {
   const [servicesData] = useAtom(GlobalServiceData);
   const [showDetails, setShowDetails] = useState(false);
   const [numberOfAvailableSeats, setNumberOfAvailableSeats] = useState(item.AvailableSeatCount);
   const [loadingSeatCount, setLoadingSeatCount] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const showDetailsRef = useRef(showDetails);
 
   useEffect(() => {
     setNumberOfAvailableSeats(item.AvailableSeatCount);
   }, [servicesData]);
+  useEffect(() => {
+    showDetailsRef.current = showDetails;
+  }, [showDetails]);
 
   useEffect(() => {
     if (!showDetails) return;
     setTimeout(() => {
-      const yOffset = -90; 
+      if (!showDetailsRef.current) return;
+      const yOffset = -90;
       const y = ref.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    } , 350)
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }, 350);
     setLoadingSeatCount(true);
     fetchNumberOfAvailableSeats(item.ID)
       .then((result) => {
@@ -48,11 +53,7 @@ const Panel = ({ item, trigger, setTrigger, index=0 }: Props) => {
       });
   }, [showDetails, item.ID]);
   return (
-    <div
-      className={s.panel}
-      ref={ref}
-      style={{ animationDuration: `${Math.min(index * 0.05 + 0.3, 0.6)}s` }}
-      >
+    <div className={s.panel} ref={ref} style={{ animationDuration: `${Math.min(index * 0.05 + 0.3, 0.6)}s` }}>
       <div className={s.flexRow}>
         <div className={s.companyLogo}>
           <img src={item.CompanyLogo} alt="CompanyLogo" onError={(e) => (e.currentTarget.src = defaultImg)} />
