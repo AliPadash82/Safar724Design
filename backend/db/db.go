@@ -2,9 +2,11 @@ package db
 
 import (
 	"fmt"
+	"log"
 
 	m "main/models"
-
+	"os"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -13,8 +15,11 @@ var db *gorm.DB
 
 func InitDB() {
 
-	var err error
-	dsn := "postgres://default:6v1UnCVSYkyw@ep-divine-waterfall-a4qo56m0.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
+	err := godotenv.Load("E:/react/React/backend/dbInformation.env")
+	if err != nil {
+		log.Fatalf("Error loading .env file", err.Error())
+	}
+	dsn := os.Getenv("POSTGRES_URL")
 	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
@@ -106,17 +111,17 @@ func GetSeatsWithGender(serviceID uint) ([]m.SeatWithGender, error) {
 func GetNumberOfAvailableSeats(serviceID uint) (uint, error) {
 	var numberOfFilledSeats int64
 	err := db.Model(&m.Service{}).
-	Select(
+		Select(
 			"bus_types.seat_count - COALESCE(filled_seats.count, 0) as available_seat_count").
-	Joins("left join bus_types on bus_types.id = services.bus_type_id").
-	Joins(`left join (
+		Joins("left join bus_types on bus_types.id = services.bus_type_id").
+		Joins(`left join (
 		SELECT service_id, COUNT(*) as count 
 		FROM seats 
 		WHERE seats.accessible = false OR EXISTS (SELECT 1 FROM passengers WHERE passengers.seat_id = seats.id)
 		GROUP BY service_id
 	) as filled_seats ON filled_seats.service_id = services.id`).
-	Where("services.id = ?", serviceID).
-	Scan(&numberOfFilledSeats).Error
+		Where("services.id = ?", serviceID).
+		Scan(&numberOfFilledSeats).Error
 
 	return uint(numberOfFilledSeats), err
 }
