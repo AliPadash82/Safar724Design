@@ -5,19 +5,25 @@ import AlertBox from "./AlertBox";
 const RefundBox = () => {
   const [showCondition, setShowCondition] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [render, setRender] = useState<boolean>(false);
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    if(!showCondition) setTimeout(() => setRender(false), 600);
+    else setRender(true);
+  }, [showCondition])
+
   return screenWidth < 1024 ? (
     <>
       <button className={s.seeCondition} onClick={() => setShowCondition(!showCondition)}>
         مشاهده شرایط استرداد
       </button>
-      {true && (
-        <AlertBox title="شرایط استرداد">
+      {render && (
+        <AlertBox title="شرایط استرداد" setShowCondition={setShowCondition} showCondition={showCondition}>
           <p>
             در صورت کنسلی بلیط به صورت آنلاین توسط شما، هزینه استرداد طبق شرایط زیر توسط شرکت مسافربری از مبلغ بلیط کسر
             خواهد شد.

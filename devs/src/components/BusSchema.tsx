@@ -1,4 +1,3 @@
-import React from "react";
 import s from "../assets/css/busSchema.module.css";
 import Seat from "./Seat";
 import busFront from "../assets/images/BusFront.png";

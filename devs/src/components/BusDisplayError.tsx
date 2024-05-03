@@ -20,7 +20,6 @@ const BusSchemaError = ({ setShowDetails, setErrorFetching }: Props) => {
   return (
     <div style={{ marginTop: "40px" }}>
       <div className={s.dividerLine} />
-      <RefundBox />
       <div className={s.cover + " " + s.errorCover}>
         <i className="fas fa-times"></i>
         <h1>خطایی رخ داده است. دوباره تلاش کنید</h1>
@@ -33,6 +32,7 @@ const BusSchemaError = ({ setShowDetails, setErrorFetching }: Props) => {
         <BusSchema convertedSeatsArray={seatsArray_DUMMY} blur={true} column={12} />
         <Legend className={s.legend} />
       </div>
+      <RefundBox />
     </div>
   );
 };
