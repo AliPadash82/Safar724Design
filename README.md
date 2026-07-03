@@ -8,7 +8,7 @@
 
 [مشاهده نمونه ظاهر وب‌سایت](https://drive.google.com/file/d/1bKAPiJDvvOPJwmRDGqtUo6dlS5NmOQBG/view?usp=sharing&utm_source=chatgpt.com)
 
-این پروژه با استفاده از **Go (net/http، Gin، GORM)** در بخش Backend، **React + TypeScript + Vite** در بخش Frontend و **PostgreSQL (Neon)** به عنوان پایگاه داده توسعه یافته است.
+این پروژه با استفاده از **Go (net/http، Gin، GORM)** در بخش Backend و **React + TypeScript + Vite** در بخش Frontend و **PostgreSQL (Neon)** به عنوان پایگاه داده توسعه یافته است.
 
 ---
 # ویژگی‌های پروژه
